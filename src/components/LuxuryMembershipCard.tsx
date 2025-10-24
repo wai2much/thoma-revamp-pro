@@ -1,127 +1,139 @@
-import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Sparkles, Crown, Star } from "lucide-react";
+import { Wallet, ChevronRight, Sparkles } from "lucide-react";
 import tpLogo from "@/assets/tp-logo.png";
 
 export const LuxuryMembershipCard = () => {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
-    <section className="relative py-24 px-4 overflow-hidden">
-      {/* Premium background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-accent/10" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--primary)/0.15),transparent_50%)]" />
-      
-      <div className="container max-w-6xl mx-auto relative z-10">
-        <div className="text-center mb-16 space-y-4">
-          <Badge className="mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] animate-[gradient-shift_3s_ease_infinite] border-0 px-6 py-2 text-sm font-semibold">
-            <Crown className="w-4 h-4 mr-2" />
-            EXCLUSIVE MEMBERSHIP
-          </Badge>
-          <h2 className="text-4xl md:text-6xl font-display font-bold">
-            <span className="gradient-text">Your Premium</span>
+    <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
+      <div className="container max-w-5xl mx-auto relative z-10">
+        {/* Apple-style header */}
+        <div className="text-center mb-12 space-y-3">
+          <h2 className="text-5xl md:text-6xl font-semibold tracking-tight text-foreground">
+            Your membership.
             <br />
-            <span className="text-foreground">Membership Card</span>
+            <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
+              Always with you.
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Experience luxury with every service. Your digital card, endless benefits.
+          <p className="text-xl text-muted-foreground font-light max-w-2xl mx-auto">
+            Add your membership to Apple Wallet or Google Pay for instant access.
           </p>
         </div>
 
-        <div className="flex justify-center">
-          <div 
-            className="relative group perspective-1000"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {/* Glow effect */}
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary via-accent to-primary opacity-30 blur-3xl group-hover:opacity-50 transition-opacity duration-500 animate-pulse" />
+        {/* Apple-style card showcase */}
+        <div className="flex justify-center mb-16">
+          <div className="relative group">
+            {/* Ambient glow */}
+            <div className="absolute -inset-8 bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             
-            {/* Card container with 3D effect */}
-            <div className="relative transform transition-all duration-500 hover:scale-105" 
-                 style={{ 
-                   transform: isHovered ? 'rotateY(5deg) rotateX(-5deg)' : 'rotateY(0deg) rotateX(0deg)',
-                   transformStyle: 'preserve-3d'
-                 }}>
-              <Card className="w-[400px] h-[250px] relative overflow-hidden border-0 shadow-2xl">
-                {/* Holographic gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary via-accent to-primary opacity-90" />
-                
-                {/* Animated shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                
-                {/* Noise texture for premium feel */}
-                <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIvPjwvc3ZnPg==')]" />
-                
-                {/* Card content */}
-                <div className="relative h-full flex flex-col justify-between p-8 text-white">
-                  {/* Header */}
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <img src={tpLogo} alt="Tyreplus" className="h-12 mb-2 brightness-0 invert" />
-                      <p className="text-xs font-medium tracking-wider opacity-90">THOMASTOWN</p>
-                    </div>
-                    <div className="flex gap-1">
-                      <Star className="w-5 h-5 fill-white animate-pulse" style={{ animationDelay: '0s' }} />
-                      <Star className="w-5 h-5 fill-white animate-pulse" style={{ animationDelay: '0.2s' }} />
-                      <Star className="w-5 h-5 fill-white animate-pulse" style={{ animationDelay: '0.4s' }} />
-                    </div>
+            {/* Main card */}
+            <Card className="relative w-[380px] h-[240px] overflow-hidden border border-border/50 bg-gradient-to-br from-card via-card to-card/95 shadow-2xl backdrop-blur-xl transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]">
+              {/* Subtle gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-accent/[0.03]" />
+              
+              {/* Glass reflection effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-transparent" />
+              
+              {/* Card content */}
+              <div className="relative h-full flex flex-col justify-between p-7">
+                {/* Header */}
+                <div className="flex justify-between items-start">
+                  <div className="space-y-1">
+                    <img 
+                      src={tpLogo} 
+                      alt="Tyreplus" 
+                      className="h-10 opacity-90 mix-blend-normal" 
+                    />
+                    <p className="text-xs font-medium tracking-wide text-muted-foreground">
+                      THOMASTOWN
+                    </p>
                   </div>
-
-                  {/* Middle section */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="w-5 h-5" />
-                      <span className="text-2xl font-display font-bold tracking-wider">
-                        PREMIUM MEMBER
-                      </span>
-                    </div>
-                    <div className="text-sm opacity-90 tracking-wide">
-                      Exclusive Benefits • Priority Service
-                    </div>
-                  </div>
-
-                  {/* Footer */}
-                  <div className="flex justify-between items-end">
-                    <div className="space-y-1">
-                      <p className="text-xs opacity-75 tracking-wider">MEMBER SINCE</p>
-                      <p className="text-sm font-semibold">2025</p>
-                    </div>
-                    <div className="text-right space-y-1">
-                      <p className="text-xs opacity-75 tracking-wider">TIER</p>
-                      <div className="flex items-center gap-2">
-                        <Crown className="w-4 h-4" />
-                        <p className="text-sm font-semibold">PLATINUM</p>
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
+                    <Sparkles className="w-3.5 h-3.5 text-primary" />
+                    <span className="text-xs font-semibold text-primary tracking-wide">
+                      ACTIVE
+                    </span>
                   </div>
                 </div>
 
-                {/* Holographic light reflection */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-radial from-white/40 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-              </Card>
+                {/* Member info */}
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground mb-1">
+                      Member Name
+                    </p>
+                    <p className="text-2xl font-semibold tracking-tight text-foreground">
+                      Premium Member
+                    </p>
+                  </div>
+                  <div className="flex gap-8">
+                    <div>
+                      <p className="text-xs font-medium text-muted-foreground mb-0.5">
+                        Tier
+                      </p>
+                      <p className="text-sm font-semibold text-foreground">
+                        Platinum
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium text-muted-foreground mb-0.5">
+                        Since
+                      </p>
+                      <p className="text-sm font-semibold text-foreground">
+                        2025
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              {/* Card back shine */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" 
-                   style={{ transform: 'translateZ(-10px)' }} />
-            </div>
+              {/* Subtle edge highlight */}
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            </Card>
           </div>
         </div>
 
-        {/* Features below card */}
-        <div className="mt-16 grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+        {/* Apple-style wallet buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
+          <button className="group relative w-full sm:w-auto px-8 py-4 bg-foreground text-background rounded-xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3">
+            <Wallet className="w-5 h-5" />
+            <span>Add to Apple Wallet</span>
+            <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+          </button>
+          
+          <button className="group relative w-full sm:w-auto px-8 py-4 bg-card border border-border/50 text-foreground rounded-xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-border flex items-center justify-center gap-3">
+            <Wallet className="w-5 h-5" />
+            <span>Add to Google Pay</span>
+            <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+          </button>
+        </div>
+
+        {/* Apple-style feature grid */}
+        <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: Crown, title: "VIP Treatment", desc: "Priority service every visit" },
-            { icon: Sparkles, title: "Instant Rewards", desc: "$20 credit on signup" },
-            { icon: Star, title: "Double Bonuses", desc: "2x points on wins" }
+            {
+              title: "Instant access",
+              description: "Your membership is always available on your device. No need to carry a physical card."
+            },
+            {
+              title: "Secure & private",
+              description: "Your information is encrypted and protected with industry-leading security."
+            },
+            {
+              title: "Auto-updates",
+              description: "Your card updates automatically when you upgrade or renew your membership."
+            }
           ].map((feature, i) => (
-            <div key={i} className="glass-card p-6 text-center space-y-3 hover:scale-105 transition-transform duration-300">
-              <div className="inline-flex p-3 rounded-full bg-primary/10">
-                <feature.icon className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-semibold text-lg">{feature.title}</h3>
-              <p className="text-sm text-muted-foreground">{feature.desc}</p>
+            <div 
+              key={i} 
+              className="p-6 rounded-2xl bg-card/50 border border-border/30 backdrop-blur-sm transition-all duration-300 hover:bg-card/80 hover:border-border/50"
+            >
+              <h3 className="text-lg font-semibold mb-2 text-foreground">
+                {feature.title}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed font-light">
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>
