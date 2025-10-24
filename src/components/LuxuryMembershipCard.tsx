@@ -1,12 +1,57 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Heart, Download } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Sparkles, Heart, Wallet } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 export const LuxuryMembershipCard = () => {
   const [selectedStyle, setSelectedStyle] = useState<"classic" | "elegance">("classic");
-  const navigate = useNavigate();
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { user } = useAuth();
+
+  const handleGeneratePass = async () => {
+    if (!user) {
+      toast.error("Please sign in to generate your membership pass");
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (!sessionData.session) {
+        toast.error("Please sign in to continue");
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('generate-wallet-pass', {
+        headers: {
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.appleWalletUrl) {
+        window.open(data.appleWalletUrl, '_blank');
+        toast.success("Apple Wallet pass opened! Tap to add to your wallet.");
+      } else if (data.googlePayUrl) {
+        window.open(data.googlePayUrl, '_blank');
+        toast.success("Google Pay pass opened!");
+      } else if (data.passUrl) {
+        window.open(data.passUrl, '_blank');
+        toast.success("Membership pass generated successfully!");
+      } else {
+        throw new Error("No pass URL received");
+      }
+    } catch (error) {
+      console.error("Error generating pass:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to generate pass");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
@@ -179,10 +224,17 @@ export const LuxuryMembershipCard = () => {
           <Button 
             size="lg"
             className="bg-primary hover:bg-primary/90 gap-3 px-8 py-6 text-lg"
+            onClick={handleGeneratePass}
+            disabled={isGenerating || !user}
           >
-            <Download className="w-6 h-6" />
-            Coming Soon: Add to Apple Wallet
+            <Wallet className="w-6 h-6" />
+            {isGenerating ? "Generating..." : "Add to Apple Wallet"}
           </Button>
+          {!user && (
+            <p className="text-sm text-muted-foreground mt-2 text-center">
+              Sign in to generate your membership pass
+            </p>
+          )}
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">

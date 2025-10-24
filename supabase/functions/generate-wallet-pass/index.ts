@@ -14,6 +14,8 @@ const PRODUCT_NAMES: Record<string, string> = {
   "prod_TIKmurHwJ5bDWJ": "Business Velocity Pack",
 };
 
+const PASSENTRY_TEMPLATE = "haus-tyreplus";
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -65,22 +67,61 @@ serve(async (req) => {
     const productId = subscription.items.data[0].price.product as string;
     const planName = PRODUCT_NAMES[productId] || "Premium Member";
     
-    // Generate membership card data
-    const membershipData = {
-      memberName: user.email.split('@')[0].charAt(0).toUpperCase() + user.email.split('@')[0].slice(1),
-      memberEmail: user.email,
-      planName: planName,
-      memberId: customerId.substring(0, 12).toUpperCase(),
-      memberSince: new Date(subscription.created * 1000).getFullYear().toString(),
-      validUntil: subscription.current_period_end 
-        ? new Date(subscription.current_period_end * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-        : "Active",
-      qrCode: `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${customerId}`,
-    };
+    const memberName = user.email.split('@')[0].charAt(0).toUpperCase() + user.email.split('@')[0].slice(1);
+    const memberId = customerId.substring(0, 12).toUpperCase();
+    const memberSince = new Date(subscription.created * 1000).getFullYear().toString();
+    const validUntil = subscription.current_period_end 
+      ? new Date(subscription.current_period_end * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      : "Active";
 
-    console.log("[WALLET-PASS] Generated pass data", { planName, memberId: membershipData.memberId });
+    console.log("[WALLET-PASS] Generating PassEntry pass", { planName, memberId });
 
-    return new Response(JSON.stringify(membershipData), {
+    // Create PassEntry wallet pass
+    const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
+    if (!passEntryKey) throw new Error("PassEntry API key not configured");
+
+    const passEntryResponse = await fetch(`https://api.passentry.com/v1/passes`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${passEntryKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        template: PASSENTRY_TEMPLATE,
+        fields: {
+          memberName: memberName,
+          memberEmail: user.email,
+          planName: planName,
+          memberId: memberId,
+          memberSince: memberSince,
+          validUntil: validUntil,
+        },
+      }),
+    });
+
+    if (!passEntryResponse.ok) {
+      const errorText = await passEntryResponse.text();
+      console.error("[WALLET-PASS] PassEntry API error:", errorText);
+      throw new Error(`PassEntry API error: ${passEntryResponse.status} - ${errorText}`);
+    }
+
+    const passData = await passEntryResponse.json();
+    console.log("[WALLET-PASS] PassEntry pass created successfully", { passId: passData.id });
+
+    return new Response(JSON.stringify({
+      success: true,
+      passUrl: passData.url,
+      appleWalletUrl: passData.appleWalletUrl,
+      googlePayUrl: passData.googlePayUrl,
+      membershipData: {
+        memberName,
+        memberEmail: user.email,
+        planName,
+        memberId,
+        memberSince,
+        validUntil,
+      }
+    }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
