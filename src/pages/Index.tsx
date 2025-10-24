@@ -4,6 +4,7 @@ import { SavingsCalculator } from "@/components/SavingsCalculator";
 import { PricingPlans } from "@/components/PricingPlans";
 import { ValueBreakdown } from "@/components/ValueBreakdown";
 import { Benefits } from "@/components/Benefits";
+import { RewardsProgram } from "@/components/RewardsProgram";
 import { CTA } from "@/components/CTA";
 import { Navigation } from "@/components/Navigation";
 
@@ -17,6 +18,7 @@ const Index = () => {
         <SavingsCalculator />
         <PricingPlans />
         <ValueBreakdown />
+        <RewardsProgram />
         <Benefits />
         <CTA />
         
