@@ -151,7 +151,11 @@ export const PricingPlans = () => {
               className={`glass-card p-6 flex flex-col relative transition-all duration-500 hover:-translate-y-2 ${
                 plan.popular ? "ring-2 ring-primary shadow-2xl scale-105" : ""
               }`}
-              style={plan.id === "single" ? { backgroundColor: '#1C1C1C' } : (plan.popular ? { boxShadow: '0 0 60px hsl(217 91% 60% / 0.3)' } : {})}
+              style={
+                plan.id === "single" ? { backgroundColor: '#1C1C1C' } : 
+                plan.id === "family" ? { backgroundColor: '#00C2A8' } :
+                (plan.popular ? { boxShadow: '0 0 60px hsl(217 91% 60% / 0.3)' } : {})
+              }
             >
               {plan.popular && (
                 <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary shadow-lg font-semibold animate-pulse">
