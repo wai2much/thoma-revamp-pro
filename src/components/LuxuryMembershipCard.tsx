@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Wallet, ChevronRight, Sparkles } from "lucide-react";
-import tpLogo from "@/assets/tp-logo.png";
+import { Wallet, ChevronRight, Sparkles, ShieldCheck } from "lucide-react";
 
 export const LuxuryMembershipCard = () => {
   return (
@@ -38,15 +37,18 @@ export const LuxuryMembershipCard = () => {
               <div className="relative h-full flex flex-col justify-between p-7">
                 {/* Header */}
                 <div className="flex justify-between items-start">
-                  <div className="space-y-1">
-                    <img 
-                      src={tpLogo} 
-                      alt="Tyreplus" 
-                      className="h-10 opacity-90 mix-blend-normal" 
-                    />
-                    <p className="text-xs font-medium tracking-wide text-muted-foreground">
-                      THOMASTOWN
-                    </p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <ShieldCheck className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-base text-foreground">
+                        Membership
+                      </p>
+                      <p className="text-xs font-medium tracking-wide text-muted-foreground">
+                        PREMIUM
+                      </p>
+                    </div>
                   </div>
                   <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
                     <Sparkles className="w-3.5 h-3.5 text-primary" />
