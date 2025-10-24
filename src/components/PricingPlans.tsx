@@ -155,6 +155,7 @@ export const PricingPlans = () => {
                 plan.id === "single" ? { backgroundColor: '#1C1C1C' } : 
                 plan.id === "family" ? { backgroundColor: '#00C2A8' } :
                 plan.id === "business" ? { backgroundColor: '#0057B8' } :
+                plan.id === "enterprise" ? { backgroundColor: '#FFD700' } :
                 (plan.popular ? { boxShadow: '0 0 60px hsl(217 91% 60% / 0.3)' } : {})
               }
             >
