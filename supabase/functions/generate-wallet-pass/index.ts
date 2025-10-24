@@ -80,22 +80,28 @@ serve(async (req) => {
     const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
     if (!passEntryKey) throw new Error("PassEntry API key not configured");
 
-    const passEntryResponse = await fetch(`https://api.passentry.com/v1/passes`, {
+    const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${passEntryKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        template: PASSENTRY_TEMPLATE,
-        fields: {
-          memberName: memberName,
-          memberEmail: user.email,
-          planName: planName,
-          memberId: memberId,
-          memberSince: memberSince,
-          validUntil: validUntil,
-        },
+        pass: {
+          memberName: { value: memberName },
+          memberEmail: { value: user.email },
+          planName: { value: planName },
+          memberId: { value: memberId },
+          memberSince: { value: memberSince },
+          validUntil: { value: validUntil },
+          barcode: {
+            enabled: true,
+            type: "qr",
+            source: "custom",
+            value: customerId,
+            displayText: true
+          }
+        }
       }),
     });
 
@@ -106,13 +112,17 @@ serve(async (req) => {
     }
 
     const passData = await passEntryResponse.json();
-    console.log("[WALLET-PASS] PassEntry pass created successfully", { passId: passData.id });
+    console.log("[WALLET-PASS] PassEntry pass created successfully", { passId: passData.data?.id });
+
+    const downloadUrl = passData.data?.attributes?.downloadUrl;
+    const passSource = passData.data?.attributes?.passSource;
+    const appleUrl = passSource?.apple || downloadUrl;
 
     return new Response(JSON.stringify({
       success: true,
-      passUrl: passData.url,
-      appleWalletUrl: passData.appleWalletUrl,
-      googlePayUrl: passData.googlePayUrl,
+      passUrl: downloadUrl,
+      appleWalletUrl: appleUrl,
+      googlePayUrl: passSource?.google,
       membershipData: {
         memberName,
         memberEmail: user.email,
