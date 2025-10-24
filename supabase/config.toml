@@ -8,3 +8,6 @@ verify_jwt = true
 
 [functions.customer-portal]
 verify_jwt = true
+
+[functions.generate-wallet-pass]
+verify_jwt = true

@@ -1,9 +1,72 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
-import { Wallet, ChevronRight, Sparkles, Heart } from "lucide-react";
+import { Wallet, ChevronRight, Sparkles, Heart, Download } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export const LuxuryMembershipCard = () => {
   const [selectedStyle, setSelectedStyle] = useState<"classic" | "elegance">("classic");
+  const [membershipData, setMembershipData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const { user, subscription } = useAuth();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (user && subscription.subscribed) {
+      loadMembershipData();
+    }
+  }, [user, subscription.subscribed]);
+
+  const loadMembershipData = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-wallet-pass");
+      if (error) throw error;
+      setMembershipData(data);
+    } catch (error) {
+      console.error("Error loading membership data:", error);
+    }
+  };
+
+  const downloadMembershipCard = () => {
+    if (!membershipData) {
+      toast({
+        title: "Please sign in",
+        description: "You need an active membership to download your card",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Create a simple text representation for now
+    const cardText = `
+HAUS OF TECHNIK MEMBERSHIP CARD
+
+Member: ${membershipData.memberName}
+Email: ${membershipData.memberEmail}
+Plan: ${membershipData.planName}
+Member ID: ${membershipData.memberId}
+Member Since: ${membershipData.memberSince}
+Valid Until: ${membershipData.validUntil}
+
+Present this at any Haus of Technik location.
+    `;
+
+    const blob = new Blob([cardText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `membership-card-${membershipData.memberId}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: "Card downloaded!",
+      description: "Your membership card has been saved",
+    });
+  };
 
   return (
     <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
@@ -133,7 +196,7 @@ export const LuxuryMembershipCard = () => {
                         ? "text-foreground"
                         : "text-pink-900 dark:text-pink-100"
                     }`}>
-                      Premium Member
+                      {membershipData?.memberName || "Premium Member"}
                     </p>
                   </div>
                   <div className="flex gap-8">
@@ -150,7 +213,7 @@ export const LuxuryMembershipCard = () => {
                           ? "text-foreground"
                           : "text-pink-900 dark:text-pink-100"
                       }`}>
-                        Platinum
+                        {membershipData?.planName || "Platinum"}
                       </p>
                     </div>
                     <div>
@@ -166,7 +229,7 @@ export const LuxuryMembershipCard = () => {
                           ? "text-foreground"
                           : "text-pink-900 dark:text-pink-100"
                       }`}>
-                        2025
+                        {membershipData?.memberSince || "2025"}
                       </p>
                     </div>
                   </div>
@@ -183,19 +246,27 @@ export const LuxuryMembershipCard = () => {
           </div>
         </div>
 
-        {/* Apple-style wallet buttons */}
+        {/* Wallet buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
-          <button className="group relative w-full sm:w-auto px-8 py-4 bg-foreground text-background rounded-xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3">
-            <Wallet className="w-5 h-5" />
-            <span>Add to Apple Wallet</span>
+          <button 
+            onClick={downloadMembershipCard}
+            disabled={loading || !subscription.subscribed}
+            className="group relative w-full sm:w-auto px-8 py-4 bg-foreground text-background rounded-xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Download className="w-5 h-5" />
+            <span>{subscription.subscribed ? "Download Membership Card" : "Sign In to Get Card"}</span>
             <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
           </button>
           
-          <button className="group relative w-full sm:w-auto px-8 py-4 bg-card border border-border/50 text-foreground rounded-xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-border flex items-center justify-center gap-3">
-            <Wallet className="w-5 h-5" />
-            <span>Add to Google Pay</span>
-            <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-          </button>
+          {membershipData?.qrCode && (
+            <div className="group relative w-full sm:w-auto px-8 py-4 bg-card border border-border/50 rounded-xl flex items-center justify-center gap-3">
+              <img src={membershipData.qrCode} alt="Membership QR Code" className="w-16 h-16" />
+              <div className="text-left">
+                <p className="text-sm font-semibold">Member ID</p>
+                <p className="text-xs text-muted-foreground">{membershipData.memberId}</p>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Apple-style feature grid */}
