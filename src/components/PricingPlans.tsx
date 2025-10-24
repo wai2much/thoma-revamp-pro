@@ -6,88 +6,98 @@ import { useState } from "react";
 
 const plans = [
   {
-    id: "single",
-    name: "Single Pack",
-    subtitle: "(1 Car)",
-    badge: "The Deal Breaker",
-    monthlyPrice: 35,
-    yearlyPrice: 350,
-    value: 1059,
-    savings: 639,
+    id: "c-pack",
+    name: "C Pack",
+    subtitle: "(1 Vehicle)",
+    badge: "Essential Care",
+    monthlyPrice: 55,
+    yearlyPrice: 550,
+    value: 450,
+    savings: 0,
+    margin: "~88%",
     features: [
-      "1x Express Service (oil change, oil filter, 5L oil, 50-point safety inspection)",
-      "1x Wheel Alignment (Passenger)",
-      "1x Rotate & Balance (Passenger)",
-      "2x Engine Diagnostics",
-      "1x Autel Full System Scan",
-      "1x Coolant Flush",
-      "1x Power Steering Flush",
-      "1x Brake Fluid Flush",
+      "1x Express Service",
+      "1x Rotate & Balance",
+      "1x Diagnostics",
       "Unlimited Puncture Repairs",
-      "100% Labour Coverage"
-    ]
+      "Priority Booking",
+      "Wallet Pass + Loyalty Ring"
+    ],
+    note: "No tow included"
   },
   {
     id: "family",
-    name: "Family Safety Pack",
-    subtitle: "(2 Cars)",
+    name: "Family Pack",
+    subtitle: "(2 Vehicles)",
     badge: "Most Popular",
     popular: true,
-    monthlyPrice: 60,
-    yearlyPrice: 600,
-    value: 1818,
-    savings: 1158,
+    monthlyPrice: 110,
+    yearlyPrice: 1100,
+    value: 2070,
+    savings: 750,
+    margin: "~57%",
     features: [
-      "2x Express Service (oil change, oil filter, 5L oil, 50-point safety inspection)",
-      "2x Wheel Alignments",
-      "2x Rotate & Balance",
-      "4x Engine Diagnostics",
-      "2x Autel Full System Scan",
-      "2x Coolant Flush",
-      "2x Power Steering Flush",
-      "2x Brake Fluid Flush",
+      "2x Express Services (per vehicle)",
+      "2x Rotate & Balance (per vehicle)",
+      "2x Wheel Alignment (per vehicle)",
+      "2x Diagnostics (per vehicle)",
+      "2x Fault Scans (per vehicle)",
+      "2x Coolant Flush (per vehicle)",
       "Unlimited Puncture Repairs",
-      "100% Labour Coverage"
-    ]
+      "Priority Booking",
+      "Wallet Pass + Loyalty Ring"
+    ],
+    note: "No tow included"
   },
   {
     id: "business",
-    name: "Business Starter",
+    name: "Business Starter Pack",
     subtitle: "(3 Vehicles)",
-    badge: "The Deal Breaker",
-    monthlyPrice: 110,
-    yearlyPrice: 1100,
-    value: 2940,
-    savings: 1752,
+    badge: "Fleet Ready",
+    monthlyPrice: 249,
+    yearlyPrice: 2490,
+    value: 4716,
+    savings: 1728,
+    margin: "~58%",
     features: [
-      "3x Express Services (5L oil included, $20/L over 5L)",
-      "3x Wheel Alignments",
-      "3x Rotate & Balance",
-      "6x Engine Diagnostics",
-      "3x Autel Full System Scan",
-      "3x Coolant Flush",
-      "3x Power Steering Flush",
-      "3x Brake Fluid Flush",
+      "3x Express Services (per vehicle)",
+      "3x Rotate & Balance (per vehicle)",
+      "3x Wheel Alignment (per vehicle)",
+      "3x Diagnostics (per vehicle)",
+      "3x Fault Scans (per vehicle)",
+      "1x Coolant Flush (per vehicle)",
       "Unlimited Puncture Repairs",
-      "100% Labour Coverage"
-    ]
+      "Priority Booking",
+      "Wallet Pass + Loyalty Ring"
+    ],
+    note: "No tow included"
   },
   {
     id: "enterprise",
     name: "Business Velocity Pack",
     subtitle: "(6+ Vehicles)",
-    badge: "Enterprise Solution",
-    monthlyPrice: 40,
-    yearlyPrice: 400,
+    badge: "Premium Fleet",
+    monthlyPrice: 100,
+    yearlyPrice: 1000,
     perVehicle: true,
+    value: 1950,
+    savings: 825,
+    margin: "~69%",
     features: [
-      "Per Vehicle Pricing",
-      "1 Free Tow Per Year + 50% Off 2nd Tow",
-      "Concierge Vehicle Return",
-      "Top Priority Workshop Service",
-      "All Business Starter Benefits",
-      "Dedicated Account Manager",
-      "Custom Service Scheduling"
+      "2x Logbook Services (per vehicle)",
+      "2x Rotate & Balance (per vehicle)",
+      "2x Wheel Alignment (per vehicle)",
+      "2x Engine Diagnostics (per vehicle)",
+      "2x Fault Full System Scans (per vehicle)",
+      "2x Coolant Flush (per vehicle)",
+      "2x Power Steering Flush (per vehicle)",
+      "2x Brake Fluid Flush (per vehicle)",
+      "Unlimited Puncture Repairs",
+      "1 Free Tow per membership/year",
+      "50% off additional tows",
+      "Priority Booking",
+      "Wallet Pass + Loyalty Ring",
+      "Fleet-wide SMS + Loyalty Triggers"
     ]
   }
 ];
@@ -158,39 +168,32 @@ export const PricingPlans = () => {
                 )}
               </div>
 
-              {plan.value && (
-                <div className="mb-6">
+              <div className="mb-6">
+                {plan.value && (
                   <div className="text-sm text-muted-foreground mb-2">
                     ${plan.value}+ Value for
                   </div>
-                  <div className="text-4xl font-bold">
-                    ${billingPeriod === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
-                    <span className="text-lg text-muted-foreground">
-                      /{billingPeriod === "monthly" ? "mo" : "yr"}
-                    </span>
-                    {plan.perVehicle && <span className="text-sm">/vehicle</span>}
-                  </div>
-                  {plan.savings && (
-                    <div className="text-sm text-primary mt-2">
-                      Save ${plan.savings} annually
-                    </div>
-                  )}
+                )}
+                <div className="text-4xl font-bold">
+                  ${billingPeriod === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
+                  <span className="text-lg text-muted-foreground">
+                    /{billingPeriod === "monthly" ? "mo" : "yr"}
+                  </span>
+                  {plan.perVehicle && <span className="text-sm text-muted-foreground">/vehicle</span>}
                 </div>
-              )}
-
-              {!plan.value && (
-                <div className="mb-6">
-                  <div className="text-4xl font-bold">
-                    ${billingPeriod === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
-                    <span className="text-lg text-muted-foreground">
-                      /{billingPeriod === "monthly" ? "mo" : "yr"}
-                    </span>
-                    {plan.perVehicle && <span className="text-sm text-muted-foreground">/vehicle</span>}
+                {plan.savings > 0 && (
+                  <div className="text-sm text-primary mt-2">
+                    Save ${plan.savings} annually
                   </div>
-                </div>
-              )}
+                )}
+                {plan.margin && (
+                  <div className="text-xs text-muted-foreground mt-1">
+                    Margin: {plan.margin}
+                  </div>
+                )}
+              </div>
 
-              <ul className="space-y-3 mb-8 flex-1">
+              <ul className="space-y-3 mb-6 flex-1">
                 {plan.features.slice(0, 3).map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm">
                     <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
@@ -198,6 +201,12 @@ export const PricingPlans = () => {
                   </li>
                 ))}
               </ul>
+
+              {plan.note && (
+                <div className="text-xs text-muted-foreground italic mb-4 p-2 bg-secondary/30 rounded">
+                  {plan.note}
+                </div>
+              )}
 
               <div className="space-y-3">
                 {plan.features.length > 3 && (

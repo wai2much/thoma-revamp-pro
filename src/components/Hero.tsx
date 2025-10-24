@@ -31,7 +31,7 @@ export const Hero = () => {
             <span className="gradient-text">simple and affordable</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-            Membership-based car maintenance that saves you time and money. All-inclusive plans starting at $35/month.
+            Membership-based car maintenance that saves you time and money. All-inclusive plans starting at $55/month.
           </p>
         </div>
 

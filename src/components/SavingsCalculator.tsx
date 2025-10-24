@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 
 const plans = [
-  { vehicles: 1, name: "Single Pack", price: 35, value: 1059, savings: 639 },
-  { vehicles: 2, name: "Family Safety Pack", price: 60, value: 1818, savings: 1158 },
-  { vehicles: 3, name: "Business Starter", price: 110, value: 2940, savings: 1752 },
+  { vehicles: 1, name: "C Pack", price: 55, value: 450, savings: 0 },
+  { vehicles: 2, name: "Family Pack", price: 110, value: 2070, savings: 750 },
+  { vehicles: 3, name: "Business Starter Pack", price: 249, value: 4716, savings: 1728 },
 ];
 
 export const SavingsCalculator = () => {
@@ -57,10 +57,17 @@ export const SavingsCalculator = () => {
               </div>
 
               <div className="text-center p-6 rounded-lg bg-primary/10 md:col-span-2">
-                <div className="text-sm text-muted-foreground mb-2">Your Annual Savings</div>
-                <div className="text-5xl font-bold gradient-text">${currentPlan.savings}</div>
+                <div className="text-sm text-muted-foreground mb-2">Your Annual Details</div>
+                {currentPlan.savings > 0 ? (
+                  <>
+                    <div className="text-5xl font-bold gradient-text">${currentPlan.savings}</div>
+                    <div className="text-sm text-muted-foreground mt-2">Annual Savings</div>
+                  </>
+                ) : (
+                  <div className="text-3xl font-bold gradient-text">${currentPlan.value}</div>
+                )}
                 <div className="text-lg text-muted-foreground mt-2">
-                  ${currentPlan.value} value for ${currentPlan.price * 12}
+                  ${currentPlan.value} value for ${currentPlan.price * 12}/year
                 </div>
               </div>
             </div>
