@@ -48,32 +48,28 @@ const planData = [
     name: "Single Pack",
     subtitle: "1 Vehicle",
     services: cPackServices,
-    annualCost: 660,
-    margin: "~88%"
+    annualCost: 660
   },
   {
     id: "family",
     name: "Family Pack",
     subtitle: "2 Vehicles",
     services: familyPackServices,
-    annualCost: 1320,
-    margin: "~57%"
+    annualCost: 1320
   },
   {
     id: "business",
     name: "Business Starter Pack",
     subtitle: "3 Vehicles",
     services: businessStarterServices,
-    annualCost: 2988,
-    margin: "~58%"
+    annualCost: 2988
   },
   {
     id: "velocity",
     name: "Business Velocity Pack",
     subtitle: "Per Vehicle (6+ minimum)",
     services: businessVelocityServices,
-    annualCost: 1200,
-    margin: "~69%"
+    annualCost: 1200
   }
 ];
 
@@ -141,17 +137,6 @@ export const ValueBreakdown = () => {
                     <div className="flex items-center justify-between p-4 rounded-lg bg-primary/20 font-bold text-lg border-2 border-primary/30">
                       <span>TOTAL ANNUAL VALUE</span>
                       <span className="text-primary">${totalValue}</span>
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="p-6 rounded-lg bg-accent/10 border-l-4 border-accent">
-                      <div className="text-sm font-semibold mb-2">Profit Margin</div>
-                      <div className="text-2xl font-bold text-accent">{plan.margin}</div>
-                    </div>
-                    <div className="p-6 rounded-lg bg-primary/10 border-l-4 border-primary">
-                      <div className="text-sm font-semibold mb-2">Customer ROI</div>
-                      <div className="text-2xl font-bold text-primary">{roi}%</div>
                     </div>
                   </div>
 

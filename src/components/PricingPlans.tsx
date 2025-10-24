@@ -14,7 +14,6 @@ const plans = [
     yearlyPrice: 550,
     value: 450,
     savings: 0,
-    margin: "~88%",
     features: [
       "1x Express Service",
       "1x Rotate & Balance",
@@ -35,7 +34,6 @@ const plans = [
     yearlyPrice: 1100,
     value: 2070,
     savings: 750,
-    margin: "~57%",
     features: [
       "2x Express Services (per vehicle)",
       "2x Rotate & Balance (per vehicle)",
@@ -58,7 +56,6 @@ const plans = [
     yearlyPrice: 2490,
     value: 4716,
     savings: 1728,
-    margin: "~58%",
     features: [
       "3x Express Services (per vehicle)",
       "3x Rotate & Balance (per vehicle)",
@@ -82,7 +79,6 @@ const plans = [
     perVehicle: true,
     value: 1950,
     savings: 825,
-    margin: "~69%",
     features: [
       "2x Logbook Services (per vehicle)",
       "2x Rotate & Balance (per vehicle)",
@@ -188,11 +184,6 @@ export const PricingPlans = () => {
                 {plan.savings > 0 && (
                   <div className="text-sm text-primary mt-2">
                     Save ${plan.savings} annually
-                  </div>
-                )}
-                {plan.margin && (
-                  <div className="text-xs text-muted-foreground mt-1">
-                    Margin: {plan.margin}
                   </div>
                 )}
               </div>
