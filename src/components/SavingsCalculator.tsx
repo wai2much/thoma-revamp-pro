@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 
 const plans = [
-  { vehicles: 1, name: "C Pack", price: 55, value: 450, savings: 0 },
+  { vehicles: 1, name: "Single Pack", price: 55, value: 450, savings: 0 },
   { vehicles: 2, name: "Family Pack", price: 110, value: 2070, savings: 750 },
   { vehicles: 3, name: "Business Starter Pack", price: 249, value: 4716, savings: 1728 },
 ];

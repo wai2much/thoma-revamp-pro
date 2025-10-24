@@ -6,8 +6,8 @@ import { useState } from "react";
 
 const plans = [
   {
-    id: "c-pack",
-    name: "C Pack",
+    id: "single",
+    name: "Single Pack",
     subtitle: "(1 Vehicle)",
     badge: "Essential Care",
     monthlyPrice: 55,

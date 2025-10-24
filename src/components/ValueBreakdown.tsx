@@ -44,8 +44,8 @@ const businessVelocityServices = [
 
 const planData = [
   {
-    id: "c-pack",
-    name: "C Pack",
+    id: "single",
+    name: "Single Pack",
     subtitle: "1 Vehicle",
     services: cPackServices,
     annualCost: 660,

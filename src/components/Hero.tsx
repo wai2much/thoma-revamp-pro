@@ -62,8 +62,8 @@ export const Hero = () => {
             <div className="text-muted-foreground">Customer Base</div>
           </div>
           <div className="glass-card rounded-xl p-6 text-center hover:glow-border transition-all">
-            <div className="text-4xl font-bold mb-2">50+</div>
-            <div className="text-muted-foreground">Locations</div>
+            <div className="text-4xl font-bold mb-2">Premium</div>
+            <div className="text-muted-foreground">Service Quality</div>
           </div>
           <div className="glass-card rounded-xl p-6 text-center hover:glow-border transition-all">
             <div className="text-4xl font-bold mb-2">4.9★</div>
