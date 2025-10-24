@@ -1,7 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import bannerSuperGt from "@/assets/banner-super-gt.png";
+import bannerSports from "@/assets/banner-sports.png";
+import banner190e from "@/assets/banner-190e.png";
 
 export const Hero = () => {
+  const [currentBanner, setCurrentBanner] = useState(0);
+  const banners = [bannerSuperGt, bannerSports, banner190e];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBanner((prev) => (prev + 1) % banners.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
   const scrollToPlans = () => {
     document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -12,11 +25,22 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 pt-20">
-      {/* Enhanced Background effects */}
-      <div className="absolute inset-0 animated-gradient-bg" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,hsl(217_91%_60%/0.15),transparent_60%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,hsl(271_91%_65%/0.15),transparent_60%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,hsl(316_70%_60%/0.1),transparent_60%)]" />
+      {/* Banner Background Carousel */}
+      {banners.map((banner, index) => (
+        <div
+          key={index}
+          className="absolute inset-0 transition-opacity duration-1000"
+          style={{
+            opacity: currentBanner === index ? 1 : 0,
+            backgroundImage: `url(${banner})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+      ))}
+      
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/50" />
       
       {/* Animated dots */}
       <div className="absolute top-20 left-10 w-2 h-2 bg-primary rounded-full pulse-glow" />
