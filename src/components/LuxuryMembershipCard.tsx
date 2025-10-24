@@ -11,7 +11,6 @@ export const LuxuryMembershipCard = () => {
   return (
     <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
       <div className="container max-w-5xl mx-auto relative z-10">
-        {/* Apple-style header */}
         <div className="text-center mb-8 space-y-4">
           <h2 className="text-5xl md:text-6xl font-semibold tracking-tight text-foreground">
             Your membership.
@@ -24,7 +23,6 @@ export const LuxuryMembershipCard = () => {
             Download your digital membership card for instant access
           </p>
           
-          {/* Style selector */}
           <div className="flex justify-center gap-3 pt-4">
             <button
               onClick={() => setSelectedStyle("classic")}
@@ -37,7 +35,7 @@ export const LuxuryMembershipCard = () => {
               Classic
             </button>
             <button
-              onClick(() => setSelectedStyle("elegance")}
+              onClick={() => setSelectedStyle("elegance")}
               className={`px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 ${
                 selectedStyle === "elegance"
                   ? "bg-foreground text-background shadow-lg scale-105"
@@ -49,23 +47,19 @@ export const LuxuryMembershipCard = () => {
           </div>
         </div>
 
-        {/* Apple-style card showcase */}
         <div className="flex justify-center mb-16">
           <div className="relative group">
-            {/* Ambient glow */}
             <div className={`absolute -inset-8 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${
               selectedStyle === "classic" 
                 ? "bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20"
                 : "bg-gradient-to-r from-pink-500/20 via-purple-500/30 to-pink-500/20"
             }`} />
             
-            {/* Main card */}
             <Card className={`relative w-[380px] h-[240px] overflow-hidden border shadow-2xl backdrop-blur-xl transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] ${
               selectedStyle === "classic"
                 ? "border-border/50 bg-gradient-to-br from-card via-card to-card/95"
                 : "border-pink-500/20 bg-gradient-to-br from-pink-50/95 via-purple-50/90 to-pink-50/95 dark:from-pink-950/40 dark:via-purple-950/30 dark:to-pink-950/40"
             }`}>
-              {/* Gradient overlay */}
               {selectedStyle === "classic" ? (
                 <>
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-accent/[0.03]" />
@@ -75,15 +69,12 @@ export const LuxuryMembershipCard = () => {
                 <>
                   <div className="absolute inset-0 bg-gradient-to-br from-pink-400/[0.08] via-transparent to-purple-400/[0.08]" />
                   <div className="absolute inset-0 bg-gradient-to-br from-white/[0.15] via-transparent to-transparent" />
-                  {/* Decorative elements */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-pink-300/20 to-transparent rounded-full blur-2xl" />
                   <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-purple-300/20 to-transparent rounded-full blur-2xl" />
                 </>
               )}
               
-              {/* Card content */}
               <div className="relative h-full flex flex-col justify-between p-7">
-                {/* Header */}
                 <div className="flex justify-between items-start">
                   <div>
                     <p className={`text-xl font-semibold mb-0.5 ${
@@ -121,7 +112,6 @@ export const LuxuryMembershipCard = () => {
                   </div>
                 </div>
 
-                {/* Member info */}
                 <div className="space-y-3">
                   <div>
                     <p className={`text-sm font-medium mb-1 ${
@@ -176,7 +166,6 @@ export const LuxuryMembershipCard = () => {
                 </div>
               </div>
 
-              {/* Subtle edge highlight */}
               <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent to-transparent ${
                 selectedStyle === "classic"
                   ? "via-primary/30"
@@ -186,19 +175,16 @@ export const LuxuryMembershipCard = () => {
           </div>
         </div>
 
-        {/* Digital Card Download Button */}
         <div className="flex justify-center mb-16">
           <Button 
             size="lg"
-            onClick={() => navigate('/digital-card')}
             className="bg-primary hover:bg-primary/90 gap-3 px-8 py-6 text-lg"
           >
             <Download className="w-6 h-6" />
-            Get Your Digital Membership Card
+            Coming Soon: Add to Apple Wallet
           </Button>
         </div>
 
-        {/* Apple-style feature grid */}
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
