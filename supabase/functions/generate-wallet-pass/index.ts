@@ -107,7 +107,12 @@ serve(async (req) => {
 
     if (!passEntryResponse.ok) {
       const errorText = await passEntryResponse.text();
-      console.error("[WALLET-PASS] PassEntry API error:", errorText);
+      console.error("[WALLET-PASS] PassEntry API error:", {
+        status: passEntryResponse.status,
+        statusText: passEntryResponse.statusText,
+        body: errorText,
+        url: passEntryResponse.url
+      });
       throw new Error(`PassEntry API error: ${passEntryResponse.status} - ${errorText}`);
     }
 
