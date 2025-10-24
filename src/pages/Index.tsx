@@ -23,9 +23,43 @@ const Index = () => {
         <CTA />
         
         {/* Footer */}
-        <footer className="border-t border-border/50 py-8 px-4">
-          <div className="container max-w-6xl mx-auto text-center text-sm text-muted-foreground">
-            <p>© 2025 Tyreplus Thomastown. All rights reserved.</p>
+        <footer className="border-t border-border/50 py-12 px-4 bg-muted/30">
+          <div className="container max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <h3 className="font-semibold mb-3 text-foreground">Contact Us</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>
+                    <a href="mailto:info@hausoftechnik.com.au" className="hover:text-primary transition-colors">
+                      info@hausoftechnik.com.au
+                    </a>
+                  </p>
+                  <p>
+                    <a href="https://hausoftechnik.com.au" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                      hausoftechnik.com.au
+                    </a>
+                  </p>
+                  <p>
+                    <a href="https://onlinetyreplusthomastown.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                      onlinetyreplusthomastown.com
+                    </a>
+                  </p>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold mb-3 text-foreground">Fair Play Commitment</h3>
+                <p className="text-sm text-muted-foreground">
+                  Our membership service is designed with transparency and fairness in mind. 
+                  We comply with all Australian Consumer Law requirements and industry standards, 
+                  ensuring you receive honest pricing, quality service, and clear terms without hidden fees.
+                </p>
+              </div>
+            </div>
+            
+            <div className="text-center text-sm text-muted-foreground pt-6 border-t border-border/50">
+              <p>© 2025 Tyreplus Thomastown. All rights reserved.</p>
+            </div>
           </div>
         </footer>
       </div>
