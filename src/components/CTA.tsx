@@ -34,7 +34,7 @@ export const CTA = () => {
         </div>
 
         <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground">
-          <div>✓ No long-term commitment</div>
+          <div>✓ Some commitment</div>
           <div>✓ Cancel anytime</div>
           <div>✓ Money-back guarantee</div>
         </div>
