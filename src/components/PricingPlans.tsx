@@ -22,7 +22,7 @@ const plans = [
       "Priority Booking",
       "Wallet Pass + Loyalty Ring"
     ],
-    note: "No tow included"
+    note: "All services include 5L oil. Excess oil: $15 per liter. No tow included."
   },
   {
     id: "family",
@@ -45,7 +45,7 @@ const plans = [
       "Priority Booking",
       "Wallet Pass + Loyalty Ring"
     ],
-    note: "No tow included"
+    note: "All services include 5L oil. Excess oil: $15 per liter. No tow included."
   },
   {
     id: "business",
@@ -67,7 +67,7 @@ const plans = [
       "Priority Booking",
       "Wallet Pass + Loyalty Ring"
     ],
-    note: "No tow included"
+    note: "All services include 5L oil. Excess oil: $15 per liter. No tow included."
   },
   {
     id: "enterprise",
@@ -94,7 +94,8 @@ const plans = [
       "Priority Booking",
       "Wallet Pass + Loyalty Ring",
       "Fleet-wide SMS + Loyalty Triggers"
-    ]
+    ],
+    note: "All services include 5L oil. Excess oil: $15 per liter."
   }
 ];
 
