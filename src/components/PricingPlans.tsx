@@ -1,8 +1,13 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { MEMBERSHIP_TIERS } from "@/lib/membershipTiers";
 
 const plans = [
   {
@@ -101,6 +106,47 @@ const plans = [
 
 export const PricingPlans = () => {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("monthly");
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleSubscribe = async (planId: string) => {
+    if (!user) {
+      navigate("/auth");
+      return;
+    }
+
+    const tierMap: Record<string, keyof typeof MEMBERSHIP_TIERS> = {
+      single: "single",
+      family: "family",
+      business: "business",
+      enterprise: "enterprise",
+    };
+
+    const tier = tierMap[planId];
+    if (!tier) return;
+
+    setCheckoutLoading(planId);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-checkout", {
+        body: { priceId: MEMBERSHIP_TIERS[tier].price_id },
+      });
+
+      if (error) throw error;
+      if (data?.url) {
+        window.open(data.url, "_blank");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to start checkout",
+        variant: "destructive",
+      });
+    } finally {
+      setCheckoutLoading(null);
+    }
+  };
 
   return (
     <section id="pricing" className="py-24 px-4 relative overflow-hidden">
@@ -222,8 +268,19 @@ export const PricingPlans = () => {
                       ? "bg-primary hover:bg-primary/90 shadow-lg hover:shadow-glow hover:scale-105" 
                       : "bg-secondary hover:bg-secondary/80 hover:scale-[1.02]"
                   }`}
+                  onClick={() => handleSubscribe(plan.id)}
+                  disabled={checkoutLoading === plan.id}
                 >
-                  {plan.id === "enterprise" ? "Schedule Consultation" : "Subscribe Now"}
+                  {checkoutLoading === plan.id ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Loading...
+                    </>
+                  ) : plan.id === "enterprise" ? (
+                    "Schedule Consultation"
+                  ) : (
+                    "Subscribe Now"
+                  )}
                 </Button>
               </div>
             </Card>
