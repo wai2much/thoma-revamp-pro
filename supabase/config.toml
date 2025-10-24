@@ -11,3 +11,6 @@ verify_jwt = true
 
 [functions.generate-wallet-pass]
 verify_jwt = true
+
+[functions.list-pass-templates]
+verify_jwt = true

@@ -53,6 +53,35 @@ export const LuxuryMembershipCard = () => {
     }
   };
 
+  const handleListTemplates = async () => {
+    if (!user) {
+      toast.error("Please sign in");
+      return;
+    }
+
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (!sessionData.session) {
+        toast.error("Please sign in to continue");
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('list-pass-templates', {
+        headers: {
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+      });
+
+      if (error) throw error;
+
+      console.log("Available PassEntry templates:", data);
+      toast.success(`Found ${data.data?.length || 0} templates - check console for details`);
+    } catch (error) {
+      console.error("Error listing templates:", error);
+      toast.error("Failed to list templates");
+    }
+  };
+
   return (
     <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
       <div className="container max-w-5xl mx-auto relative z-10">
@@ -220,7 +249,7 @@ export const LuxuryMembershipCard = () => {
           </div>
         </div>
 
-        <div className="flex justify-center mb-16">
+        <div className="flex flex-col items-center mb-16 gap-3">
           <Button 
             size="lg"
             className="bg-primary hover:bg-primary/90 gap-3 px-8 py-6 text-lg"
@@ -230,8 +259,17 @@ export const LuxuryMembershipCard = () => {
             <Wallet className="w-6 h-6" />
             {isGenerating ? "Generating..." : "Add to Apple Wallet"}
           </Button>
+          {user && (
+            <Button 
+              size="sm" 
+              variant="outline"
+              onClick={handleListTemplates}
+            >
+              Debug: List Templates
+            </Button>
+          )}
           {!user && (
-            <p className="text-sm text-muted-foreground mt-2 text-center">
+            <p className="text-sm text-muted-foreground text-center">
               Sign in to generate your membership pass
             </p>
           )}
