@@ -1,72 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Wallet, ChevronRight, Sparkles, Heart, Download } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Sparkles, Heart, Download } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const LuxuryMembershipCard = () => {
   const [selectedStyle, setSelectedStyle] = useState<"classic" | "elegance">("classic");
-  const [membershipData, setMembershipData] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
-  const { user, subscription } = useAuth();
-  const { toast } = useToast();
-
-  useEffect(() => {
-    if (user && subscription.subscribed) {
-      loadMembershipData();
-    }
-  }, [user, subscription.subscribed]);
-
-  const loadMembershipData = async () => {
-    try {
-      const { data, error } = await supabase.functions.invoke("generate-wallet-pass");
-      if (error) throw error;
-      setMembershipData(data);
-    } catch (error) {
-      console.error("Error loading membership data:", error);
-    }
-  };
-
-  const downloadMembershipCard = () => {
-    if (!membershipData) {
-      toast({
-        title: "Please sign in",
-        description: "You need an active membership to download your card",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Create a simple text representation for now
-    const cardText = `
-HAUS OF TECHNIK MEMBERSHIP CARD
-
-Member: ${membershipData.memberName}
-Email: ${membershipData.memberEmail}
-Plan: ${membershipData.planName}
-Member ID: ${membershipData.memberId}
-Member Since: ${membershipData.memberSince}
-Valid Until: ${membershipData.validUntil}
-
-Present this at any Haus of Technik location.
-    `;
-
-    const blob = new Blob([cardText], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `membership-card-${membershipData.memberId}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    toast({
-      title: "Card downloaded!",
-      description: "Your membership card has been saved",
-    });
-  };
+  const navigate = useNavigate();
 
   return (
     <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
@@ -81,7 +21,7 @@ Present this at any Haus of Technik location.
             </span>
           </h2>
           <p className="text-xl text-muted-foreground font-light max-w-2xl mx-auto">
-            Add your membership to Apple Wallet or Google Pay for instant access.
+            Download your digital membership card for instant access
           </p>
           
           {/* Style selector */}
@@ -97,7 +37,7 @@ Present this at any Haus of Technik location.
               Classic
             </button>
             <button
-              onClick={() => setSelectedStyle("elegance")}
+              onClick(() => setSelectedStyle("elegance")}
               className={`px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 ${
                 selectedStyle === "elegance"
                   ? "bg-foreground text-background shadow-lg scale-105"
@@ -196,7 +136,7 @@ Present this at any Haus of Technik location.
                         ? "text-foreground"
                         : "text-pink-900 dark:text-pink-100"
                     }`}>
-                      {membershipData?.memberName || "Premium Member"}
+                      Premium Member
                     </p>
                   </div>
                   <div className="flex gap-8">
@@ -213,7 +153,7 @@ Present this at any Haus of Technik location.
                           ? "text-foreground"
                           : "text-pink-900 dark:text-pink-100"
                       }`}>
-                        {membershipData?.planName || "Platinum"}
+                        Platinum
                       </p>
                     </div>
                     <div>
@@ -229,7 +169,7 @@ Present this at any Haus of Technik location.
                           ? "text-foreground"
                           : "text-pink-900 dark:text-pink-100"
                       }`}>
-                        {membershipData?.memberSince || "2025"}
+                        2025
                       </p>
                     </div>
                   </div>
@@ -246,27 +186,16 @@ Present this at any Haus of Technik location.
           </div>
         </div>
 
-        {/* Wallet buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
-          <button 
-            onClick={downloadMembershipCard}
-            disabled={loading || !subscription.subscribed}
-            className="group relative w-full sm:w-auto px-8 py-4 bg-foreground text-background rounded-xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+        {/* Digital Card Download Button */}
+        <div className="flex justify-center mb-16">
+          <Button 
+            size="lg"
+            onClick={() => navigate('/digital-card')}
+            className="bg-primary hover:bg-primary/90 gap-3 px-8 py-6 text-lg"
           >
-            <Download className="w-5 h-5" />
-            <span>{subscription.subscribed ? "Download Membership Card" : "Sign In to Get Card"}</span>
-            <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-          </button>
-          
-          {membershipData?.qrCode && (
-            <div className="group relative w-full sm:w-auto px-8 py-4 bg-card border border-border/50 rounded-xl flex items-center justify-center gap-3">
-              <img src={membershipData.qrCode} alt="Membership QR Code" className="w-16 h-16" />
-              <div className="text-left">
-                <p className="text-sm font-semibold">Member ID</p>
-                <p className="text-xs text-muted-foreground">{membershipData.memberId}</p>
-              </div>
-            </div>
-          )}
+            <Download className="w-6 h-6" />
+            Get Your Digital Membership Card
+          </Button>
         </div>
 
         {/* Apple-style feature grid */}
