@@ -106,10 +106,13 @@ export const PricingPlans = () => {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("monthly");
 
   return (
-    <section id="pricing" className="py-24 px-4 relative">
-      <div className="container max-w-7xl mx-auto">
+    <section id="pricing" className="py-24 px-4 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,hsl(217_91%_60%/0.08),transparent_50%)]" />
+      
+      <div className="container max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
             Choose Your <span className="gradient-text">Plan</span>
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
@@ -117,29 +120,29 @@ export const PricingPlans = () => {
           </p>
 
           {/* Billing toggle */}
-          <div className="inline-flex items-center gap-4 bg-secondary/50 p-2 rounded-lg">
+          <div className="inline-flex items-center gap-4 glass-card p-2 rounded-xl">
             <button
               onClick={() => setBillingPeriod("monthly")}
-              className={`px-6 py-2 rounded-md transition-all ${
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
                 billingPeriod === "monthly" 
-                  ? "bg-primary text-primary-foreground" 
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "bg-primary text-primary-foreground shadow-lg scale-105" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
               }`}
             >
               Monthly
             </button>
             <button
               onClick={() => setBillingPeriod("yearly")}
-              className={`px-6 py-2 rounded-md transition-all ${
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
                 billingPeriod === "yearly" 
-                  ? "bg-primary text-primary-foreground" 
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "bg-primary text-primary-foreground shadow-lg scale-105" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
               }`}
             >
               Yearly
             </button>
             {billingPeriod === "yearly" && (
-              <Badge variant="secondary" className="bg-accent/20 text-accent">Save 17%</Badge>
+              <Badge variant="secondary" className="bg-accent/30 text-accent font-semibold pulse-glow">Save 17%</Badge>
             )}
           </div>
         </div>
@@ -148,18 +151,19 @@ export const PricingPlans = () => {
           {plans.map((plan) => (
             <Card 
               key={plan.id}
-              className={`glass-card p-6 flex flex-col relative ${
-                plan.popular ? "ring-2 ring-primary glow-border scale-105" : ""
+              className={`glass-card p-6 flex flex-col relative transition-all duration-500 hover:-translate-y-2 ${
+                plan.popular ? "ring-2 ring-primary shadow-2xl scale-105" : ""
               }`}
+              style={plan.popular ? { boxShadow: '0 0 60px hsl(217 91% 60% / 0.3)' } : {}}
             >
               {plan.popular && (
-                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary">
+                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary shadow-lg font-semibold animate-pulse">
                   {plan.badge}
                 </Badge>
               )}
               
               <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-1">{plan.name}</h3>
+                <h3 className="text-2xl font-display font-bold mb-1">{plan.name}</h3>
                 <p className="text-sm text-muted-foreground mb-3">{plan.subtitle}</p>
                 {!plan.popular && (
                   <Badge variant="outline" className="border-accent/50 text-accent">
@@ -215,10 +219,10 @@ export const PricingPlans = () => {
                   </Button>
                 )}
                 <Button 
-                  className={`w-full ${
+                  className={`w-full font-semibold transition-all duration-300 ${
                     plan.popular 
-                      ? "bg-primary hover:bg-primary/90" 
-                      : "bg-secondary hover:bg-secondary/80"
+                      ? "bg-primary hover:bg-primary/90 shadow-lg hover:shadow-glow hover:scale-105" 
+                      : "bg-secondary hover:bg-secondary/80 hover:scale-[1.02]"
                   }`}
                 >
                   {plan.id === "enterprise" ? "Schedule Consultation" : "Subscribe Now"}

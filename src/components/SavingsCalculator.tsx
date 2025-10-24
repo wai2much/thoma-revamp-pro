@@ -15,10 +15,13 @@ export const SavingsCalculator = () => {
   const currentPlan = plans.find(p => p.vehicles === vehicles) || plans[0];
 
   return (
-    <section className="py-24 px-4">
-      <div className="container max-w-5xl mx-auto">
+    <section className="py-24 px-4 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(271_91%_65%/0.08),transparent_50%)]" />
+      
+      <div className="container max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
             Calculate Your <span className="gradient-text">Annual Savings</span>
           </h2>
           <p className="text-xl text-muted-foreground">
@@ -26,7 +29,7 @@ export const SavingsCalculator = () => {
           </p>
         </div>
 
-        <Card className="glass-card p-8 md:p-12">
+        <Card className="glass-card p-8 md:p-12 shadow-2xl">
           <div className="space-y-8">
             {/* Slider */}
             <div>
@@ -74,7 +77,7 @@ export const SavingsCalculator = () => {
 
             <Button 
               size="lg" 
-              className="w-full bg-primary hover:bg-primary/90"
+              className="w-full bg-primary hover:bg-primary/90 shadow-lg hover:shadow-glow transition-all duration-300 hover:scale-[1.02] font-semibold"
               onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Get Started with {currentPlan.name}
