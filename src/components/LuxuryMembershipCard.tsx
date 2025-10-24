@@ -37,18 +37,13 @@ export const LuxuryMembershipCard = () => {
               <div className="relative h-full flex flex-col justify-between p-7">
                 {/* Header */}
                 <div className="flex justify-between items-start">
-                  <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <ShieldCheck className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-base text-foreground">
-                        Membership
-                      </p>
-                      <p className="text-xs font-medium tracking-wide text-muted-foreground">
-                        PREMIUM
-                      </p>
-                    </div>
+                  <div>
+                    <p className="text-xl font-semibold text-foreground mb-0.5">
+                      Haus of Technik
+                    </p>
+                    <p className="text-xs font-medium tracking-wide text-muted-foreground">
+                      MEMBERSHIP CARD
+                    </p>
                   </div>
                   <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
                     <Sparkles className="w-3.5 h-3.5 text-primary" />
