@@ -99,15 +99,7 @@ serve(async (req) => {
             enabled: true,
             type: "qr",
             source: "custom",
-            value: JSON.stringify({
-              customerId,
-              email: user.email,
-              plan: planName,
-              memberId,
-              memberName,
-              since: memberSince,
-              validUntil
-            }),
+            value: `TYREPLUS-${memberId}`,
             displayText: true
           }
         }
