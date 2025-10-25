@@ -59,7 +59,11 @@ export const Benefits = () => {
       </section>
 
       {/* Benefits grid */}
-      <section className="py-24 px-4">
+      <section className="py-24 px-4 relative overflow-hidden">
+        {/* Subtle Stripe gradient overlay */}
+        <div className="absolute inset-0 opacity-15" 
+             style={{ background: 'var(--gradient-stripe)' }} 
+        />
         <div className="container max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">

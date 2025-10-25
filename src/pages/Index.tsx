@@ -10,7 +10,14 @@ import { Navigation } from "@/components/Navigation";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen relative text-foreground">
+      {/* Stripe-inspired gradient background across entire page */}
+      <div className="fixed inset-0 bg-background -z-10" />
+      <div className="fixed inset-0 opacity-40 -z-10" 
+           style={{ background: 'var(--gradient-stripe)' }} 
+      />
+      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-background/30 to-background/60 -z-10" />
+      
       <Navigation />
       <div className="pt-16">
         <Hero />
@@ -23,8 +30,12 @@ const Index = () => {
         <CTA />
         
         {/* Footer */}
-        <footer className="border-t border-border/50 py-12 px-4 bg-muted/30">
-          <div className="container max-w-6xl mx-auto">
+        <footer className="relative border-t border-border/50 py-12 px-4">
+          <div className="absolute inset-0 bg-secondary/20" />
+          <div className="absolute inset-0 opacity-30" 
+               style={{ background: 'var(--gradient-stripe)' }} 
+          />
+          <div className="container max-w-6xl mx-auto relative z-10">
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div>
                 <h3 className="font-semibold mb-3 text-foreground">Contact Us</h3>

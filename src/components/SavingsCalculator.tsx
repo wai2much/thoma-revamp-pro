@@ -16,8 +16,10 @@ export const SavingsCalculator = () => {
 
   return (
     <section className="py-24 px-4 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(271_91%_65%/0.08),transparent_50%)]" />
+      {/* Subtle Stripe gradient overlay */}
+      <div className="absolute inset-0 opacity-20" 
+           style={{ background: 'var(--gradient-stripe)' }} 
+      />
       
       <div className="container max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-12">

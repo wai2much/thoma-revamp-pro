@@ -150,8 +150,10 @@ export const PricingPlans = () => {
 
   return (
     <section id="pricing" className="py-24 px-4 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,hsl(217_91%_60%/0.08),transparent_50%)]" />
+      {/* Subtle Stripe gradient overlay */}
+      <div className="absolute inset-0 opacity-20" 
+           style={{ background: 'var(--gradient-stripe)' }} 
+      />
       
       <div className="container max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12">

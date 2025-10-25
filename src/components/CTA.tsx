@@ -4,8 +4,10 @@ import { ArrowRight } from "lucide-react";
 export const CTA = () => {
   return (
     <section id="locations" className="py-24 px-4 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(217_91%_60%/0.15),transparent_70%)]" />
+      {/* Stripe gradient overlay */}
+      <div className="absolute inset-0 opacity-25" 
+           style={{ background: 'var(--gradient-stripe)' }} 
+      />
       
       <div className="container max-w-4xl mx-auto text-center relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold mb-6">

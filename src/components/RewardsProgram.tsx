@@ -28,8 +28,10 @@ export const RewardsProgram = () => {
 
   return (
     <section className="py-24 px-4 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(217_91%_60%/0.1),transparent_50%)]" />
+      {/* Stripe gradient overlay */}
+      <div className="absolute inset-0 opacity-25" 
+           style={{ background: 'var(--gradient-stripe)' }} 
+      />
       
       <div className="container max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-16">

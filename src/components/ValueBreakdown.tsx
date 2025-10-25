@@ -75,7 +75,11 @@ const planData = [
 
 export const ValueBreakdown = () => {
   return (
-    <section className="py-24 px-4 bg-secondary/20">
+    <section className="py-24 px-4 relative overflow-hidden">
+      {/* Stripe gradient overlay */}
+      <div className="absolute inset-0 opacity-20" 
+           style={{ background: 'var(--gradient-stripe)' }} 
+      />
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
