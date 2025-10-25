@@ -80,8 +80,7 @@ serve(async (req) => {
     const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
     if (!passEntryKey) throw new Error("PassEntry API key not configured");
 
-    // Provide both template fields AND comprehensive QR code data
-    // Template fields for display, QR code for complete membership info
+    // Use only the required centralLabel field + comprehensive QR code
     const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple`, {
       method: "POST",
       headers: {
@@ -90,13 +89,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         pass: {
-          // Template display fields
           centralLabel: { value: planName },
-          memberName: { value: memberName },
-          memberId: { value: memberId },
-          memberSince: { value: memberSince },
-          validUntil: { value: validUntil },
-          // Comprehensive QR code with all data
           barcode: {
             enabled: true,
             type: "qr",
@@ -106,6 +99,7 @@ serve(async (req) => {
               email: user.email,
               plan: planName,
               memberId,
+              memberName,
               since: memberSince,
               validUntil
             }),
