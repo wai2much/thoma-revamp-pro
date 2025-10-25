@@ -19,15 +19,14 @@ const Index = () => {
       <div className="fixed inset-0 bg-gradient-to-b from-transparent via-background/30 to-background/60 -z-10" />
       
       <Navigation />
-      <div className="pt-16">
-        <Hero />
-        <LuxuryMembershipCard />
-        <SavingsCalculator />
-        <PricingPlans />
-        <ValueBreakdown />
-        <RewardsProgram />
-        <Benefits />
-        <CTA />
+      <Hero />
+      <LuxuryMembershipCard />
+      <SavingsCalculator />
+      <PricingPlans />
+      <ValueBreakdown />
+      <RewardsProgram />
+      <Benefits />
+      <CTA />
         
         {/* Footer */}
         <footer className="relative border-t border-border/50 py-12 px-4">
@@ -73,7 +72,6 @@ const Index = () => {
             </div>
           </div>
         </footer>
-      </div>
     </div>
   );
 };
