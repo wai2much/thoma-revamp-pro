@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { User, LogIn } from "lucide-react";
+import { User, LogIn, ScanLine } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import tyrePlusLogo from "@/assets/tyreplus-logo.png";
 
@@ -29,6 +29,15 @@ export const Navigation = () => {
                   Active Member
                 </span>
               )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/scanner")}
+                className="hidden sm:flex"
+              >
+                <ScanLine className="mr-2 h-4 w-4" />
+                Scanner
+              </Button>
               <Button
                 variant="outline"
                 size="sm"
