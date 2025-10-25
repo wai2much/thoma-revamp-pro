@@ -80,7 +80,7 @@ serve(async (req) => {
     const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
     if (!passEntryKey) throw new Error("PassEntry API key not configured");
 
-    // Use only the required centralLabel field + comprehensive QR code
+    // Create PassEntry wallet pass with all field mappings
     const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple`, {
       method: "POST",
       headers: {
@@ -89,7 +89,12 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         pass: {
+          balanceLabel: { value: "LOYALTY POINTS" },
           centralLabel: { value: planName },
+          label1: { value: memberId },
+          label2: { value: memberName },
+          label3: { value: memberSince },
+          label4: { value: validUntil },
           barcode: {
             enabled: true,
             type: "qr",
