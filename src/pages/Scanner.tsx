@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { QrCode, Nfc, Search, CheckCircle, XCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { BarcodeScanner } from "@capacitor-community/barcode-scanner";
+import { BarcodeScanner } from "@capacitor-mlkit/barcode-scanning";
 
 interface MemberData {
   memberId: string;
@@ -62,36 +62,16 @@ const Scanner = () => {
   const startQRScan = async () => {
     try {
       setScanning(true);
-      
-      // Check camera permission
-      const status = await BarcodeScanner.checkPermission({ force: true });
-      
-      if (!status.granted) {
-        toast({
-          title: "Permission Required",
-          description: "Camera permission is required to scan QR codes",
-          variant: "destructive",
-        });
-        setScanning(false);
-        return;
-      }
 
-      // Prepare scanner
-      await BarcodeScanner.hideBackground();
-      document.body.classList.add("scanner-active");
+      // Start scanning with MLKit
+      const { barcodes } = await BarcodeScanner.scan();
 
-      // Start scanning
-      const result = await BarcodeScanner.startScan();
-
-      // Clean up
-      document.body.classList.remove("scanner-active");
       setScanning(false);
 
-      if (result.hasContent) {
-        await validateMember(result.content);
+      if (barcodes && barcodes.length > 0) {
+        await validateMember(barcodes[0].rawValue);
       }
     } catch (error) {
-      document.body.classList.remove("scanner-active");
       setScanning(false);
       toast({
         title: "Scan Error",
@@ -108,14 +88,8 @@ const Scanner = () => {
     });
   };
 
-  const stopScanning = async () => {
-    try {
-      await BarcodeScanner.stopScan();
-      document.body.classList.remove("scanner-active");
-      setScanning(false);
-    } catch (error) {
-      console.error("Error stopping scan:", error);
-    }
+  const stopScanning = () => {
+    setScanning(false);
   };
 
   const handleManualSearch = () => {
@@ -256,14 +230,6 @@ const Scanner = () => {
         )}
       </div>
 
-      <style>{`
-        body.scanner-active {
-          visibility: hidden;
-        }
-        .scanner-active .scanner-ui {
-          visibility: visible;
-        }
-      `}</style>
     </div>
   );
 };

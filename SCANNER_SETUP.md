@@ -22,11 +22,10 @@ npx cap add android
 npx cap update android
 ```
 
-### 3. Install NFC Plugin
-The NFC plugin needs to be installed manually:
-```bash
-npm install @capacitor-community/nfc
-```
+### 3. Install Scanner Plugins
+The scanner plugins are already installed:
+- `@capacitor-mlkit/barcode-scanning` (for QR codes)
+- `@capacitor-community/nfc` (optional, for NFC scanning)
 
 ### 4. Configure Permissions
 
