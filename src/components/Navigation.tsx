@@ -9,8 +9,14 @@ export const Navigation = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
-      <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg border-b border-border/50 relative">
+      {/* Stripe gradient background */}
+      <div className="absolute inset-0 bg-background/80" />
+      <div className="absolute inset-0 opacity-30" 
+           style={{ background: 'var(--gradient-stripe)' }} 
+      />
+      
+      <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-2">
           <img src={tyrePlusLogo} alt="Tyreplus Thomastown" className="h-12 w-auto" />
         </div>
