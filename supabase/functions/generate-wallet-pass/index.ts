@@ -14,7 +14,7 @@ const PRODUCT_NAMES: Record<string, string> = {
   "prod_TIKmurHwJ5bDWJ": "Business Velocity Pack",
 };
 
-const PASSENTRY_TEMPLATE = "haus-tyreplus";
+const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
