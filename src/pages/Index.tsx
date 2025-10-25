@@ -7,6 +7,7 @@ import { Benefits } from "@/components/Benefits";
 import { RewardsProgram } from "@/components/RewardsProgram";
 import { CTA } from "@/components/CTA";
 import { Navigation } from "@/components/Navigation";
+import { AIAssistant } from "@/components/AIAssistant";
 
 const Index = () => {
   return (
@@ -72,6 +73,8 @@ const Index = () => {
             </div>
           </div>
         </footer>
+      
+      <AIAssistant />
     </div>
   );
 };
