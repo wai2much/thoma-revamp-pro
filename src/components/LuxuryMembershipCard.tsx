@@ -83,7 +83,13 @@ export const LuxuryMembershipCard = () => {
   };
 
   return (
-    <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
+    <section className="relative py-24 px-4 overflow-hidden">
+      {/* Stripe-style gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background" />
+      <div className="absolute inset-0 opacity-60" 
+           style={{ background: 'var(--gradient-stripe)' }} 
+      />
+      
       <div className="container max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-8 space-y-4">
           <h2 className="text-5xl md:text-6xl font-semibold tracking-tight text-foreground">
@@ -125,8 +131,8 @@ export const LuxuryMembershipCard = () => {
           <div className="relative group">
             <div className={`absolute -inset-8 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${
               selectedStyle === "classic" 
-                ? "bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20"
-                : "bg-gradient-to-r from-pink-500/20 via-purple-500/30 to-pink-500/20"
+                ? "bg-gradient-to-r from-primary/30 via-accent/30 to-primary/30"
+                : "bg-gradient-to-r from-[hsl(355_100%_64%)]/30 via-[hsl(271_91%_65%)]/30 to-[hsl(355_100%_64%)]/30"
             }`} />
             
             <Card className={`relative w-[380px] h-[240px] overflow-hidden border shadow-2xl backdrop-blur-xl transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] ${

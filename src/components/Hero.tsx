@@ -25,22 +25,17 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 pt-20">
-      {/* Banner Background Carousel */}
-      {banners.map((banner, index) => (
-        <div
-          key={index}
-          className="absolute inset-0 transition-opacity duration-1000"
-          style={{
-            opacity: currentBanner === index ? 1 : 0,
-            backgroundImage: `url(${banner})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-      ))}
+      {/* Stripe-inspired gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary/30 to-background" />
+      <div className="absolute inset-0 opacity-80 animate-[gradient-shift_20s_ease_infinite]" 
+           style={{ 
+             background: 'var(--gradient-stripe)',
+             backgroundSize: '200% 200%'
+           }} 
+      />
       
-      {/* Dark overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/50" />
+      {/* Subtle overlay for depth */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/5 to-background/30" />
       
       {/* Animated dots */}
       <div className="absolute top-20 left-10 w-2 h-2 bg-primary rounded-full pulse-glow" />
