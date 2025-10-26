@@ -33,8 +33,14 @@ const PRODUCT_COLORS: Record<string, string> = {
 
 const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
 
-// Car banner images for random selection
+// Car banner images for random selection (1125px x 432px)
 const CAR_BANNERS = [
+  "banner-speed.png",
+  "banner-sunset-water.png",
+  "banner-city-sunset.png",
+  "banner-red-smoke.png",
+  "banner-supercar-rear.png",
+  "banner-racing-sunset.png",
   "banner-sports.png", 
   "banner-super-gt.png"
 ];
