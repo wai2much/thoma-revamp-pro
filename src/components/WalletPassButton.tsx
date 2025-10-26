@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Wallet, Download, Loader2, ExternalLink } from "lucide-react";
+import { Wallet, Download, Loader2, ExternalLink, Apple } from "lucide-react";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -127,7 +127,9 @@ export const WalletPassButton = ({
         </>
       ) : (
         <>
-          {isMobile ? (
+          {detectedPlatform === 'apple' ? (
+            <Apple className="h-4 w-4 mr-2" />
+          ) : isMobile ? (
             <Download className="h-4 w-4 mr-2" />
           ) : (
             <ExternalLink className="h-4 w-4 mr-2" />
