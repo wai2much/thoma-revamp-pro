@@ -6,6 +6,7 @@ import { Gift, Wallet, Loader2, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { WalletPassButton } from "./WalletPassButton";
+import bannerImage from "@/assets/banner-super-gt-4.png";
 
 export const LoyaltyCardCapture = () => {
   const [formData, setFormData] = useState({
@@ -117,7 +118,7 @@ export const LoyaltyCardCapture = () => {
           <div className="relative overflow-hidden rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] aspect-[1.586/1] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-white/10">
             {/* Banner Image */}
             <img 
-              src="/assets/banner-speed-branded.png" 
+              src={bannerImage} 
               alt="TyrePlus Loyalty Card"
               className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40"
             />
