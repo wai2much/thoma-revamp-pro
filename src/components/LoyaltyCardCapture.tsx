@@ -112,6 +112,52 @@ export const LoyaltyCardCapture = () => {
           </p>
         </div>
 
+        {/* Card Preview */}
+        <div className="max-w-md mx-auto mb-12 animate-fade-in">
+          <div className="relative overflow-hidden rounded-2xl shadow-2xl aspect-[1.586/1] bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900">
+            {/* Banner Image */}
+            <img 
+              src="/assets/banner-speed-branded.png" 
+              alt="Business Velocity Pack Card"
+              className="absolute inset-0 w-full h-full object-cover opacity-90"
+            />
+            
+            {/* Card Content Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            
+            <div className="relative h-full p-6 flex flex-col justify-between text-white">
+              {/* Top Section */}
+              <div className="space-y-1">
+                <div className="text-sm font-semibold opacity-90">TYREPLUS LOYALTY</div>
+                <div className="text-2xl font-bold">$20 Welcome Card</div>
+              </div>
+
+              {/* Bottom Section */}
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <div className="text-xs opacity-70 mb-1">MEMBER ID</div>
+                  <div className="font-mono font-bold">XXXX</div>
+                </div>
+                <div>
+                  <div className="text-xs opacity-70 mb-1">POINTS</div>
+                  <div className="font-bold">99</div>
+                </div>
+                <div>
+                  <div className="text-xs opacity-70 mb-1">MEMBER NAME</div>
+                  <div className="font-bold">YOUR NAME</div>
+                </div>
+                <div>
+                  <div className="text-xs opacity-70 mb-1">VALID UNTIL</div>
+                  <div className="font-bold text-xs">1 YEAR</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="text-center text-sm text-muted-foreground mt-4">
+            Preview • Your card will have one of 3 exclusive car designs
+          </p>
+        </div>
+
         <Card className="glass-card p-8 max-w-lg mx-auto">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
