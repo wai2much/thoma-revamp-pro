@@ -118,7 +118,7 @@ export const LoyaltyCardCapture = () => {
             {/* Banner Image */}
             <img 
               src="/assets/banner-speed-branded.png" 
-              alt="Business Velocity Pack Card"
+              alt="TyrePlus Loyalty Card"
               className="absolute inset-0 w-full h-full object-cover opacity-90"
             />
             
