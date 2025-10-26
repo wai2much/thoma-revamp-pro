@@ -342,13 +342,7 @@ export const PricingPlans = () => {
                     </Button>
                   )}
                   <Button 
-                    className={`w-full font-semibold transition-all duration-300 border-0 ${
-                      plan.id === 'family'
-                        ? "bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 shadow-lg hover:shadow-glow hover:scale-105" 
-                        : plan.id === 'enterprise'
-                        ? "bg-black text-white hover:bg-black/80 hover:scale-[1.02]"
-                        : "bg-black text-white hover:bg-black/80 hover:scale-[1.02]"
-                    }`}
+                    className="w-full font-semibold transition-all duration-300 border-0 bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 shadow-lg hover:shadow-glow hover:scale-105"
                     onClick={() => handleSubscribe(plan.id)}
                     disabled={checkoutLoading === plan.id}
                   >
