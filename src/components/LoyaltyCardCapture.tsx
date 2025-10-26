@@ -114,55 +114,39 @@ export const LoyaltyCardCapture = () => {
 
         {/* Card Preview */}
         <div className="max-w-md mx-auto mb-12 animate-fade-in">
-          <div className="relative overflow-hidden rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] aspect-[1.586/1] bg-gradient-to-br from-black via-zinc-900 to-black border border-zinc-800">
-            {/* Subtle pattern overlay */}
-            <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-            
-            {/* Shine effect */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-3xl" />
-            
-            <div className="relative h-full p-8 flex flex-col justify-between text-white">
-              {/* Top Section */}
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-400">TyrePlus</div>
-                    <div className="text-sm font-light tracking-wide text-zinc-300 mt-1">Loyalty Card</div>
-                  </div>
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
-                    <span className="text-xl">💎</span>
-                  </div>
-                </div>
-                
-                <div>
-                  <div className="text-5xl font-bold tracking-tight">$20</div>
-                  <div className="text-sm font-light text-zinc-400 tracking-wide mt-1">Welcome Credit</div>
-                </div>
+          <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-white">
+            {/* Header Section */}
+            <div className="bg-gradient-to-r from-purple-500 via-blue-500 to-purple-600 p-6 text-white">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-2xl font-bold">TyrePlus</div>
+                <div className="text-xs font-bold tracking-wider">LOYALTY</div>
               </div>
+            </div>
 
-              {/* Bottom Section */}
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-1">Member ID</div>
-                    <div className="font-mono text-sm font-light tracking-wider">LP-XXXX</div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-1">Points</div>
-                    <div className="text-sm font-light tracking-wide">20 pts</div>
-                  </div>
-                </div>
-                
-                <div className="flex justify-between items-end text-xs border-t border-zinc-800 pt-4">
-                  <div>
-                    <div className="text-zinc-500 uppercase tracking-wider text-[10px] mb-1">Member</div>
-                    <div className="font-light">Your Name</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-zinc-500 uppercase tracking-wider text-[10px] mb-1">Valid</div>
-                    <div className="font-light">1 Year</div>
-                  </div>
-                </div>
+            {/* Car Banner */}
+            <div className="relative h-48 overflow-hidden">
+              <img 
+                src="/assets/banner-racing-sunset.png" 
+                alt="Loyalty Card"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Points Section */}
+            <div className="bg-gradient-to-r from-purple-600 via-purple-700 to-blue-600 p-6 text-white text-center">
+              <div className="text-xs font-bold tracking-[0.2em] uppercase opacity-80 mb-2">LOYALTY POINTS</div>
+              <div className="text-5xl font-bold">20</div>
+            </div>
+
+            {/* Details Section */}
+            <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-purple-600 p-6 grid grid-cols-2 gap-4 text-white">
+              <div>
+                <div className="text-xs font-bold tracking-wider uppercase opacity-80 mb-1">MEMBER ID</div>
+                <div className="font-mono text-sm">LP-XXXX</div>
+              </div>
+              <div>
+                <div className="text-xs font-bold tracking-wider uppercase opacity-80 mb-1">MEMBER NAME</div>
+                <div className="text-sm">Your Name</div>
               </div>
             </div>
           </div>
