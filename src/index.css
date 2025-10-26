@@ -60,14 +60,19 @@ All colors MUST be HSL.
                      radial-gradient(at 100% 100%, hsl(25 100% 75% / 0.2) 0px, transparent 50%),
                      radial-gradient(at 0% 100%, hsl(355 100% 64% / 0.2) 0px, transparent 50%);
     
-    /* Enhanced shadows */
-    --shadow-glow: 0 0 60px hsl(217 91% 60% / 0.4);
-    --shadow-glow-accent: 0 0 60px hsl(271 91% 65% / 0.4);
-    --shadow-card: 0 20px 40px -15px hsl(0 0% 0% / 0.6);
-    --shadow-card-hover: 0 30px 60px -15px hsl(217 91% 60% / 0.3);
+    /* Enhanced shadows with depth */
+    --shadow-glow: 0 0 80px hsl(217 91% 60% / 0.5), 0 0 120px hsl(217 91% 60% / 0.2);
+    --shadow-glow-accent: 0 0 80px hsl(271 91% 65% / 0.5), 0 0 120px hsl(271 91% 65% / 0.2);
+    --shadow-card: 0 30px 60px -20px hsl(0 0% 0% / 0.8), 0 10px 30px -10px hsl(217 91% 60% / 0.2);
+    --shadow-card-hover: 0 40px 80px -20px hsl(217 91% 60% / 0.4), 0 20px 40px -10px hsl(271 91% 65% / 0.3);
+    --shadow-elevation-1: 0 2px 8px hsl(0 0% 0% / 0.4);
+    --shadow-elevation-2: 0 8px 24px hsl(0 0% 0% / 0.5);
+    --shadow-elevation-3: 0 16px 48px hsl(0 0% 0% / 0.6);
+    --shadow-neon: 0 0 20px hsl(var(--primary) / 0.6), 0 0 40px hsl(var(--primary) / 0.3), inset 0 0 20px hsl(var(--primary) / 0.1);
     
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --transition-spring: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 
@@ -82,17 +87,45 @@ All colors MUST be HSL.
   }
   
   .glass-card {
-    background: hsl(var(--card) / 0.4);
-    backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid hsl(var(--border) / 0.3);
+    background: hsl(var(--card) / 0.5);
+    backdrop-filter: blur(24px) saturate(200%);
+    border: 1px solid hsl(var(--border) / 0.4);
+    box-shadow: var(--shadow-card);
     transition: var(--transition-smooth);
+    transform-style: preserve-3d;
   }
   
   .glass-card:hover {
-    background: hsl(var(--card) / 0.6);
-    border-color: hsl(var(--primary) / 0.5);
+    background: hsl(var(--card) / 0.7);
+    border-color: hsl(var(--primary) / 0.6);
     box-shadow: var(--shadow-card-hover);
-    transform: translateY(-4px);
+    transform: translateY(-8px) scale(1.02);
+  }
+  
+  .glass-card-premium {
+    background: linear-gradient(135deg, hsl(var(--card) / 0.6), hsl(var(--card) / 0.4));
+    backdrop-filter: blur(32px) saturate(220%);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    box-shadow: var(--shadow-elevation-2);
+  }
+  
+  .glass-card-premium::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: var(--gradient-primary);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  
+  .glass-card-premium:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: var(--shadow-card-hover), var(--shadow-glow);
   }
   
   .glow-border {
@@ -118,6 +151,37 @@ All colors MUST be HSL.
     animation: pulse-glow 3s ease-in-out infinite;
   }
   
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, hsl(var(--primary) / 0.1) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+  
+  .tilt-card {
+    transform-style: preserve-3d;
+    transition: var(--transition-spring);
+  }
+  
+  .tilt-card:hover {
+    transform: rotateX(2deg) rotateY(-2deg) translateY(-8px);
+  }
+  
+  .depth-layer-1 {
+    box-shadow: var(--shadow-elevation-1);
+  }
+  
+  .depth-layer-2 {
+    box-shadow: var(--shadow-elevation-2);
+  }
+  
+  .depth-layer-3 {
+    box-shadow: var(--shadow-elevation-3);
+  }
+  
+  .neon-glow {
+    box-shadow: var(--shadow-neon);
+  }
+  
   @keyframes gradient-shift {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -129,12 +193,21 @@ All colors MUST be HSL.
   }
   
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.2); }
-    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.5); }
+    0%, 100% { box-shadow: 0 0 30px hsl(var(--primary) / 0.3); }
+    50% { box-shadow: 0 0 60px hsl(var(--primary) / 0.6), 0 0 90px hsl(var(--primary) / 0.3); }
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
   }
   
   .perspective-1000 {
     perspective: 1000px;
+  }
+  
+  .transform-3d {
+    transform-style: preserve-3d;
   }
 }
 
