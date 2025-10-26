@@ -1,6 +1,7 @@
 import { Hero } from "@/components/Hero";
 import { LuxuryMembershipCard } from "@/components/LuxuryMembershipCard";
 import { LoyaltyCardCapture } from "@/components/LoyaltyCardCapture";
+import { ServiceCapabilities } from "@/components/ServiceCapabilities";
 import { SavingsCalculator } from "@/components/SavingsCalculator";
 import { PricingPlans } from "@/components/PricingPlans";
 import { ValueBreakdown } from "@/components/ValueBreakdown";
@@ -23,6 +24,7 @@ const Index = () => {
       <Navigation />
       <Hero />
       <LoyaltyCardCapture />
+      <ServiceCapabilities />
       <LuxuryMembershipCard />
       <SavingsCalculator />
       <PricingPlans />
