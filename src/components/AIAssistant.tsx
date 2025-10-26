@@ -115,10 +115,15 @@ export const AIAssistant = () => {
 
   return (
     <Card className="fixed bottom-6 right-6 w-96 h-[500px] flex flex-col shadow-2xl z-50">
-      <div className="flex items-center justify-between p-4 border-b">
+      <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-primary/5 to-transparent">
         <div className="flex items-center gap-2">
-          <MessageCircle className="h-5 w-5 text-primary" />
-          <h3 className="font-semibold">Tyreplus Assistant</h3>
+          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+            <MessageCircle className="h-4 w-4 text-primary" />
+          </div>
+          <div>
+            <h3 className="font-semibold">Tessa</h3>
+            <p className="text-xs text-muted-foreground">Your Tyreplus Expert</p>
+          </div>
         </div>
         <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
           <X className="h-4 w-4" />
@@ -128,11 +133,11 @@ export const AIAssistant = () => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 && (
           <div className="text-center text-muted-foreground text-sm py-8">
-            <p className="mb-2">👋 Hi! I can help you with:</p>
-            <ul className="text-left inline-block">
-              <li>• Service details & timing</li>
-              <li>• Oil types we use</li>
-              <li>• Membership plans</li>
+            <p className="mb-2">👋 Hi, I'm Tessa! I can help you with:</p>
+            <ul className="text-left inline-block space-y-1">
+              <li>• What oil we use & service details</li>
+              <li>• Service duration & timing</li>
+              <li>• Membership plans & benefits</li>
               <li>• Booking information</li>
             </ul>
           </div>
