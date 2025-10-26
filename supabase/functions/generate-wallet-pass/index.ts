@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
+import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -124,6 +125,60 @@ serve(async (req) => {
     const passSource = passData.data?.attributes?.passSource;
     const appleUrl = passSource?.apple || downloadUrl;
 
+    // Send confirmation email
+    console.log("[WALLET-PASS] Starting email send process");
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (resendKey) {
+      try {
+        const resend = new Resend(resendKey);
+        console.log("[WALLET-PASS] Resend initialized, preparing email");
+        
+        const emailResponse = await resend.emails.send({
+          from: "TyrePlus Membership <onboarding@resend.dev>",
+          to: [user.email],
+          subject: "Your TyrePlus Membership Pass is Ready!",
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <h1 style="color: #333;">Welcome to TyrePlus, ${memberName}!</h1>
+              <p>Your digital membership pass has been created and is ready to use.</p>
+              
+              <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h2 style="margin-top: 0;">Membership Details</h2>
+                <p><strong>Plan:</strong> ${planName}</p>
+                <p><strong>Member ID:</strong> ${memberId}</p>
+                <p><strong>Member Since:</strong> ${memberSince}</p>
+                <p><strong>Valid Until:</strong> ${validUntil}</p>
+              </div>
+
+              <div style="margin: 30px 0;">
+                <h3>Add to Your Wallet:</h3>
+                ${appleUrl ? `<p><a href="${appleUrl}" style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 5px 0;">Add to Apple Wallet</a></p>` : ''}
+                ${passSource?.google ? `<p><a href="${passSource.google}" style="display: inline-block; background: #4285f4; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 5px 0;">Add to Google Wallet</a></p>` : ''}
+              </div>
+
+              <p style="color: #666; font-size: 14px;">
+                Thank you for choosing TyrePlus. If you have any questions, please contact our support team.
+              </p>
+            </div>
+          `,
+        });
+        
+        console.log("[WALLET-PASS] Email sent successfully", { 
+          emailId: emailResponse.data?.id,
+          recipient: user.email 
+        });
+      } catch (emailError) {
+        console.error("[WALLET-PASS] Email send failed (non-blocking):", {
+          error: emailError instanceof Error ? emailError.message : String(emailError),
+          recipient: user.email
+        });
+        // Don't throw - email is non-critical
+      }
+    } else {
+      console.log("[WALLET-PASS] RESEND_API_KEY not configured, skipping email");
+    }
+
+    console.log("[WALLET-PASS] Returning success response");
     return new Response(JSON.stringify({
       success: true,
       passUrl: downloadUrl,
