@@ -47,9 +47,6 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
-          backgroundColor: "#070913",
-          foregroundColor: "#F7F9FC",
-          labelColor: "#A8B3CF",
           balanceLabel: { value: "LOYALTY BALANCE" },
           centralLabel: { value: "Welcome Card" },
           label1: { value: memberId },

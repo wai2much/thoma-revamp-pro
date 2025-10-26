@@ -91,9 +91,6 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
-          backgroundColor: "#070913",
-          foregroundColor: "#F7F9FC",
-          labelColor: "#A8B3CF",
           balanceLabel: { value: "LOYALTY POINTS" },
           centralLabel: { value: planName },
           label1: { value: memberId },
@@ -104,7 +101,7 @@ serve(async (req) => {
             enabled: true,
             type: "qr",
             source: "custom",
-            value: "TYREPLUS-SUBSCRIPTION",
+            value: `TYREPLUS-${memberId}`,
             displayText: true
           }
         }
