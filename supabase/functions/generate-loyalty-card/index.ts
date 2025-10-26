@@ -9,16 +9,11 @@ const corsHeaders = {
 const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
 const LOYALTY_PREFIX = "635BF"; // Stripe purple #635BFF
 
-// Car banner images for random selection (1125px x 432px)
+// Car banner images for random selection (1125px x 432px) - branded with Business Velocity Pack
 const CAR_BANNERS = [
-  "banner-speed.png",
-  "banner-sunset-water.png",
-  "banner-city-sunset.png",
-  "banner-red-smoke.png",
-  "banner-supercar-rear.png",
-  "banner-racing-sunset.png",
-  "banner-sports.png", 
-  "banner-super-gt.png"
+  "banner-speed-branded.png",
+  "banner-city-sunset-branded.png",
+  "banner-racing-sunset-branded.png"
 ];
 
 serve(async (req) => {
