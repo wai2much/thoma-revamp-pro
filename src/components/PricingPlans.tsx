@@ -112,7 +112,10 @@ export const PricingPlans = () => {
   const { toast } = useToast();
 
   const handleSubscribe = async (planId: string) => {
+    console.log("Subscribe clicked for plan:", planId);
+    
     if (!user) {
+      console.log("No user found, redirecting to auth");
       navigate("/auth");
       return;
     }
@@ -125,22 +128,45 @@ export const PricingPlans = () => {
     };
 
     const tier = tierMap[planId];
-    if (!tier) return;
+    if (!tier) {
+      console.error("Invalid tier:", planId);
+      toast({
+        title: "Error",
+        description: "Invalid plan selected",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const priceId = MEMBERSHIP_TIERS[tier].price_id;
+    console.log("Using price ID:", priceId);
 
     setCheckoutLoading(planId);
     try {
+      console.log("Invoking create-checkout function...");
       const { data, error } = await supabase.functions.invoke("create-checkout", {
-        body: { priceId: MEMBERSHIP_TIERS[tier].price_id },
+        body: { priceId },
       });
 
-      if (error) throw error;
+      console.log("Response:", { data, error });
+
+      if (error) {
+        console.error("Supabase function error:", error);
+        throw error;
+      }
+      
       if (data?.url) {
+        console.log("Opening checkout URL:", data.url);
         window.open(data.url, "_blank");
+      } else {
+        console.error("No URL in response:", data);
+        throw new Error("No checkout URL received");
       }
     } catch (error: any) {
+      console.error("Checkout error:", error);
       toast({
         title: "Error",
-        description: error.message || "Failed to start checkout",
+        description: error.message || "Failed to start checkout. Please try again.",
         variant: "destructive",
       });
     } finally {
