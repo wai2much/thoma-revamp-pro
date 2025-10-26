@@ -50,9 +50,6 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
-          backgroundColor: "#635BFF",  // Stripe purple to match hex prefix
-          labelColor: "#FFFFFF",       // White text for contrast
-          foregroundColor: "#FFFFFF",  // White foreground
           balanceLabel: { value: "LOYALTY BALANCE" },
           centralLabel: { value: "Welcome Card" },
           label1: { value: memberId },
