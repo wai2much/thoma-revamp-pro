@@ -113,6 +113,65 @@ export const LoyaltyCardCapture = () => {
           </p>
         </div>
 
+        {/* Card Preview */}
+        <div className="max-w-md mx-auto mb-12 animate-fade-in">
+          <div className="relative overflow-hidden rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] aspect-[1.586/1] bg-gradient-to-br from-black via-zinc-900 to-black border border-zinc-800">
+            {/* Subtle pattern overlay */}
+            <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+            
+            {/* Shine effect */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-3xl" />
+            
+            <div className="relative h-full p-8 flex flex-col justify-between text-white">
+              {/* Top Section */}
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-400">TyrePlus</div>
+                    <div className="text-sm font-light tracking-wide text-zinc-300 mt-1">Loyalty Card</div>
+                  </div>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <span className="text-xl">💎</span>
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="text-5xl font-bold tracking-tight">$20</div>
+                  <div className="text-sm font-light text-zinc-400 tracking-wide mt-1">Welcome Credit</div>
+                </div>
+              </div>
+
+              {/* Bottom Section */}
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-1">Member ID</div>
+                    <div className="font-mono text-sm font-light tracking-wider">LP-XXXX</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-1">Points</div>
+                    <div className="text-sm font-light tracking-wide">20 pts</div>
+                  </div>
+                </div>
+                
+                <div className="flex justify-between items-end text-xs border-t border-zinc-800 pt-4">
+                  <div>
+                    <div className="text-zinc-500 uppercase tracking-wider text-[10px] mb-1">Member</div>
+                    <div className="font-light">Your Name</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-zinc-500 uppercase tracking-wider text-[10px] mb-1">Valid</div>
+                    <div className="font-light">1 Year</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="text-center text-sm text-muted-foreground mt-6">
+            Your card will feature one of 3 exclusive car designs
+          </p>
+        </div>
+
         <Card className="glass-card p-8 max-w-lg mx-auto">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
