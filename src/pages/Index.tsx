@@ -32,7 +32,6 @@ const Index = () => {
       <ValueBreakdown />
       <RewardsProgram />
       <Benefits />
-      <WalletPassShowcase />
       <CTA />
         
         {/* Footer */}
