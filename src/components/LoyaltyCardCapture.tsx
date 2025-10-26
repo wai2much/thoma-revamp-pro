@@ -115,13 +115,6 @@ export const LoyaltyCardCapture = () => {
         {/* Card Preview */}
         <div className="max-w-md mx-auto mb-12 animate-fade-in">
           <div className="relative bg-card rounded-2xl shadow-elegant overflow-hidden border border-border/50">
-            {/* Banner Image */}
-            <img 
-              src="/assets/banner-speed-branded.png" 
-              alt="TyrePlus Loyalty Card"
-              className="w-full h-48 object-cover"
-            />
-            
             {/* Card Content */}
             <div className="p-6 bg-[#1C1C1C] text-white">
               <div className="flex justify-between items-start mb-6">
