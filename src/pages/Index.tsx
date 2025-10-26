@@ -6,6 +6,7 @@ import { PricingPlans } from "@/components/PricingPlans";
 import { ValueBreakdown } from "@/components/ValueBreakdown";
 import { Benefits } from "@/components/Benefits";
 import { RewardsProgram } from "@/components/RewardsProgram";
+import { WalletPassShowcase } from "@/components/WalletPassShowcase";
 import { CTA } from "@/components/CTA";
 import { Navigation } from "@/components/Navigation";
 import { AIAssistant } from "@/components/AIAssistant";
@@ -28,6 +29,7 @@ const Index = () => {
       <ValueBreakdown />
       <RewardsProgram />
       <Benefits />
+      <WalletPassShowcase />
       <CTA />
         
         {/* Footer */}
