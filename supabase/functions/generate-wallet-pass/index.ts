@@ -104,7 +104,7 @@ serve(async (req) => {
             enabled: true,
             type: "qr",
             source: "custom",
-            value: `TYREPLUS-${memberId}`,
+            value: "TYREPLUS-SUBSCRIPTION",
             displayText: true
           }
         }
