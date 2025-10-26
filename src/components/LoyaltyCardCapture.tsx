@@ -114,47 +114,72 @@ export const LoyaltyCardCapture = () => {
 
         {/* Card Preview */}
         <div className="max-w-md mx-auto mb-12 animate-fade-in">
-          <div className="relative overflow-hidden rounded-2xl shadow-2xl aspect-[1.586/1] bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900">
+          <div className="relative overflow-hidden rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] aspect-[1.586/1] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-white/10">
             {/* Banner Image */}
             <img 
               src="/assets/banner-speed-branded.png" 
               alt="TyrePlus Loyalty Card"
-              className="absolute inset-0 w-full h-full object-cover opacity-90"
+              className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40"
             />
             
-            {/* Card Content Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            {/* Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-transparent to-purple-600/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
             
-            <div className="relative h-full p-6 flex flex-col justify-between text-white">
-              {/* Top Section */}
-              <div className="space-y-1">
-                <div className="text-sm font-semibold opacity-90">TYREPLUS LOYALTY</div>
-                <div className="text-2xl font-bold">$20 Welcome Card</div>
+            {/* Shine Effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
+            
+            <div className="relative h-full p-8 flex flex-col justify-between text-white">
+              {/* Top Section - Logo & Brand */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                    <span className="text-2xl">🎁</span>
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold tracking-[0.2em] uppercase opacity-70 text-primary-foreground">TyrePlus</div>
+                    <div className="text-sm font-semibold opacity-90">Loyalty Rewards</div>
+                  </div>
+                </div>
+                
+                <div className="inline-block">
+                  <div className="text-4xl font-black tracking-tight bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                    $20
+                  </div>
+                  <div className="text-sm font-medium opacity-80 -mt-1">Welcome Credit</div>
+                </div>
               </div>
 
-              {/* Bottom Section */}
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <div className="text-xs opacity-70 mb-1">MEMBER ID</div>
-                  <div className="font-mono font-bold">XXXX</div>
+              {/* Bottom Section - Card Details */}
+              <div className="space-y-4">
+                <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-1">
+                    <div className="text-[10px] font-bold tracking-wider uppercase opacity-50">Member ID</div>
+                    <div className="font-mono text-base font-bold tracking-wide">LP-XXXX</div>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-[10px] font-bold tracking-wider uppercase opacity-50">Points</div>
+                    <div className="text-base font-bold">20 pts</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-xs opacity-70 mb-1">POINTS</div>
-                  <div className="font-bold">99</div>
-                </div>
-                <div>
-                  <div className="text-xs opacity-70 mb-1">MEMBER NAME</div>
-                  <div className="font-bold">YOUR NAME</div>
-                </div>
-                <div>
-                  <div className="text-xs opacity-70 mb-1">VALID UNTIL</div>
-                  <div className="font-bold text-xs">1 YEAR</div>
+                
+                <div className="flex items-center justify-between text-xs">
+                  <div>
+                    <span className="opacity-50 uppercase tracking-wider">Member: </span>
+                    <span className="font-semibold">Your Name</span>
+                  </div>
+                  <div>
+                    <span className="opacity-50">Valid 1 Year</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <p className="text-center text-sm text-muted-foreground mt-4">
-            Preview • Your card will have one of 3 exclusive car designs
+          <p className="text-center text-sm text-muted-foreground mt-6 flex items-center justify-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse" />
+            Your card will feature one of 3 exclusive car designs
           </p>
         </div>
 
