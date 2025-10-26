@@ -180,7 +180,7 @@ const Scanner = () => {
           <Card className="p-6 space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold">Member Details</h2>
-              <div className="flex items-center gap-2 text-primary">
+              <div className="flex items-center gap-2 text-green-600">
                 <CheckCircle className="h-6 w-6" />
                 <span className="font-semibold">Valid</span>
               </div>
