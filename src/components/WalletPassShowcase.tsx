@@ -1,7 +1,22 @@
 import { Smartphone, Apple, Wallet } from "lucide-react";
 import bannerImage from "@/assets/banner-racing-sunset.png";
+import { useEffect, useState } from "react";
+import QRCode from "qrcode";
 
 export const WalletPassShowcase = () => {
+  const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
+
+  useEffect(() => {
+    // Generate a sample QR code for the showcase
+    QRCode.toDataURL("MEMBER-1C1C1-ABC123", {
+      width: 128,
+      margin: 1,
+      color: {
+        dark: "#000000",
+        light: "#FFFFFF",
+      },
+    }).then(setQrCodeUrl);
+  }, []);
   return (
     <section className="relative py-24 px-4 overflow-hidden">
       <div className="absolute inset-0 bg-secondary/30" />
@@ -66,11 +81,15 @@ export const WalletPassShowcase = () => {
                   </div>
                 </div>
 
-                {/* QR Code Placeholder */}
+                {/* QR Code */}
                 <div className="bg-white p-4 rounded-lg flex items-center justify-center">
-                  <div className="w-32 h-32 bg-black/10 rounded flex items-center justify-center">
-                    <span className="text-xs text-black/40">QR CODE</span>
-                  </div>
+                  {qrCodeUrl ? (
+                    <img src={qrCodeUrl} alt="Membership QR Code" className="w-32 h-32" />
+                  ) : (
+                    <div className="w-32 h-32 bg-black/10 rounded flex items-center justify-center">
+                      <span className="text-xs text-black/40">Loading...</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
