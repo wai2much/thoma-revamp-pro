@@ -18,7 +18,7 @@ export const Navigation = () => {
       
       <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-2">
-          <img src={tyrePlusLogo} alt="Tyreplus Thomastown" className="h-12 w-auto" />
+          <img src={tyrePlusLogo} alt="TyrePlus" className="h-12 w-auto" />
         </div>
 
         <div className="flex items-center gap-3">

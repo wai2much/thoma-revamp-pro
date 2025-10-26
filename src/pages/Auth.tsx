@@ -70,7 +70,7 @@ const Auth = () => {
           <p className="text-muted-foreground">
             {isLogin
               ? "Sign in to manage your membership"
-              : "Join Tyreplus Thomastown today"}
+              : "Join TyrePlus today"}
           </p>
         </div>
 
