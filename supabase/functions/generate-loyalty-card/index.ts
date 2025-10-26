@@ -7,6 +7,7 @@ const corsHeaders = {
 };
 
 const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
+const LOYALTY_PREFIX = "635BF"; // Stripe purple #635BFF
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -30,8 +31,10 @@ serve(async (req) => {
 
     console.log("[LOYALTY-CARD] Generating card for lead", { email, name });
 
-    // Generate unique member ID from email
-    const memberId = email.substring(0, 8).toUpperCase() + Math.random().toString(36).substring(2, 6).toUpperCase();
+    // Generate unique member ID with Stripe purple hex prefix
+    const uniqueId = Math.random().toString(36).substring(2, 9).toUpperCase();
+    const memberId = `${LOYALTY_PREFIX}-${uniqueId}`;
+    console.log("[LOYALTY-CARD] Generated member ID with Stripe hex prefix:", memberId);
     const memberSince = new Date().getFullYear().toString();
 
     // Create PassEntry loyalty card

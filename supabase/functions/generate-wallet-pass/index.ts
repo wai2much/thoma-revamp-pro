@@ -15,6 +15,14 @@ const PRODUCT_NAMES: Record<string, string> = {
   "prod_TIKmurHwJ5bDWJ": "Business Velocity Pack",
 };
 
+// Map Stripe product IDs to 5-character hex prefixes (from tier colors)
+const PRODUCT_PREFIXES: Record<string, string> = {
+  "prod_TIKlo107LUfRkP": "1C1C1",  // Single Pack - #1C1C1C
+  "prod_TIKmAWTileFjnm": "00C2A",  // Family Pack - #00C2A8
+  "prod_TIKmxYafsqTXwO": "0057B",  // Business Starter - #0057B8
+  "prod_TIKmurHwJ5bDWJ": "FFD70",  // Business Velocity - #FFD700
+};
+
 const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
 
 serve(async (req) => {
@@ -69,7 +77,13 @@ serve(async (req) => {
     const planName = PRODUCT_NAMES[productId] || "Premium Member";
     
     const memberName = user.email.split('@')[0].charAt(0).toUpperCase() + user.email.split('@')[0].slice(1);
-    const memberId = customerId.substring(0, 12).toUpperCase();
+    
+    // Generate unique member ID with hex prefix based on product tier
+    const hexPrefix = PRODUCT_PREFIXES[productId] || "00000";
+    const uniqueId = Math.random().toString(36).substring(2, 9).toUpperCase();
+    const memberId = `${hexPrefix}-${uniqueId}`;
+    console.log("[WALLET-PASS] Generated member ID with hex prefix:", memberId, "for product:", productId);
+    
     const memberSince = new Date(subscription.created * 1000).getFullYear().toString();
     const validUntil = subscription.current_period_end 
       ? new Date(subscription.current_period_end * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
