@@ -98,7 +98,7 @@ export const LoyaltyCardCapture = () => {
   }
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/20">
+    <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/20" aria-label="Get your free loyalty card">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
@@ -120,8 +120,9 @@ export const LoyaltyCardCapture = () => {
             <div className="absolute inset-0">
               <img 
                 src={bannerImage} 
-                alt="Luxury car banner" 
+                alt="Premium sports car at TyrePlus Thomastown service center" 
                 className="w-full h-full object-cover opacity-60"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90" />
             </div>

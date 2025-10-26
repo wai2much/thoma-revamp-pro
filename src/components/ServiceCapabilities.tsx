@@ -3,10 +3,10 @@ import { CheckCircle, Truck, Car, AlertCircle } from "lucide-react";
 
 export const ServiceCapabilities = () => {
   return (
-    <section className="py-20 px-4 bg-muted/30">
+    <section className="py-20 px-4 bg-muted/30" aria-labelledby="service-capabilities-heading">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">
+          <h2 id="service-capabilities-heading" className="text-4xl font-bold mb-4">
             What We Service
           </h2>
           <p className="text-xl text-muted-foreground">

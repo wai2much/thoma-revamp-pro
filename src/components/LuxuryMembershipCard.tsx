@@ -91,8 +91,9 @@ export const LuxuryMembershipCard = () => {
               <div className="relative h-full">
                 <img 
                   src={loyaltyCardTemplate} 
-                  alt="TyrePlus Loyalty Card Template" 
+                  alt="TyrePlus premium membership loyalty card with exclusive benefits" 
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
                 
                 {/* Mock-up Member Data Overlay */}

@@ -22,15 +22,18 @@ const Index = () => {
       <div className="fixed inset-0 bg-gradient-to-b from-transparent via-background/30 to-background/60 -z-10" />
       
       <Navigation />
-      <Hero />
-      <LoyaltyCardCapture />
-      <ServiceCapabilities />
-      <SavingsCalculator />
-      <PricingPlans />
-      <ValueBreakdown />
-      <RewardsProgram />
-      <Benefits />
-      <CTA />
+      
+      <main>
+        <Hero />
+        <LoyaltyCardCapture />
+        <ServiceCapabilities />
+        <SavingsCalculator />
+        <PricingPlans />
+        <ValueBreakdown />
+        <RewardsProgram />
+        <Benefits />
+        <CTA />
+      </main>
         
         {/* Footer */}
         <footer className="relative border-t border-border/50 py-12 px-4">

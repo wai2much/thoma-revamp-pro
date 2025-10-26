@@ -45,7 +45,7 @@ export const Benefits = () => {
   return (
     <>
       {/* Feature strip */}
-      <section className="py-12 border-y border-border/50">
+      <section className="py-12 border-y border-border/50" aria-label="Key features">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground">
             {features.map((feature, idx) => (
@@ -59,14 +59,14 @@ export const Benefits = () => {
       </section>
 
       {/* Benefits grid */}
-      <section className="py-24 px-4 relative overflow-hidden">
+      <section className="py-24 px-4 relative overflow-hidden" aria-labelledby="benefits-heading">
         {/* Subtle Stripe gradient overlay */}
         <div className="absolute inset-0 opacity-15" 
              style={{ background: 'var(--gradient-stripe)' }} 
         />
         <div className="container max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 id="benefits-heading" className="text-4xl md:text-5xl font-bold mb-4">
               Why choose our <span className="gradient-text">membership?</span>
             </h2>
             <p className="text-xl text-muted-foreground">
