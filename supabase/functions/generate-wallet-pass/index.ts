@@ -23,6 +23,14 @@ const PRODUCT_PREFIXES: Record<string, string> = {
   "prod_TIKmurHwJ5bDWJ": "FFD70",  // Business Velocity - #FFD700
 };
 
+// Map Stripe product IDs to full hex colors for pass backgrounds
+const PRODUCT_COLORS: Record<string, string> = {
+  "prod_TIKlo107LUfRkP": "#1C1C1C",  // Single Pack - Dark Gray/Black
+  "prod_TIKmAWTileFjnm": "#00C2A8",  // Family Pack - Teal
+  "prod_TIKmxYafsqTXwO": "#0057B8",  // Business Starter - Blue
+  "prod_TIKmurHwJ5bDWJ": "#FFD700",  // Business Velocity - Gold
+};
+
 const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
 
 serve(async (req) => {
@@ -95,7 +103,11 @@ serve(async (req) => {
     const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
     if (!passEntryKey) throw new Error("PassEntry API key not configured");
 
-    // Create PassEntry wallet pass with all field mappings
+    // Get tier color for pass background
+    const tierColor = PRODUCT_COLORS[productId] || "#1C1C1C";
+    console.log("[WALLET-PASS] Using tier color:", tierColor, "for product:", productId);
+
+    // Create PassEntry wallet pass with tier-specific colors
     const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple,google`, {
       method: "POST",
       headers: {
@@ -105,6 +117,9 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
+          backgroundColor: tierColor,           // Tier-specific color
+          labelColor: "#FFFFFF",                // White text for contrast
+          foregroundColor: "#FFFFFF",           // White foreground
           balanceLabel: { value: "LOYALTY POINTS" },
           centralLabel: { value: planName },
           label1: { value: memberId },
