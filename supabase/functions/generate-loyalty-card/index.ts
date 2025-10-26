@@ -43,11 +43,19 @@ serve(async (req) => {
 
     console.log("[LOYALTY-CARD] Generating card for lead", { email, name });
 
-    // Generate unique member ID with Stripe purple hex prefix
-    const uniqueId = Math.random().toString(36).substring(2, 9).toUpperCase();
-    const memberId = `${LOYALTY_PREFIX}-${uniqueId}`;
-    console.log("[LOYALTY-CARD] Generated member ID with Stripe hex prefix:", memberId);
-    const memberSince = new Date().getFullYear().toString();
+    // Generate unique member ID (simple numeric for loyalty card)
+    const memberId = Math.floor(1000 + Math.random() * 9000).toString();
+    console.log("[LOYALTY-CARD] Generated member ID:", memberId);
+    
+    // Member since as month name
+    const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+                       "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+    const memberSince = monthNames[new Date().getMonth()];
+    
+    // Set validity to 1 year from now
+    const validUntil = new Date();
+    validUntil.setFullYear(validUntil.getFullYear() + 1);
+    const validity = validUntil.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
     // Create PassEntry loyalty card
     const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
@@ -69,12 +77,12 @@ serve(async (req) => {
         externalId: memberId,
         pass: {
           stripImage: bannerUrl,                // Random car banner
-          balanceLabel: { value: "LOYALTY BALANCE" },
-          centralLabel: { value: "Welcome Card" },
+          balanceLabel: { value: "99" },        // Loyalty points
+          centralLabel: { value: "$20 Welcome Card" },
           label1: { value: memberId },
-          label2: { value: name },
+          label2: { value: name.toUpperCase() },
           label3: { value: memberSince },
-          label4: { value: "$20.00 CREDIT" },
+          label4: { value: validity },
           barcode: {
             enabled: true,
             type: "qr",
