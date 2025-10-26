@@ -143,7 +143,7 @@ export const LuxuryMembershipCard = () => {
                         ? "text-foreground" 
                         : "text-pink-900 dark:text-pink-100"
                     }`}>
-                      Haus of Technik
+                      John Citizen
                     </p>
                     <p className={`text-xs font-medium tracking-wide ${
                       selectedStyle === "classic"

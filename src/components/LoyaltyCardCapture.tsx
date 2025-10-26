@@ -122,7 +122,7 @@ export const LoyaltyCardCapture = () => {
                 <Input
                   id="name"
                   type="text"
-                  placeholder="John Smith"
+                  placeholder="John Citizen"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
