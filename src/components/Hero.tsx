@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, MessageCircle, Star } from "lucide-react";
 import { useState, useEffect } from "react";
 import bannerSuperGt from "@/assets/banner-super-gt.png";
 import bannerSports from "@/assets/banner-sports.png";
@@ -79,6 +79,27 @@ export const Hero = () => {
           >
             Find a Location
           </Button>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto opacity-0 animate-fade-in" style={{ animationDelay: '0.7s' }}>
+          <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
+            <div className="text-5xl font-display font-bold mb-2 gradient-text group-hover:scale-110 transition-transform duration-300">Growing</div>
+            <div className="text-sm text-muted-foreground uppercase tracking-wider">Customer Base</div>
+          </div>
+          <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
+            <div className="text-5xl font-display font-bold mb-2 gradient-text group-hover:scale-110 transition-transform duration-300">Premium</div>
+            <div className="text-sm text-muted-foreground uppercase tracking-wider">Service Quality</div>
+          </div>
+          <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
+            <div className="text-5xl font-display font-bold mb-2 text-primary group-hover:scale-110 transition-transform duration-300">4.9</div>
+            <div className="flex justify-center gap-1 mb-2">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+              ))}
+            </div>
+            <div className="text-sm text-muted-foreground uppercase tracking-wider">Customer Rating</div>
+          </div>
         </div>
       </div>
 
