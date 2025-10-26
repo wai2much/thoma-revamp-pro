@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Gift, Wallet, Loader2, Download, Sparkles } from "lucide-react";
+import { Gift, Wallet, Loader2, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { WalletPassButton } from "./WalletPassButton";
 
 export const LoyaltyCardCapture = () => {
   const [formData, setFormData] = useState({
@@ -30,15 +31,18 @@ export const LoyaltyCardCapture = () => {
 
     try {
       setIsGenerating(true);
-      console.log("Generating loyalty card...", formData);
+      console.log("🎁 [FRONTEND] Generating loyalty card...", formData);
 
       const { data, error } = await supabase.functions.invoke('generate-loyalty-card', {
         body: formData,
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("❌ [FRONTEND] Function error:", error);
+        throw error;
+      }
 
-      console.log("Loyalty card generated:", data);
+      console.log("✅ [FRONTEND] Loyalty card generated:", data);
       setPassUrls({
         appleWalletUrl: data.appleWalletUrl,
         googlePayUrl: data.googlePayUrl,
@@ -47,10 +51,11 @@ export const LoyaltyCardCapture = () => {
       setShowSuccess(true);
       toast.success("Your $20 loyalty card is ready!");
     } catch (error) {
-      console.error("Error generating loyalty card:", error);
+      console.error("💥 [FRONTEND] Error generating loyalty card:", error);
       toast.error("Failed to generate loyalty card. Please try again.");
     } finally {
       setIsGenerating(false);
+      console.log("🏁 [FRONTEND] Loyalty card generation complete");
     }
   };
 
@@ -74,28 +79,13 @@ export const LoyaltyCardCapture = () => {
           </div>
 
           <div className="space-y-3">
-            {passUrls.appleWalletUrl && (
-              <Button
-                onClick={() => window.open(passUrls.appleWalletUrl, '_blank')}
-                className="w-full bg-black hover:bg-black/90 text-white h-12"
-                size="lg"
-              >
-                <Download className="h-5 w-5 mr-2" />
-                Add to Apple Wallet
-              </Button>
-            )}
-            
-            {passUrls.googlePayUrl && (
-              <Button
-                onClick={() => window.open(passUrls.googlePayUrl, '_blank')}
-                variant="outline"
-                className="w-full h-12"
-                size="lg"
-              >
-                <Download className="h-5 w-5 mr-2" />
-                Add to Google Pay
-              </Button>
-            )}
+            <WalletPassButton
+              appleUrl={passUrls.appleWalletUrl}
+              googleUrl={passUrls.googlePayUrl}
+              url={passUrls.passUrl}
+              platform="auto"
+              className="w-full h-12 bg-black hover:bg-black/90 text-white"
+            />
           </div>
 
           <p className="text-sm text-muted-foreground mt-6">

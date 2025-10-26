@@ -1,29 +1,21 @@
 import { useState, useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Heart, Wallet } from "lucide-react";
+import { Sparkles, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { WalletPassButton } from "./WalletPassButton";
 
 export const LuxuryMembershipCard = () => {
   const [selectedStyle, setSelectedStyle] = useState<"classic" | "elegance">("classic");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [passUrls, setPassUrls] = useState<{
+    appleWalletUrl?: string;
+    googlePayUrl?: string;
+    passUrl?: string;
+  }>({});
   const { user } = useAuth();
-
-  // Detect user's platform
-  const platform = useMemo(() => {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isIOS = /iphone|ipad|ipod/.test(userAgent);
-    const isMac = /macintosh|mac os x/.test(userAgent);
-    const isAndroid = /android/.test(userAgent);
-    
-    if (isIOS || isMac) return 'apple';
-    if (isAndroid) return 'google';
-    return 'apple'; // Default to Apple for desktop
-  }, []);
-
-  const walletButtonText = platform === 'apple' ? 'Add to Apple Wallet' : 'Add to Google Wallet';
 
   const handleGeneratePass = async () => {
     if (!user) {
@@ -32,40 +24,41 @@ export const LuxuryMembershipCard = () => {
     }
 
     setIsGenerating(true);
+    console.log("🎫 [FRONTEND] Starting wallet pass generation...");
+    
     try {
       const { data: sessionData } = await supabase.auth.getSession();
       if (!sessionData.session) {
+        console.error("❌ [FRONTEND] No session found");
         toast.error("Please sign in to continue");
         return;
       }
 
+      console.log("📞 [FRONTEND] Calling generate-wallet-pass function...");
       const { data, error } = await supabase.functions.invoke('generate-wallet-pass', {
         headers: {
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
       });
 
-      if (error) throw error;
-
-      // Try platform-specific URL first, then fall back to generic passUrl
-      const passUrl = platform === 'apple' 
-        ? (data.appleWalletUrl || data.passUrl)
-        : (data.googlePayUrl || data.passUrl);
-
-      if (passUrl) {
-        window.open(passUrl, '_blank');
-        const successMessage = platform === 'apple' 
-          ? "Apple Wallet pass opened! Tap to add to your wallet."
-          : "Google Wallet pass opened! Tap to add to your wallet.";
-        toast.success(successMessage);
-      } else {
-        throw new Error("No pass URL received from server");
+      if (error) {
+        console.error("❌ [FRONTEND] Function error:", error);
+        throw error;
       }
+
+      console.log("✅ [FRONTEND] Pass generated successfully:", data);
+      setPassUrls({
+        appleWalletUrl: data.appleWalletUrl,
+        googlePayUrl: data.googlePayUrl,
+        passUrl: data.passUrl,
+      });
+      toast.success("Pass ready! Tap to add to your wallet.");
     } catch (error) {
-      console.error("Error generating pass:", error);
+      console.error("💥 [FRONTEND] Error generating pass:", error);
       toast.error(error instanceof Error ? error.message : "Failed to generate pass");
     } finally {
       setIsGenerating(false);
+      console.log("🏁 [FRONTEND] Pass generation complete");
     }
   };
 
@@ -244,15 +237,15 @@ export const LuxuryMembershipCard = () => {
         </div>
 
         <div className="flex flex-col items-center mb-16 gap-3">
-          <Button 
-            size="lg"
-            className="bg-primary hover:bg-primary/90 gap-3 px-8 py-6 text-lg"
-            onClick={handleGeneratePass}
-            disabled={isGenerating || !user}
-          >
-            <Wallet className="w-6 h-6" />
-            {isGenerating ? "Generating..." : walletButtonText}
-          </Button>
+          <WalletPassButton
+            appleUrl={passUrls.appleWalletUrl}
+            googleUrl={passUrls.googlePayUrl}
+            url={passUrls.passUrl}
+            isGenerating={isGenerating}
+            platform="auto"
+            onGenerate={handleGeneratePass}
+            className="px-8 py-6 text-lg h-auto"
+          />
           {!user && (
             <p className="text-sm text-muted-foreground text-center">
               Sign in to generate your membership pass

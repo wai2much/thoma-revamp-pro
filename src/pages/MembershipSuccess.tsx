@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CheckCircle, Wallet, Loader2, Download } from "lucide-react";
+import { CheckCircle, Wallet, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { WalletPassButton } from "@/components/WalletPassButton";
 
 const MembershipSuccess = () => {
   const navigate = useNavigate();
@@ -33,23 +34,28 @@ const MembershipSuccess = () => {
   const generateWalletPass = async () => {
     try {
       setIsGenerating(true);
-      console.log("Generating wallet pass...");
+      console.log("🎫 [FRONTEND] Generating wallet pass on success page...");
       
       const { data: sessionData } = await supabase.auth.getSession();
       if (!sessionData.session) {
+        console.error("❌ [FRONTEND] No session found");
         toast.error("Please sign in to generate your pass");
         return;
       }
 
+      console.log("📞 [FRONTEND] Calling generate-wallet-pass function...");
       const { data, error } = await supabase.functions.invoke('generate-wallet-pass', {
         headers: {
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("❌ [FRONTEND] Function error:", error);
+        throw error;
+      }
 
-      console.log("Wallet pass generated:", data);
+      console.log("✅ [FRONTEND] Wallet pass generated:", data);
       setPassUrls({
         appleWalletUrl: data.appleWalletUrl,
         googlePayUrl: data.googlePayUrl,
@@ -58,10 +64,11 @@ const MembershipSuccess = () => {
       setMembershipData(data.membershipData);
       toast.success("Your digital membership card is ready!");
     } catch (error) {
-      console.error("Error generating wallet pass:", error);
+      console.error("💥 [FRONTEND] Error generating wallet pass:", error);
       toast.error("Failed to generate wallet pass. You can try again from your membership page.");
     } finally {
       setIsGenerating(false);
+      console.log("🏁 [FRONTEND] Wallet pass generation complete");
     }
   };
 
@@ -102,43 +109,20 @@ const MembershipSuccess = () => {
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
             <p className="text-sm text-muted-foreground">Generating your digital membership card...</p>
           </div>
-        ) : passUrls.appleWalletUrl || passUrls.googlePayUrl ? (
+        ) : passUrls.appleWalletUrl || passUrls.googlePayUrl || passUrls.passUrl ? (
           <div className="space-y-3 mb-6">
             <p className="text-sm font-semibold text-center mb-3 flex items-center justify-center gap-2">
               <Wallet className="h-4 w-4" />
               Add to Your Digital Wallet
             </p>
             
-            {passUrls.appleWalletUrl && (
-              <Button
-                onClick={() => window.open(passUrls.appleWalletUrl, '_blank')}
-                className="w-full bg-black hover:bg-black/90 text-white"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Add to Apple Wallet
-              </Button>
-            )}
-            
-            {passUrls.googlePayUrl && (
-              <Button
-                onClick={() => window.open(passUrls.googlePayUrl, '_blank')}
-                variant="outline"
-                className="w-full"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Add to Google Pay
-              </Button>
-            )}
-            
-            {passUrls.passUrl && !passUrls.appleWalletUrl && !passUrls.googlePayUrl && (
-              <Button
-                onClick={() => window.open(passUrls.passUrl, '_blank')}
-                className="w-full"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Download Pass
-              </Button>
-            )}
+            <WalletPassButton
+              appleUrl={passUrls.appleWalletUrl}
+              googleUrl={passUrls.googlePayUrl}
+              url={passUrls.passUrl}
+              platform="auto"
+              className="w-full"
+            />
           </div>
         ) : null}
 
