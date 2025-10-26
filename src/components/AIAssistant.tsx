@@ -125,8 +125,13 @@ export const AIAssistant = () => {
             <p className="text-xs text-muted-foreground">Your Tyreplus Expert</p>
           </div>
         </div>
-        <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-          <X className="h-4 w-4" />
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={() => setIsOpen(false)}
+          className="hover:bg-destructive/10"
+        >
+          <X className="h-5 w-5 text-foreground" />
         </Button>
       </div>
 
