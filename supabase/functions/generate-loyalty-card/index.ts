@@ -9,6 +9,18 @@ const corsHeaders = {
 const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
 const LOYALTY_PREFIX = "635BF"; // Stripe purple #635BFF
 
+// Car banner images for random selection (1125px x 432px)
+const CAR_BANNERS = [
+  "banner-speed.png",
+  "banner-sunset-water.png",
+  "banner-city-sunset.png",
+  "banner-red-smoke.png",
+  "banner-supercar-rear.png",
+  "banner-racing-sunset.png",
+  "banner-sports.png", 
+  "banner-super-gt.png"
+];
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -41,6 +53,12 @@ serve(async (req) => {
     const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
     if (!passEntryKey) throw new Error("PassEntry API key not configured");
 
+    // Randomly select a car banner
+    const randomBanner = CAR_BANNERS[Math.floor(Math.random() * CAR_BANNERS.length)];
+    const origin = req.headers.get("origin") || "https://lnfmxpcpudugultrpwwa.lovableproject.com";
+    const bannerUrl = `${origin}/assets/${randomBanner}`;
+    console.log("[LOYALTY-CARD] Using random banner:", bannerUrl);
+
     const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple`, {
       method: "POST",
       headers: {
@@ -50,6 +68,7 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
+          stripImage: bannerUrl,                // Random car banner
           balanceLabel: { value: "LOYALTY BALANCE" },
           centralLabel: { value: "Welcome Card" },
           label1: { value: memberId },
