@@ -10,7 +10,7 @@ export const ServiceCapabilities = () => {
             What We Service
           </h2>
           <p className="text-xl text-muted-foreground">
-            Professional service for vehicles up to 2.5 tons
+            Professional service for vehicles up to 3.5 tons
           </p>
         </div>
 
@@ -37,7 +37,7 @@ export const ServiceCapabilities = () => {
                 <Car className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                 <div>
                   <p className="font-semibold">SUVs & 4WDs</p>
-                  <p className="text-sm text-muted-foreground">All sizes up to 2.5 tons</p>
+                  <p className="text-sm text-muted-foreground">All sizes up to 3.5 tons</p>
                 </div>
               </div>
               
@@ -72,8 +72,8 @@ export const ServiceCapabilities = () => {
               <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
                 <div className="text-center">
                   <p className="text-sm text-muted-foreground mb-2">Maximum GVM</p>
-                  <p className="text-4xl font-bold text-primary mb-2">2.5 Tons</p>
-                  <p className="text-sm text-muted-foreground">(2,500 kg Gross Vehicle Mass)</p>
+                  <p className="text-4xl font-bold text-primary mb-2">3.5 Tons</p>
+                  <p className="text-sm text-muted-foreground">(3,500 kg Gross Vehicle Mass)</p>
                 </div>
               </div>
 
