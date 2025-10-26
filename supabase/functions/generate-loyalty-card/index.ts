@@ -45,6 +45,7 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        externalId: memberId,
         pass: {
           balanceLabel: { value: "LOYALTY BALANCE" },
           centralLabel: { value: "Welcome Card" },
