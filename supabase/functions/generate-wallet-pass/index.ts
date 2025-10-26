@@ -33,6 +33,13 @@ const PRODUCT_COLORS: Record<string, string> = {
 
 const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
 
+// Car banner images for random selection
+const CAR_BANNERS = [
+  "banner-190e.png",
+  "banner-sports.png", 
+  "banner-super-gt.png"
+];
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -107,7 +114,13 @@ serve(async (req) => {
     const tierColor = PRODUCT_COLORS[productId] || "#1C1C1C";
     console.log("[WALLET-PASS] Using tier color:", tierColor, "for product:", productId);
 
-    // Create PassEntry wallet pass with tier-specific colors
+    // Randomly select a car banner
+    const randomBanner = CAR_BANNERS[Math.floor(Math.random() * CAR_BANNERS.length)];
+    const origin = req.headers.get("origin") || "https://lnfmxpcpudugultrpwwa.lovableproject.com";
+    const bannerUrl = `${origin}/assets/${randomBanner}`;
+    console.log("[WALLET-PASS] Using random banner:", bannerUrl);
+
+    // Create PassEntry wallet pass with tier-specific colors and random banner
     const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple,google`, {
       method: "POST",
       headers: {
@@ -120,6 +133,7 @@ serve(async (req) => {
           backgroundColor: tierColor,           // Tier-specific color
           labelColor: "#FFFFFF",                // White text for contrast
           foregroundColor: "#FFFFFF",           // White foreground
+          stripImage: bannerUrl,                // Random car banner
           balanceLabel: { value: "LOYALTY POINTS" },
           centralLabel: { value: planName },
           label1: { value: memberId },
