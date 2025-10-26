@@ -103,13 +103,14 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* WhatsApp floating button - moved to left side */}
+      {/* WhatsApp floating button - moved to left side with higher z-index */}
       <a
         href="https://wa.me/61451590517?text=Hi!%20I%27m%20interested%20in%20your%20car%20service%20membership"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 left-6 z-50 bg-[#25D366] hover:bg-[#20BA5A] text-white p-4 rounded-full shadow-2xl transition-all hover:scale-110 pulse-glow animate-fade-in"
+        className="fixed bottom-6 left-6 z-[60] bg-[#25D366] hover:bg-[#20BA5A] text-white p-4 rounded-full shadow-2xl transition-all hover:scale-110 pulse-glow animate-fade-in"
         style={{ boxShadow: '0 0 30px rgba(37, 211, 102, 0.3)' }}
+        aria-label="Contact us on WhatsApp"
       >
         <MessageCircle className="h-6 w-6" />
       </a>
