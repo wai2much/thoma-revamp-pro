@@ -113,6 +113,49 @@ export const LoyaltyCardCapture = () => {
           </p>
         </div>
 
+        {/* Card Preview */}
+        <div className="max-w-md mx-auto mb-12 animate-fade-in">
+          <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-white">
+            {/* Header Section */}
+            <div className="bg-gradient-to-r from-purple-500 via-blue-500 to-purple-600 p-6 text-white">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-2xl font-bold">TyrePlus</div>
+                <div className="text-xs font-bold tracking-wider">LOYALTY</div>
+              </div>
+            </div>
+
+            {/* Car Banner */}
+            <div className="relative h-48 overflow-hidden">
+              <img 
+                src={bannerImage}
+                alt="Loyalty Card"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Points Section */}
+            <div className="bg-gradient-to-r from-purple-600 via-purple-700 to-blue-600 p-6 text-white text-center">
+              <div className="text-xs font-bold tracking-[0.2em] uppercase opacity-80 mb-2">LOYALTY POINTS</div>
+              <div className="text-5xl font-bold">20</div>
+            </div>
+
+            {/* Details Section */}
+            <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-purple-600 p-6 grid grid-cols-2 gap-4 text-white">
+              <div>
+                <div className="text-xs font-bold tracking-wider uppercase opacity-80 mb-1">MEMBER ID</div>
+                <div className="font-mono text-sm">LP-XXXX</div>
+              </div>
+              <div>
+                <div className="text-xs font-bold tracking-wider uppercase opacity-80 mb-1">MEMBER NAME</div>
+                <div className="text-sm">Your Name</div>
+              </div>
+            </div>
+          </div>
+          <p className="text-center text-sm text-muted-foreground mt-6">
+            Your card will feature one of 3 exclusive car designs
+          </p>
+        </div>
+
         <Card className="glass-card p-8 max-w-lg mx-auto">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
