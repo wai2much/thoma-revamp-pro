@@ -247,100 +247,126 @@ export const PricingPlans = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {plans.map((plan) => (
-            <Card 
-              key={plan.id}
-              className={`glass-card p-6 flex flex-col relative transition-all duration-500 hover:-translate-y-2 ${
-                plan.popular ? "ring-2 ring-primary shadow-2xl scale-105" : ""
-              }`}
-              style={
-                plan.id === "single" ? { backgroundColor: '#1C1C1C' } : 
-                plan.id === "family" ? { backgroundColor: '#00C2A8' } :
-                plan.id === "business" ? { backgroundColor: '#0057B8' } :
-                plan.id === "enterprise" ? { backgroundColor: '#FFD700' } :
-                (plan.popular ? { boxShadow: '0 0 60px hsl(217 91% 60% / 0.3)' } : {})
-              }
-            >
-              {plan.popular && (
-                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary shadow-lg font-semibold animate-pulse">
-                  {plan.badge}
-                </Badge>
-              )}
-              
-              <div className="mb-6">
-                <h3 className="text-2xl font-display font-bold mb-1">{plan.name}</h3>
-                <p className="text-sm text-muted-foreground mb-3">{plan.subtitle}</p>
-                {!plan.popular && (
-                  <Badge variant="outline" className="border-accent/50 text-accent">
+          {plans.map((plan) => {
+            const isDark = plan.id === 'single' || plan.id === 'business' || plan.id === 'enterprise';
+            const textColor = plan.id === 'enterprise' ? 'text-black' : 'text-white';
+            const mutedColor = plan.id === 'enterprise' ? 'text-black/60' : 'text-white/70';
+            
+            return (
+              <Card 
+                key={plan.id}
+                className={`p-6 flex flex-col relative transition-all duration-500 hover:-translate-y-2 border-0 ${
+                  plan.popular ? "ring-2 ring-primary shadow-2xl scale-105" : ""
+                }`}
+                style={{
+                  backgroundColor: 
+                    plan.id === "single" ? '#1C1C1C' : 
+                    plan.id === "family" ? '#00C2A8' :
+                    plan.id === "business" ? '#0057B8' :
+                    '#FFD700'
+                }}
+              >
+                {plan.popular && (
+                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary shadow-lg font-semibold animate-pulse">
                     {plan.badge}
                   </Badge>
                 )}
-              </div>
-
-              <div className="mb-6">
-                {plan.value && (
-                  <div className="text-sm text-muted-foreground mb-2">
-                    ${plan.value}+ Value for
-                  </div>
-                )}
-                <div className="text-4xl font-bold">
-                  ${billingPeriod === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
-                  <span className="text-lg text-muted-foreground">
-                    /{billingPeriod === "monthly" ? "mo" : "yr"}
-                  </span>
-                  {plan.perVehicle && <span className="text-sm text-muted-foreground">/vehicle</span>}
-                </div>
-                {plan.savings > 0 && (
-                  <div className="text-sm text-primary mt-2">
-                    Save ${plan.savings} annually
-                  </div>
-                )}
-              </div>
-
-              <ul className="space-y-3 mb-6 flex-1">
-                {plan.features.slice(0, 3).map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-sm">
-                    <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {plan.note && (
-                <div className="text-xs text-muted-foreground italic mb-4 p-2 bg-secondary/30 rounded">
-                  {plan.note}
-                </div>
-              )}
-
-              <div className="space-y-3">
-                {plan.features.length > 3 && (
-                  <Button variant="outline" className="w-full" size="sm">
-                    See All {plan.features.length} Services
-                  </Button>
-                )}
-                <Button 
-                  className={`w-full font-semibold transition-all duration-300 ${
-                    plan.popular 
-                      ? "bg-primary hover:bg-primary/90 shadow-lg hover:shadow-glow hover:scale-105" 
-                      : "bg-secondary hover:bg-secondary/80 hover:scale-[1.02]"
-                  }`}
-                  onClick={() => handleSubscribe(plan.id)}
-                  disabled={checkoutLoading === plan.id}
-                >
-                  {checkoutLoading === plan.id ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Loading...
-                    </>
-                  ) : plan.id === "enterprise" ? (
-                    "Schedule Consultation"
-                  ) : (
-                    "Subscribe Now"
+                
+                <div className="mb-6">
+                  <h3 className={`text-2xl font-display font-bold mb-1 ${textColor}`}>{plan.name}</h3>
+                  <p className={`text-sm mb-3 ${mutedColor}`}>{plan.subtitle}</p>
+                  {!plan.popular && (
+                    <Badge 
+                      variant="outline" 
+                      className={`${
+                        plan.id === 'enterprise' 
+                          ? 'border-black/30 text-black bg-black/10' 
+                          : 'border-white/30 text-white bg-white/10'
+                      }`}
+                    >
+                      {plan.badge}
+                    </Badge>
                   )}
-                </Button>
-              </div>
-            </Card>
-          ))}
+                </div>
+
+                <div className="mb-6">
+                  {plan.value && (
+                    <div className={`text-sm mb-2 ${mutedColor}`}>
+                      ${plan.value}+ Value for
+                    </div>
+                  )}
+                  <div className={`text-4xl font-bold ${textColor}`}>
+                    ${billingPeriod === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
+                    <span className={`text-lg ${mutedColor}`}>
+                      /{billingPeriod === "monthly" ? "mo" : "yr"}
+                    </span>
+                    {plan.perVehicle && <span className={`text-sm ${mutedColor}`}>/vehicle</span>}
+                  </div>
+                  {plan.savings > 0 && (
+                    <div className={`text-sm mt-2 ${plan.id === 'family' ? 'text-purple-600 font-semibold' : mutedColor}`}>
+                      Save ${plan.savings} annually
+                    </div>
+                  )}
+                </div>
+
+                <ul className="space-y-3 mb-6 flex-1">
+                  {plan.features.slice(0, 3).map((feature, idx) => (
+                    <li key={idx} className={`flex items-start gap-2 text-sm ${textColor}`}>
+                      <Check className={`h-5 w-5 shrink-0 mt-0.5 ${plan.id === 'enterprise' ? 'text-black' : 'text-white'}`} />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {plan.note && (
+                  <div className={`text-xs italic mb-4 p-2 rounded ${
+                    plan.id === 'enterprise' 
+                      ? 'bg-black/10 text-black/60' 
+                      : 'bg-white/10 text-white/70'
+                  }`}>
+                    {plan.note}
+                  </div>
+                )}
+
+                <div className="space-y-3">
+                  {plan.features.length > 3 && (
+                    <Button 
+                      className={`w-full ${
+                        plan.id === 'enterprise'
+                          ? 'bg-black text-white hover:bg-black/80 border-0'
+                          : 'bg-black text-white hover:bg-black/80 border-0'
+                      }`}
+                      size="sm"
+                    >
+                      See All {plan.features.length} Services
+                    </Button>
+                  )}
+                  <Button 
+                    className={`w-full font-semibold transition-all duration-300 border-0 ${
+                      plan.id === 'family'
+                        ? "bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 shadow-lg hover:shadow-glow hover:scale-105" 
+                        : plan.id === 'enterprise'
+                        ? "bg-black text-white hover:bg-black/80 hover:scale-[1.02]"
+                        : "bg-black text-white hover:bg-black/80 hover:scale-[1.02]"
+                    }`}
+                    onClick={() => handleSubscribe(plan.id)}
+                    disabled={checkoutLoading === plan.id}
+                  >
+                    {checkoutLoading === plan.id ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Loading...
+                      </>
+                    ) : plan.id === "enterprise" ? (
+                      "Schedule Consultation"
+                    ) : (
+                      "Subscribe Now"
+                    )}
+                  </Button>
+                </div>
+              </Card>
+            );
+          })}
         </div>
 
         {/* Trust badges */}
