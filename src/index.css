@@ -92,14 +92,12 @@ All colors MUST be HSL.
     border: 1px solid hsl(var(--border) / 0.2);
     box-shadow: var(--shadow-card), 0 8px 32px hsl(0 0% 0% / 0.1);
     transition: var(--transition-smooth);
-    transform-style: preserve-3d;
   }
   
   .glass-card:hover {
-    background: hsl(var(--card) / 0.4);
-    border-color: hsl(var(--primary) / 0.4);
-    box-shadow: var(--shadow-card-hover);
-    transform: translateY(-8px) scale(1.02);
+    background: hsl(var(--card) / 0.35);
+    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: var(--shadow-card), 0 12px 40px hsl(0 0% 0% / 0.15);
   }
   
   .glass-card-premium {
@@ -124,8 +122,8 @@ All colors MUST be HSL.
   }
   
   .glass-card-premium:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: var(--shadow-card-hover), var(--shadow-glow);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-elevation-2), 0 0 40px hsl(var(--primary) / 0.2);
   }
   
   .glow-border {
@@ -163,7 +161,7 @@ All colors MUST be HSL.
   }
   
   .tilt-card:hover {
-    transform: rotateX(2deg) rotateY(-2deg) translateY(-8px);
+    transform: translateY(-4px);
   }
   
   .depth-layer-1 {
