@@ -87,7 +87,7 @@ export const LuxuryMembershipCard = () => {
             <Card className="relative w-[380px] h-[600px] overflow-hidden border border-border/50 shadow-2xl backdrop-blur-xl transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] bg-gradient-to-br from-card via-card to-card/95">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-accent/[0.03]" />
               
-              {/* Card preview using uploaded image */}
+              {/* Loyalty Card Template Display */}
               <div className="relative h-full">
                 <img 
                   src={loyaltyCardTemplate} 
@@ -95,25 +95,36 @@ export const LuxuryMembershipCard = () => {
                   className="w-full h-full object-cover"
                 />
                 
-                {/* Overlay with example data */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/60 via-transparent to-transparent">
-                  <div className="text-white space-y-2">
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="text-red-400 font-semibold text-xs">MEMBER ID</p>
-                        <p className="font-mono">MEMBER001</p>
+                {/* Mock-up Member Data Overlay */}
+                <div className="absolute inset-0 flex flex-col justify-between p-8">
+                  {/* Top section - branding area (keep clean) */}
+                  <div className="h-1/3" />
+                  
+                  {/* Bottom section - member details */}
+                  <div className="space-y-4">
+                    {/* Loyalty Points - Prominent Display */}
+                    <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                      <p className="text-red-400 font-semibold text-xs mb-1">LOYALTY POINTS</p>
+                      <p className="text-white text-3xl font-bold">1,250</p>
+                    </div>
+                    
+                    {/* Member Info Grid */}
+                    <div className="grid grid-cols-2 gap-3 text-white">
+                      <div className="bg-black/30 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+                        <p className="text-red-400 font-semibold text-xs mb-1">MEMBER ID</p>
+                        <p className="font-mono text-sm">TP-2025-001</p>
                       </div>
-                      <div>
-                        <p className="text-red-400 font-semibold text-xs">MEMBER NAME</p>
-                        <p>John Citizen</p>
+                      <div className="bg-black/30 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+                        <p className="text-red-400 font-semibold text-xs mb-1">MEMBER NAME</p>
+                        <p className="text-sm">John Citizen</p>
                       </div>
-                      <div>
-                        <p className="text-red-400 font-semibold text-xs">MEMBER SINCE</p>
-                        <p>2025</p>
+                      <div className="bg-black/30 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+                        <p className="text-red-400 font-semibold text-xs mb-1">MEMBER SINCE</p>
+                        <p className="text-sm">January 2025</p>
                       </div>
-                      <div>
-                        <p className="text-red-400 font-semibold text-xs">POINTS</p>
-                        <p className="font-semibold">0</p>
+                      <div className="bg-black/30 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+                        <p className="text-red-400 font-semibold text-xs mb-1">TIER STATUS</p>
+                        <p className="text-sm font-semibold">Gold</p>
                       </div>
                     </div>
                   </div>
