@@ -12,5 +12,8 @@ verify_jwt = true
 [functions.generate-wallet-pass]
 verify_jwt = true
 
+[functions.generate-loyalty-card]
+verify_jwt = false
+
 [functions.list-pass-templates]
 verify_jwt = true
