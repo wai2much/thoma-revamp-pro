@@ -112,10 +112,15 @@ export const PricingPlans = () => {
   const { toast } = useToast();
 
   const handleSubscribe = async (planId: string) => {
-    console.log("Subscribe clicked for plan:", planId);
+    console.log("🔔 Subscribe button clicked for plan:", planId);
+    console.log("🔔 Current user:", user);
     
     if (!user) {
-      console.log("No user found, redirecting to auth");
+      console.log("❌ No user found, redirecting to /auth");
+      toast({
+        title: "Please sign in",
+        description: "You need to be signed in to subscribe",
+      });
       navigate("/auth");
       return;
     }
@@ -129,7 +134,7 @@ export const PricingPlans = () => {
 
     const tier = tierMap[planId];
     if (!tier) {
-      console.error("Invalid tier:", planId);
+      console.error("❌ Invalid tier:", planId);
       toast({
         title: "Error",
         description: "Invalid plan selected",
@@ -139,38 +144,61 @@ export const PricingPlans = () => {
     }
 
     const priceId = MEMBERSHIP_TIERS[tier].price_id;
-    console.log("Using price ID:", priceId);
+    console.log("✅ Using price ID:", priceId, "for tier:", tier);
 
     setCheckoutLoading(planId);
+    
     try {
-      console.log("Invoking create-checkout function...");
+      console.log("🚀 Invoking create-checkout edge function...");
+      
       const { data, error } = await supabase.functions.invoke("create-checkout", {
         body: { priceId },
       });
 
-      console.log("Response:", { data, error });
+      console.log("📦 Edge function response:", { data, error });
 
       if (error) {
-        console.error("Supabase function error:", error);
-        throw error;
+        console.error("❌ Edge function error:", error);
+        throw new Error(error.message || "Failed to create checkout session");
       }
       
-      if (data?.url) {
-        console.log("Opening checkout URL:", data.url);
-        window.open(data.url, "_blank");
+      if (!data?.url) {
+        console.error("❌ No checkout URL in response:", data);
+        throw new Error("No checkout URL received from server");
+      }
+
+      console.log("✅ Checkout URL received:", data.url);
+      console.log("🔗 Opening Stripe checkout in new tab...");
+      
+      // Try to open in new tab
+      const newWindow = window.open(data.url, "_blank");
+      
+      // Check if popup was blocked
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        console.warn("⚠️ Popup blocked, redirecting in current window");
+        toast({
+          title: "Popup Blocked",
+          description: "Redirecting to checkout...",
+        });
+        // Fallback: redirect in same window
+        window.location.href = data.url;
       } else {
-        console.error("No URL in response:", data);
-        throw new Error("No checkout URL received");
+        console.log("✅ Checkout opened successfully");
+        toast({
+          title: "Opening checkout",
+          description: "Please complete your purchase in the new tab",
+        });
       }
     } catch (error: any) {
-      console.error("Checkout error:", error);
+      console.error("💥 Checkout error:", error);
       toast({
-        title: "Error",
-        description: error.message || "Failed to start checkout. Please try again.",
+        title: "Checkout Failed",
+        description: error.message || "Failed to start checkout. Please try again or contact support.",
         variant: "destructive",
       });
     } finally {
       setCheckoutLoading(null);
+      console.log("🏁 Checkout process completed");
     }
   };
 
