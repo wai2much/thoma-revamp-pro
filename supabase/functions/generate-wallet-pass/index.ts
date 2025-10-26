@@ -81,7 +81,7 @@ serve(async (req) => {
     if (!passEntryKey) throw new Error("PassEntry API key not configured");
 
     // Create PassEntry wallet pass with all field mappings
-    const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple`, {
+    const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple,google`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${passEntryKey}`,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Heart, Wallet } from "lucide-react";
@@ -10,6 +10,20 @@ export const LuxuryMembershipCard = () => {
   const [selectedStyle, setSelectedStyle] = useState<"classic" | "elegance">("classic");
   const [isGenerating, setIsGenerating] = useState(false);
   const { user } = useAuth();
+
+  // Detect user's platform
+  const platform = useMemo(() => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isIOS = /iphone|ipad|ipod/.test(userAgent);
+    const isMac = /macintosh|mac os x/.test(userAgent);
+    const isAndroid = /android/.test(userAgent);
+    
+    if (isIOS || isMac) return 'apple';
+    if (isAndroid) return 'google';
+    return 'apple'; // Default to Apple for desktop
+  }, []);
+
+  const walletButtonText = platform === 'apple' ? 'Add to Apple Wallet' : 'Add to Google Wallet';
 
   const handleGeneratePass = async () => {
     if (!user) {
@@ -33,17 +47,19 @@ export const LuxuryMembershipCard = () => {
 
       if (error) throw error;
 
-      if (data.appleWalletUrl) {
-        window.open(data.appleWalletUrl, '_blank');
-        toast.success("Apple Wallet pass opened! Tap to add to your wallet.");
-      } else if (data.googlePayUrl) {
-        window.open(data.googlePayUrl, '_blank');
-        toast.success("Google Pay pass opened!");
-      } else if (data.passUrl) {
-        window.open(data.passUrl, '_blank');
-        toast.success("Membership pass generated successfully!");
+      // Try platform-specific URL first, then fall back to generic passUrl
+      const passUrl = platform === 'apple' 
+        ? (data.appleWalletUrl || data.passUrl)
+        : (data.googlePayUrl || data.passUrl);
+
+      if (passUrl) {
+        window.open(passUrl, '_blank');
+        const successMessage = platform === 'apple' 
+          ? "Apple Wallet pass opened! Tap to add to your wallet."
+          : "Google Wallet pass opened! Tap to add to your wallet.";
+        toast.success(successMessage);
       } else {
-        throw new Error("No pass URL received");
+        throw new Error("No pass URL received from server");
       }
     } catch (error) {
       console.error("Error generating pass:", error);
@@ -235,7 +251,7 @@ export const LuxuryMembershipCard = () => {
             disabled={isGenerating || !user}
           >
             <Wallet className="w-6 h-6" />
-            {isGenerating ? "Generating..." : "Add to Apple Wallet"}
+            {isGenerating ? "Generating..." : walletButtonText}
           </Button>
           {!user && (
             <p className="text-sm text-muted-foreground text-center">
