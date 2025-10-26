@@ -35,7 +35,6 @@ const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
 
 // Car banner images for random selection
 const CAR_BANNERS = [
-  "banner-190e.png",
   "banner-sports.png", 
   "banner-super-gt.png"
 ];
