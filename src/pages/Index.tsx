@@ -23,7 +23,6 @@ const Index = () => {
       
       <Navigation />
       <Hero />
-      <LoyaltyCardCapture />
       <ServiceCapabilities />
       <LuxuryMembershipCard />
       <SavingsCalculator />
