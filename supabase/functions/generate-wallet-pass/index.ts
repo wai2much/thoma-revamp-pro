@@ -138,7 +138,7 @@ serve(async (req) => {
           member_name: { value: memberName },
           member_id: { value: memberId },
           member_since: { value: memberSince },
-          tier_name: { value: planName }
+          subscribe_type: { value: planName }
         }
       }),
     });
