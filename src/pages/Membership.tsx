@@ -31,8 +31,41 @@ const Membership = () => {
   useEffect(() => {
     if (!loading && !user) {
       navigate("/auth");
+    } else if (user && subscription.subscribed) {
+      // Fetch pass from database when component loads
+      fetchPassFromDatabase();
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, subscription.subscribed]);
+
+  const fetchPassFromDatabase = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("membership_passes")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error && error.code !== "PGRST116") {
+        console.error("Error fetching pass:", error);
+        return;
+      }
+
+      if (data) {
+        console.log("Pass found in database:", data);
+        setPassUrls({
+          appleUrl: data.apple_url || undefined,
+          googleUrl: data.google_url || undefined,
+          url: data.download_url || undefined,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching pass:", error);
+    }
+  };
 
   const handleGeneratePass = async () => {
     if (!user) {

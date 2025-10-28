@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -8,9 +8,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { WalletPassButton } from "@/components/WalletPassButton";
 
+const PRODUCT_NAMES: Record<string, string> = {
+  "prod_TIKlo107LUfRkP": "Single Pack",
+  "prod_TIKmAWTileFjnm": "Family Pack",
+  "prod_TIKmxYafsqTXwO": "Business Starter Pack",
+  "prod_TIKmurHwJ5bDWJ": "Business Velocity Pack",
+};
+
 const MembershipSuccess = () => {
   const navigate = useNavigate();
-  const { refreshSubscription } = useAuth();
+  const { refreshSubscription, subscription, user } = useAuth();
   const [isGenerating, setIsGenerating] = useState(true);
   const [passUrls, setPassUrls] = useState<{
     appleWalletUrl?: string;
@@ -22,15 +29,69 @@ const MembershipSuccess = () => {
     memberId?: string;
     memberSince?: string;
   }>({});
+  const pollingIntervalRef = useRef<number | null>(null);
+  const hasGeneratedRef = useRef(false);
 
   useEffect(() => {
     // Refresh subscription status after successful payment
     refreshSubscription();
     
     // Generate wallet pass automatically - only run once on mount
-    generateWalletPass();
+    if (!hasGeneratedRef.current) {
+      hasGeneratedRef.current = true;
+      generateWalletPass();
+    }
+    
+    // Cleanup polling on unmount
+    return () => {
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const pollForPass = async () => {
+    if (!user || !subscription.subscribed) return;
+
+    console.log("🔄 [FRONTEND] Polling for pass in database...");
+    
+    const { data, error } = await supabase
+      .from("membership_passes")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error && error.code !== "PGRST116") {
+      console.error("❌ [FRONTEND] Error polling for pass:", error);
+      return;
+    }
+
+    if (data) {
+      console.log("✅ [FRONTEND] Pass found in database:", data);
+      setPassUrls({
+        appleWalletUrl: data.apple_url || undefined,
+        googlePayUrl: data.google_url || undefined,
+        passUrl: data.download_url || undefined,
+      });
+      setMembershipData({
+        memberId: data.member_id,
+        planName: subscription.product_id ? PRODUCT_NAMES[subscription.product_id as keyof typeof PRODUCT_NAMES] : undefined,
+        memberSince: new Date(data.created_at).getFullYear().toString(),
+      });
+      setIsGenerating(false);
+      
+      // Stop polling
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+        pollingIntervalRef.current = null;
+      }
+      
+      toast.success("Your digital membership card is ready!");
+    }
+  };
 
   const generateWalletPass = async () => {
     try {
@@ -56,20 +117,39 @@ const MembershipSuccess = () => {
         throw error;
       }
 
-      console.log("✅ [FRONTEND] Wallet pass generated:", data);
-      setPassUrls({
-        appleWalletUrl: data.appleWalletUrl,
-        googlePayUrl: data.googlePayUrl,
-        passUrl: data.passUrl,
-      });
-      setMembershipData(data.membershipData);
-      toast.success("Your digital membership card is ready!");
+      console.log("✅ [FRONTEND] Wallet pass generation initiated:", data);
+      
+      // If pass already exists, show it immediately
+      if (data.passUrl) {
+        setPassUrls({
+          appleWalletUrl: data.appleWalletUrl,
+          googlePayUrl: data.googlePayUrl,
+          passUrl: data.passUrl,
+        });
+        setMembershipData(data.membershipData);
+        setIsGenerating(false);
+        toast.success("Your digital membership card is ready!");
+      } else {
+        // Start polling for pass in database (webhook will insert it)
+        console.log("⏳ [FRONTEND] Waiting for webhook to confirm pass creation...");
+        
+        // Poll every 2 seconds
+        pollingIntervalRef.current = window.setInterval(pollForPass, 2000);
+        
+        // Timeout after 30 seconds
+        setTimeout(() => {
+          if (pollingIntervalRef.current) {
+            clearInterval(pollingIntervalRef.current);
+            pollingIntervalRef.current = null;
+            setIsGenerating(false);
+            toast.error("Pass generation is taking longer than expected. Check your membership page in a moment.");
+          }
+        }, 30000);
+      }
     } catch (error) {
       console.error("💥 [FRONTEND] Error generating wallet pass:", error);
       toast.error("Failed to generate wallet pass. You can try again from your membership page.");
-    } finally {
       setIsGenerating(false);
-      console.log("🏁 [FRONTEND] Wallet pass generation complete");
     }
   };
 

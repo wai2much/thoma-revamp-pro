@@ -93,7 +93,38 @@ serve(async (req) => {
     }
 
     const subscription = subscriptions.data[0];
+    const subscriptionId = subscription.id;
     const productId = subscription.items.data[0].price.product as string;
+
+    // Check if pass already exists in database
+    const { data: existingPass } = await supabaseClient
+      .from("membership_passes")
+      .select("*")
+      .eq("subscription_id", subscriptionId)
+      .single();
+
+    if (existingPass) {
+      console.log("[WALLET-PASS] Pass already exists, returning cached version");
+      return new Response(JSON.stringify({
+        success: true,
+        passUrl: existingPass.download_url,
+        appleWalletUrl: existingPass.apple_url,
+        googlePayUrl: existingPass.google_url,
+        membershipData: {
+          memberName: user.email.split('@')[0].charAt(0).toUpperCase() + user.email.split('@')[0].slice(1),
+          memberEmail: user.email,
+          planName: PRODUCT_NAMES[productId] || "Premium Member",
+          memberId: existingPass.member_id,
+          memberSince: new Date(subscription.created * 1000).getFullYear().toString(),
+          validUntil: subscription.current_period_end 
+            ? new Date(subscription.current_period_end * 1000).toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })
+            : "Active",
+        }
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
     const planName = PRODUCT_NAMES[productId] || "Premium Member";
     
     const memberName = user.email.split('@')[0].charAt(0).toUpperCase() + user.email.split('@')[0].slice(1);
@@ -125,7 +156,7 @@ serve(async (req) => {
     const bannerUrl = `${origin}/assets/${randomBanner}`;
     console.log("[WALLET-PASS] Using random banner:", bannerUrl);
 
-    // Create PassEntry wallet pass - only send fields defined in template
+    // Create PassEntry wallet pass - include metadata for webhook
     const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple,google`, {
       method: "POST",
       headers: {
@@ -139,6 +170,11 @@ serve(async (req) => {
           member_id: { value: memberId },
           member_since: { value: memberSince },
           subscribe_type: { value: planName }
+        },
+        metadata: {
+          user_id: user.id,
+          subscription_id: subscriptionId,
+          product_id: productId,
         }
       }),
     });

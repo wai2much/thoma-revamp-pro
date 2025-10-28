@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.list-pass-templates]
 verify_jwt = true
+
+[functions.passentry-webhook]
+verify_jwt = false
