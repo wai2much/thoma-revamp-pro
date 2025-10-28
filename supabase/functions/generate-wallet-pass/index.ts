@@ -145,6 +145,11 @@ serve(async (req) => {
           label2: { value: memberName },
           label3: { value: memberSince },
           label4: { value: validUntil },
+          locations: [{
+            latitude: -33.8688,
+            longitude: 151.2093,
+            relevantText: "Welcome to TyrePlus"
+          }],
           barcode: {
             enabled: true,
             type: "qr",
