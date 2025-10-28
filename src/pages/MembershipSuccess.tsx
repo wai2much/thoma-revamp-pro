@@ -27,9 +27,10 @@ const MembershipSuccess = () => {
     // Refresh subscription status after successful payment
     refreshSubscription();
     
-    // Generate wallet pass automatically
+    // Generate wallet pass automatically - only run once on mount
     generateWalletPass();
-  }, [refreshSubscription]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const generateWalletPass = async () => {
     try {
