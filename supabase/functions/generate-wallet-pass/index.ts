@@ -31,7 +31,7 @@ const PRODUCT_COLORS: Record<string, string> = {
   "prod_TIKmurHwJ5bDWJ": "#FFD700",  // Business Velocity - Gold
 };
 
-const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
+const PASSENTRY_TEMPLATE = "90e4ef389c8cf3c6d6138693";
 
 // Car banner images for random selection (1125px x 432px)
 const CAR_BANNERS = [

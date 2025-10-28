@@ -6,7 +6,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const PASSENTRY_TEMPLATE = "c1effedba2763ae003f66888";
+const PASSENTRY_TEMPLATE = "90e4ef389c8cf3c6d6138693";
 const LOYALTY_PREFIX = "635BF"; // Stripe purple #635BFF
 
 // Car banner images for random selection (1125px x 432px) - branded with Business Velocity Pack
