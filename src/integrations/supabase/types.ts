@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      membership_passes: {
+        Row: {
+          apple_url: string | null
+          created_at: string
+          download_url: string | null
+          google_url: string | null
+          id: string
+          member_id: string
+          pass_id: string
+          product_id: string | null
+          subscription_id: string
+          user_id: string
+        }
+        Insert: {
+          apple_url?: string | null
+          created_at?: string
+          download_url?: string | null
+          google_url?: string | null
+          id?: string
+          member_id: string
+          pass_id: string
+          product_id?: string | null
+          subscription_id: string
+          user_id: string
+        }
+        Update: {
+          apple_url?: string | null
+          created_at?: string
+          download_url?: string | null
+          google_url?: string | null
+          id?: string
+          member_id?: string
+          pass_id?: string
+          product_id?: string | null
+          subscription_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
