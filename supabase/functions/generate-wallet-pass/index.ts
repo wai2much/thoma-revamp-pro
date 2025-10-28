@@ -106,7 +106,7 @@ serve(async (req) => {
     
     const memberSince = new Date(subscription.created * 1000).getFullYear().toString();
     const validUntil = subscription.current_period_end 
-      ? new Date(subscription.current_period_end * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      ? new Date(subscription.current_period_end * 1000).toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })
       : "Active";
 
     console.log("[WALLET-PASS] Generating PassEntry pass", { planName, memberId });
