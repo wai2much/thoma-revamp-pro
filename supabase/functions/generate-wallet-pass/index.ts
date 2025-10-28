@@ -145,6 +145,7 @@ serve(async (req) => {
           label2: { value: memberName },
           label3: { value: memberSince },
           label4: { value: validUntil },
+          tierName: { value: planName },
           barcode: {
             enabled: true,
             type: "qr",
