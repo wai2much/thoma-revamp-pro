@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Loader2, Shield, Calendar, CreditCard, LogOut } from "lucide-react";
+import { Loader2, Shield, Calendar, CreditCard, LogOut, Wallet } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { WalletPassButton } from "@/components/WalletPassButton";
+import { toast as sonnerToast } from "sonner";
 
 const PRODUCT_NAMES: Record<string, string> = {
   "prod_TIKlo107LUfRkP": "Single Pack",
@@ -17,6 +19,12 @@ const PRODUCT_NAMES: Record<string, string> = {
 const Membership = () => {
   const { user, subscription, loading, signOut, refreshSubscription } = useAuth();
   const [portalLoading, setPortalLoading] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [passUrls, setPassUrls] = useState<{
+    appleUrl?: string;
+    googleUrl?: string;
+    url?: string;
+  }>({});
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -25,6 +33,34 @@ const Membership = () => {
       navigate("/auth");
     }
   }, [user, loading, navigate]);
+
+  const handleGeneratePass = async () => {
+    if (!user) {
+      sonnerToast.error("Please sign in to generate your pass");
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-wallet-pass");
+      
+      if (error) throw error;
+
+      if (data?.appleUrl || data?.googlePayUrl || data?.downloadUrl) {
+        setPassUrls({
+          appleUrl: data.appleUrl,
+          googleUrl: data.googlePayUrl,
+          url: data.downloadUrl,
+        });
+        sonnerToast.success("Wallet pass generated successfully!");
+      }
+    } catch (error: any) {
+      console.error("Error generating pass:", error);
+      sonnerToast.error(error.message || "Failed to generate wallet pass");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   const handleManageSubscription = async () => {
     if (!subscription.subscribed) {
@@ -101,6 +137,47 @@ const Membership = () => {
             </div>
           </div>
         </Card>
+
+        {subscription.subscribed && (
+          <Card className="glass-card p-6 mb-6">
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Wallet className="h-5 w-5" />
+              Digital Wallet Pass
+            </h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Add your membership card to Apple Wallet or Google Pay for quick access
+            </p>
+            
+            {passUrls.appleUrl || passUrls.googleUrl || passUrls.url ? (
+              <WalletPassButton
+                appleUrl={passUrls.appleUrl}
+                googleUrl={passUrls.googleUrl}
+                url={passUrls.url}
+                isGenerating={isGenerating}
+                variant="default"
+                className="w-full"
+              />
+            ) : (
+              <Button
+                onClick={handleGeneratePass}
+                disabled={isGenerating}
+                className="w-full"
+              >
+                {isGenerating ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Generating Pass...
+                  </>
+                ) : (
+                  <>
+                    <Wallet className="mr-2 h-4 w-4" />
+                    Generate Wallet Pass
+                  </>
+                )}
+              </Button>
+            )}
+          </Card>
+        )}
 
         <Card className="glass-card p-6">
           <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
