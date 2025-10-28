@@ -125,7 +125,7 @@ serve(async (req) => {
     const bannerUrl = `${origin}/assets/${randomBanner}`;
     console.log("[WALLET-PASS] Using random banner:", bannerUrl);
 
-    // Create PassEntry wallet pass with tier-specific colors and random banner
+    // Create PassEntry wallet pass - only send fields defined in template
     const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple,google`, {
       method: "POST",
       headers: {
@@ -135,24 +135,10 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
-          backgroundColor: tierColor,           // Tier-specific color
-          labelColor: "#FFFFFF",                // White text for contrast
-          foregroundColor: "#FFFFFF",           // White foreground
-          stripImage: bannerUrl,                // Random car banner
-          balanceLabel: { value: "LOYALTY POINTS" },
-          centralLabel: { value: planName },
-          label1: { value: memberId },
-          label2: { value: memberName },
-          label3: { value: memberSince },
-          label4: { value: validUntil },
-          tierName: { value: planName },
-          barcode: {
-            enabled: true,
-            type: "qr",
-            source: "custom",
-            value: `TYREPLUS-${memberId}`,
-            displayText: true
-          }
+          member_name: { value: memberName },
+          member_id: { value: memberId },
+          member_since: { value: memberSince },
+          tier_name: { value: planName }
         }
       }),
     });
