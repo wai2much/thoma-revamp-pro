@@ -85,14 +85,15 @@ serve(async (req) => {
     const subscriptions = await stripe.subscriptions.list({
       customer: customerId,
       status: "active",
-      limit: 1,
+      limit: 10, // Get all active subscriptions
     });
 
     if (subscriptions.data.length === 0) {
       throw new Error("No active subscription");
     }
 
-    const subscription = subscriptions.data[0];
+    // Get the most recent subscription (sorted by created date)
+    const subscription = subscriptions.data.sort((a, b) => b.created - a.created)[0];
     const subscriptionId = subscription.id;
     const productId = subscription.items.data[0].price.product as string;
 
