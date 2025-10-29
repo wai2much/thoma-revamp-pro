@@ -93,7 +93,7 @@ serve(async (req) => {
     }
 
     // Get the most recent subscription (sorted by created date)
-    const subscription = subscriptions.data.sort((a, b) => b.created - a.created)[0];
+    const subscription = subscriptions.data.sort((a: any, b: any) => b.created - a.created)[0];
     const subscriptionId = subscription.id;
     const productId = subscription.items.data[0].price.product as string;
 
@@ -167,10 +167,12 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
-          member_name: { value: memberName },
-          member_id: { value: memberId },
-          member_since: { value: memberSince },
-          subscribe_type: { value: planName }
+          stripImage: bannerUrl,
+          backgroundColor: tierColor,
+          label1: { value: memberName.toUpperCase() },
+          label2: { value: memberId },
+          label3: { value: memberSince },
+          label4: { value: planName.toUpperCase() }
         },
         metadata: {
           user_id: user.id,
