@@ -17,16 +17,16 @@ const PRODUCT_NAMES: Record<string, string> = {
 
 // Map Stripe product IDs to 5-character hex prefixes (from tier colors)
 const PRODUCT_PREFIXES: Record<string, string> = {
-  "prod_TIKlo107LUfRkP": "1C1C1",  // Single Pack - #1C1C1C
-  "prod_TIKmAWTileFjnm": "00C2A",  // Family Pack - #00C2A8
+  "prod_TIKlo107LUfRkP": "00000",  // Single Pack - #000000
+  "prod_TIKmAWTileFjnm": "10B98",  // Family Pack - #10B981
   "prod_TIKmxYafsqTXwO": "0057B",  // Business Starter - #0057B8
   "prod_TIKmurHwJ5bDWJ": "FFD70",  // Business Velocity - #FFD700
 };
 
 // Map Stripe product IDs to full hex colors for pass backgrounds
 const PRODUCT_COLORS: Record<string, string> = {
-  "prod_TIKlo107LUfRkP": "#1C1C1C",  // Single Pack - Dark Gray/Black
-  "prod_TIKmAWTileFjnm": "#00C2A8",  // Family Pack - Teal
+  "prod_TIKlo107LUfRkP": "#000000",  // Single Pack - Black
+  "prod_TIKmAWTileFjnm": "#10B981",  // Family Pack - Green
   "prod_TIKmxYafsqTXwO": "#0057B8",  // Business Starter - Blue
   "prod_TIKmurHwJ5bDWJ": "#FFD700",  // Business Velocity - Gold
 };
