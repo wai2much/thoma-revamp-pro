@@ -198,6 +198,27 @@ serve(async (req) => {
     const passSource = passData.data?.attributes?.passSource;
     const appleUrl = passSource?.apple || downloadUrl;
 
+    // Save pass to database
+    const { error: insertError } = await supabaseClient
+      .from("membership_passes")
+      .insert({
+        user_id: user.id,
+        member_id: memberId,
+        pass_id: passData.data?.id,
+        apple_url: appleUrl,
+        google_url: passSource?.google,
+        download_url: downloadUrl,
+        subscription_id: subscriptionId,
+        product_id: productId,
+      });
+
+    if (insertError) {
+      console.error("[WALLET-PASS] Error saving pass to database:", insertError);
+      // Don't throw - pass was created successfully, just log the error
+    } else {
+      console.log("[WALLET-PASS] Pass saved to database successfully");
+    }
+
     // Send confirmation email
     console.log("[WALLET-PASS] Starting email send process");
     const resendKey = Deno.env.get("RESEND_API_KEY");
