@@ -31,7 +31,13 @@ const PRODUCT_COLORS: Record<string, string> = {
   "prod_TIKmurHwJ5bDWJ": "#FFD700",  // Business Velocity - Gold
 };
 
-const PASSENTRY_TEMPLATE = "90e4ef389c8cf3c6d6138693";
+// Map Stripe product IDs to PassEntry template IDs (tier-specific templates)
+const TEMPLATE_IDS: Record<string, string> = {
+  "prod_TIKlo107LUfRkP": "TEMPLATE_ID_SINGLE",     // Single Pack - Black
+  "prod_TIKmAWTileFjnm": "TEMPLATE_ID_FAMILY",     // Family Pack - Green
+  "prod_TIKmxYafsqTXwO": "TEMPLATE_ID_BUSINESS",   // Business Starter - Blue
+  "prod_TIKmurHwJ5bDWJ": "TEMPLATE_ID_VELOCITY",   // Business Velocity - Gold
+};
 
 // Car banner images for random selection (1125px x 432px)
 const CAR_BANNERS = [
@@ -157,8 +163,15 @@ serve(async (req) => {
     const bannerUrl = `${origin}/assets/${randomBanner}`;
     console.log("[WALLET-PASS] Using random banner:", bannerUrl);
 
+    // Get tier-specific template ID
+    const templateId = TEMPLATE_IDS[productId];
+    if (!templateId) {
+      throw new Error(`No template configured for product: ${productId}`);
+    }
+    console.log("[WALLET-PASS] Using template:", templateId, "for product:", productId);
+
     // Create PassEntry wallet pass - include metadata for webhook
-    const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple,google`, {
+    const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${templateId}&includePassSource=apple,google`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${passEntryKey}`,
