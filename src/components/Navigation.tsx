@@ -1,12 +1,15 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { User, LogIn, ScanLine } from "lucide-react";
+import { User, LogIn, ScanLine, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import tyrePlusLogo from "@/assets/tyreplus-logo.png";
+import { useCartStore } from "@/stores/cartStore";
+import { Badge } from "@/components/ui/badge";
 
 export const Navigation = () => {
   const { user, subscription } = useAuth();
   const navigate = useNavigate();
+  const itemCount = useCartStore((state) => state.getItemCount());
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg border-b border-border/50 relative">
@@ -22,6 +25,32 @@ export const Navigation = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate("/shop")}
+            className="hidden sm:flex"
+          >
+            Shop
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate("/cart")}
+            className="relative"
+          >
+            <ShoppingCart className="h-5 w-5" />
+            {itemCount > 0 && (
+              <Badge 
+                variant="destructive" 
+                className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+              >
+                {itemCount}
+              </Badge>
+            )}
+          </Button>
+
           {user ? (
             <>
               {subscription.subscribed && (

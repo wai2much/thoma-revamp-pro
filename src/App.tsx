@@ -9,6 +9,8 @@ import Auth from "./pages/Auth";
 import Membership from "./pages/Membership";
 import MembershipSuccess from "./pages/MembershipSuccess";
 import Scanner from "./pages/Scanner";
+import Shop from "./pages/Shop";
+import Cart from "./pages/Cart";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,8 @@ const App = () => (
           <Route path="/membership" element={<Membership />} />
           <Route path="/membership-success" element={<MembershipSuccess />} />
           <Route path="/scanner" element={<Scanner />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/cart" element={<Cart />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
