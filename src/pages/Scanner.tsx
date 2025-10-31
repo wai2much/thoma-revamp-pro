@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { QrCode, Nfc, Search, CheckCircle, XCircle } from "lucide-react";
+import { QrCode, Nfc, Search, CheckCircle, Coins } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { BarcodeScanner } from "@capacitor-mlkit/barcode-scanning";
+import { Navigation } from "@/components/Navigation";
+import { Label } from "@/components/ui/label";
 
 interface MemberData {
   memberId: string;
@@ -14,12 +16,15 @@ interface MemberData {
   email: string;
   validUntil: string;
   memberSince: string;
+  userId: string;
+  loyaltyPoints: number;
 }
 
 const Scanner = () => {
   const [scanning, setScanning] = useState(false);
   const [memberData, setMemberData] = useState<MemberData | null>(null);
   const [manualId, setManualId] = useState("");
+  const [pointsToAward, setPointsToAward] = useState("");
   const { toast } = useToast();
 
   const validateMember = async (memberId: string) => {
@@ -31,8 +36,15 @@ const Scanner = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
+      // Fetch member's loyalty points
+      const { data: pointsData, error: pointsError } = await supabase.rpc('get_user_points_balance', {
+        p_user_id: user.id
+      });
+
+      if (pointsError) throw pointsError;
+
       // In a real implementation, you'd query by customer ID
-      // For now, we'll show the scanned data
+      // For now, we'll show the scanned data with loyalty points
       toast({
         title: "Member Found",
         description: `Member ID: ${memberId}`,
@@ -45,7 +57,9 @@ const Scanner = () => {
         planName: "Family Pack",
         email: "member@example.com",
         validUntil: "Dec 31, 2025",
-        memberSince: "2024"
+        memberSince: "2024",
+        userId: user.id,
+        loyaltyPoints: pointsData || 0
       });
 
       return true;
@@ -98,18 +112,49 @@ const Scanner = () => {
     }
   };
 
-  const checkIn = () => {
-    toast({
-      title: "Check-in Successful",
-      description: `${memberData?.memberName} has been checked in`,
-    });
-    setMemberData(null);
-    setManualId("");
+  const checkIn = async () => {
+    if (!memberData) return;
+
+    try {
+      // Award points if specified
+      if (pointsToAward && parseInt(pointsToAward) > 0) {
+        const { error } = await supabase.functions.invoke('grant-signup-bonus', {
+          body: {
+            userId: memberData.userId,
+            points: parseInt(pointsToAward),
+            description: 'Check-in bonus'
+          }
+        });
+
+        if (error) throw error;
+
+        toast({
+          title: "Check-in Successful",
+          description: `${memberData.memberName} checked in and awarded ${pointsToAward} points!`,
+        });
+      } else {
+        toast({
+          title: "Check-in Successful",
+          description: `${memberData.memberName} has been checked in`,
+        });
+      }
+
+      setMemberData(null);
+      setManualId("");
+      setPointsToAward("");
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to check in",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="max-w-2xl mx-auto space-y-6">
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <div className="max-w-2xl mx-auto space-y-6 p-4 pt-24">
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-2">Member Scanner</h1>
           <p className="text-muted-foreground">Scan QR code, tap NFC, or search manually</p>
@@ -211,6 +256,25 @@ const Scanner = () => {
                 <span className="text-muted-foreground">Valid Until:</span>
                 <span>{memberData.validUntil}</span>
               </div>
+              <div className="flex justify-between items-center border-t pt-3 mt-3">
+                <span className="text-muted-foreground flex items-center gap-2">
+                  <Coins className="h-4 w-4" />
+                  Loyalty Points:
+                </span>
+                <span className="font-bold text-lg text-primary">{memberData.loyaltyPoints}</span>
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2">
+              <Label htmlFor="points">Award Points (Optional)</Label>
+              <Input
+                id="points"
+                type="number"
+                placeholder="Enter points to award"
+                value={pointsToAward}
+                onChange={(e) => setPointsToAward(e.target.value)}
+                min="0"
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-3 pt-4">
