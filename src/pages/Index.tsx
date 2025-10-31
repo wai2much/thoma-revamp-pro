@@ -47,6 +47,11 @@ const Index = () => {
                 <h3 className="font-semibold mb-3 text-foreground">Contact Us</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>
+                    <a href="tel:+61468003380" className="hover:text-primary transition-colors">
+                      📞 +61 468 003 380
+                    </a>
+                  </p>
+                  <p>
                     <a href="mailto:info@hausoftechnik.com.au" className="hover:text-primary transition-colors">
                       info@hausoftechnik.com.au
                     </a>
