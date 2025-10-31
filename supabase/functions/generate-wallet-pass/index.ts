@@ -41,13 +41,14 @@ const TEMPLATE_IDS: Record<string, string> = {
 
 // Car banner images for random selection (1125px x 432px)
 const CAR_BANNERS = [
-  "pass-banner-1.png",
-  "pass-banner-2.png",
-  "pass-banner-3.png",
-  "pass-banner-4.png",
-  "pass-banner-5.png",
-  "pass-banner-6.png",
-  "pass-banner-7.png",
+  "banner-speed.png",
+  "banner-sunset-water.png",
+  "banner-city-sunset.png",
+  "banner-red-smoke.png",
+  "banner-supercar-rear.png",
+  "banner-racing-sunset.png",
+  "banner-sports.png", 
+  "banner-super-gt.png"
 ];
 
 serve(async (req) => {
@@ -181,11 +182,10 @@ serve(async (req) => {
         pass: {
           stripImage: bannerUrl,
           backgroundColor: tierColor,
-          name: { value: memberName.toUpperCase() },
-          subscription: { value: planName.toUpperCase() },
-          rego: { value: memberId },
-          uuid: { value: subscriptionId.substring(0, 13) },
-          colour: { value: tierColor }
+          label1: { value: memberName.toUpperCase() },
+          label2: { value: memberId },
+          label3: { value: memberSince },
+          label4: { value: planName.toUpperCase() }
         },
         metadata: {
           user_id: user.id,

@@ -94,37 +94,30 @@ serve(async (req) => {
           fields: {
             auxiliary: {
               one: {
-                id: "name",
-                label: "Name",
+                id: "label1",
+                label: "Member Name",
                 defaultValue: "Member",
               },
               two: {
-                id: "subscription",
-                label: "Subscription",
-                defaultValue: config.tierName,
-              },
-              three: {
-                id: "rego",
-                label: "Rego",
+                id: "label2",
+                label: "Member ID",
                 defaultValue: "00000-XXXXXX",
               },
-              four: {
-                id: "uuid",
-                label: "UUID",
-                defaultValue: "XXXX-XXXX",
+              three: {
+                id: "label3",
+                label: "Member Since",
+                defaultValue: "2024",
               },
-            },
-            secondary: {
-              one: {
-                id: "colour",
-                label: "Colour",
-                defaultValue: config.backgroundColor,
+              four: {
+                id: "label4",
+                label: "Plan",
+                defaultValue: config.tierName,
               },
             },
           },
           images: {
             stripImage: {
-              default: "https://64a7bebe-dd72-4b4c-ba13-a98f02a39d2a.lovableproject.com/assets/pass-banner-1.png",
+              default: "https://64a7bebe-dd72-4b4c-ba13-a98f02a39d2a.lovableproject.com/assets/banner-speed.png",
             },
           },
         },
