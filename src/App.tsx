@@ -11,6 +11,7 @@ import MembershipSuccess from "./pages/MembershipSuccess";
 import Scanner from "./pages/Scanner";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
+import Loyalty from "./pages/Loyalty";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/scanner" element={<Scanner />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/loyalty" element={<Loyalty />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

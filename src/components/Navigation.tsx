@@ -36,6 +36,15 @@ export const Navigation = () => {
           
           <Button
             variant="ghost"
+            size="sm"
+            onClick={() => navigate("/loyalty")}
+            className="hidden sm:flex"
+          >
+            Rewards
+          </Button>
+          
+          <Button
+            variant="ghost"
             size="icon"
             onClick={() => navigate("/cart")}
             className="relative"
