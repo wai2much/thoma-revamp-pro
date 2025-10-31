@@ -14,6 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
+      loyalty_points: {
+        Row: {
+          created_at: string | null
+          description: string
+          id: string
+          order_id: string | null
+          points: number
+          transaction_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description: string
+          id?: string
+          order_id?: string | null
+          points: number
+          transaction_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string
+          id?: string
+          order_id?: string | null
+          points?: number
+          transaction_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      loyalty_rewards: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          is_active: boolean | null
+          points_required: number
+          reward_type: string
+          reward_value: number
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          points_required: number
+          reward_type: string
+          reward_value: number
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          points_required?: number
+          reward_type?: string
+          reward_value?: number
+          title?: string
+        }
+        Relationships: []
+      }
       membership_passes: {
         Row: {
           apple_url: string | null
@@ -55,10 +118,18 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      user_loyalty_summary: {
+        Row: {
+          last_activity: string | null
+          total_points: number | null
+          total_transactions: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      get_user_points_balance: { Args: { p_user_id: string }; Returns: number }
     }
     Enums: {
       [_ in never]: never
