@@ -3,6 +3,9 @@ project_id = "lnfmxpcpudugultrpwwa"
 [functions.twilio-webhook]
 verify_jwt = false
 
+[functions.elevenlabs-conversation]
+verify_jwt = false
+
 [functions.create-checkout]
 verify_jwt = true
 

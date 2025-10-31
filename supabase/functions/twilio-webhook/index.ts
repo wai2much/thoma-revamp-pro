@@ -11,20 +11,76 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Twilio webhook called');
+    const url = new URL(req.url);
+    const pathSegments = url.pathname.split('/');
+    const action = pathSegments[pathSegments.length - 1];
+    
+    console.log('Twilio webhook called, action:', action);
     
     // Parse incoming form data from Twilio
     const formData = await req.formData();
     const from = formData.get('From');
     const to = formData.get('To');
     const callSid = formData.get('CallSid');
+    const digits = formData.get('Digits');
     
-    console.log('Call received:', { from, to, callSid });
+    console.log('Call data:', { from, to, callSid, digits, action });
 
-    // Generate TwiML response for incoming call
+    // Handle menu selection
+    if (action === 'menu' && digits) {
+      console.log('Processing menu selection:', digits);
+      
+      switch (digits) {
+        case '1':
+          // Check membership status
+          const statusTwiml = `<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say voice="alice">To check your membership status, please visit our website or contact us via email.</Say>
+  <Say voice="alice">Thank you for calling. Goodbye!</Say>
+  <Hangup/>
+</Response>`;
+          return new Response(statusTwiml, {
+            headers: { 'Content-Type': 'text/xml', ...corsHeaders },
+          });
+          
+        case '2':
+          // Connect to ElevenLabs AI assistant
+          const aiTwiml = `<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Redirect>https://lnfmxpcpudugultrpwwa.supabase.co/functions/v1/elevenlabs-conversation</Redirect>
+</Response>`;
+          return new Response(aiTwiml, {
+            headers: { 'Content-Type': 'text/xml', ...corsHeaders },
+          });
+          
+        case '0':
+          // Connect to representative
+          const repTwiml = `<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say voice="alice">Connecting you to a representative. Please hold.</Say>
+  <Dial>+1234567890</Dial>
+</Response>`;
+          return new Response(repTwiml, {
+            headers: { 'Content-Type': 'text/xml', ...corsHeaders },
+          });
+          
+        default:
+          // Invalid selection
+          const invalidTwiml = `<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say voice="alice">Invalid selection.</Say>
+  <Redirect>https://lnfmxpcpudugultrpwwa.supabase.co/functions/v1/twilio-webhook</Redirect>
+</Response>`;
+          return new Response(invalidTwiml, {
+            headers: { 'Content-Type': 'text/xml', ...corsHeaders },
+          });
+      }
+    }
+
+    // Initial greeting menu
     const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Gather input="dtmf" numDigits="1" action="https://lnfmxpcpudugultrpwwa.supabase.co/functions/v1/twilio-webhook/menu" method="POST">
+  <Gather input="dtmf" numDigits="1" action="https://lnfmxpcpudugultrpwwa.supabase.co/functions/v1/twilio-webhook/menu" method="POST" timeout="5">
     <Say voice="alice">Welcome to Tyre Plus Membership Program.</Say>
     <Say voice="alice">Press 1 to check your membership status.</Say>
     <Say voice="alice">Press 2 to speak with our A I assistant about your membership benefits.</Say>
@@ -44,7 +100,6 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in Twilio webhook:', error);
     
-    // Return a safe TwiML response even on error
     const errorTwiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say voice="alice">We're experiencing technical difficulties. Please try again later.</Say>
