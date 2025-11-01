@@ -2,7 +2,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { User, LogIn, ScanLine, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import tyrePlusLogo from "@/assets/tyreplus-logo.png";
+import tyrePlusLogo from "@/assets/tp-logo.png";
 import { useCartStore } from "@/stores/cartStore";
 import { Badge } from "@/components/ui/badge";
 
