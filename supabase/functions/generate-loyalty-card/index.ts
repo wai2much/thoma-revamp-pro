@@ -6,7 +6,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const PASSENTRY_TEMPLATE = "90e4ef389c8cf3c6d6138693";
+const PASSENTRY_TEMPLATE = "d83788a55d1c58"; // TyrePlus Loyalty Program template
 const LOYALTY_PREFIX = "635BF"; // Stripe purple #635BFF
 
 // Car banner images for random selection (1125px x 432px) - branded with Business Velocity Pack
