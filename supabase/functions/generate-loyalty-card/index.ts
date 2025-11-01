@@ -62,71 +62,28 @@ serve(async (req) => {
     const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
                        "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
     const memberSince = monthNames[new Date().getMonth()];
-    
-    // Set validity to 1 year from now
-    const validUntil = new Date();
-    validUntil.setFullYear(validUntil.getFullYear() + 1);
-    const validity = validUntil.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
-    // Get template ID from database
-    const templateId = await getTemplateId(supabaseClient);
-    if (!templateId) {
-      throw new Error("Loyalty card template not configured. Please add a template with product_id 'loyalty_card' in PassEntry configuration.");
-    }
-    console.log("[LOYALTY-CARD] Using template ID:", templateId);
-
-    // Create PassEntry loyalty card
-    const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
-    if (!passEntryKey) throw new Error("PassEntry API key not configured");
-
-    // Randomly select a car banner
-    const randomBanner = CAR_BANNERS[Math.floor(Math.random() * CAR_BANNERS.length)];
-    const origin = req.headers.get("origin") || "https://lnfmxpcpudugultrpwwa.lovableproject.com";
-    const bannerUrl = `${origin}/assets/${randomBanner}`;
-    console.log("[LOYALTY-CARD] Using random banner:", bannerUrl);
-
-    const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${templateId}&includePassSource=apple`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${passEntryKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        externalId: memberId,
-        pass: {
-          stripImage: bannerUrl,
-          backgroundColor: "#D4AF37",           // Gold color for loyalty
-          label1: { value: name.toUpperCase() },
-          label2: { value: memberId },
-          label3: { value: memberSince },
-          label4: { value: "$20 WELCOME CARD" },
-          barcode: {
-            enabled: true,
-            type: "qr",
-            source: "custom",
-            value: `TYREPLUS-LOYALTY-${memberId}`,
-            displayText: true
-          }
-        }
-      }),
-    });
-
-    if (!passEntryResponse.ok) {
-      const errorText = await passEntryResponse.text();
-      console.error("[LOYALTY-CARD] PassEntry API error:", {
-        status: passEntryResponse.status,
-        statusText: passEntryResponse.statusText,
-        body: errorText
+    // Store member data in loyalty_points table
+    const { error: insertError } = await supabaseClient
+      .from('loyalty_points')
+      .insert({
+        user_id: '00000000-0000-0000-0000-000000000000', // Anonymous user for leads
+        points: 2000, // $20 welcome credit = 2000 points (assuming 100 points = $1)
+        description: `${name} - ${email} - ${phone || 'No phone'}`,
+        transaction_type: 'bonus',
+        order_id: `MEMBER-${memberId}` // Store member ID in order_id for easy lookup
       });
-      throw new Error(`PassEntry API error: ${passEntryResponse.status} - ${errorText}`);
+
+    if (insertError) {
+      console.error("[LOYALTY-CARD] Error storing member data:", insertError);
+      throw new Error(`Failed to store member data: ${insertError.message}`);
     }
 
-    const passData = await passEntryResponse.json();
-    console.log("[LOYALTY-CARD] Pass created successfully", { passId: passData.data?.id });
+    console.log("[LOYALTY-CARD] Member data stored successfully");
 
-    const downloadUrl = passData.data?.attributes?.downloadUrl;
-    const passSource = passData.data?.attributes?.passSource;
-    const appleUrl = passSource?.apple || downloadUrl;
+    // Generate card URL
+    const origin = req.headers.get("origin") || "https://64a7bebe-dd72-4b4c-ba13-a98f02a39d2a.lovableproject.com";
+    const cardUrl = `${origin}/loyalty-card/${memberId}`;
 
     // Send SMS if phone number provided
     if (phone) {
@@ -138,7 +95,7 @@ serve(async (req) => {
       
       if (twilioAccountSid && twilioAuthToken && twilioPhoneNumber) {
         try {
-          const smsBody = `Hi ${name}! 🎉 Welcome to TyrePlus Loyalty!\n\nYour $20 welcome credit is ready!\nMember ID: ${memberId}\n\nAdd to wallet: ${appleUrl}\n\nStart earning points today!`;
+          const smsBody = `Hi ${name}! 🎉 Welcome to TyrePlus Loyalty!\n\nYour $20 welcome credit is ready!\nMember ID: ${memberId}\n\nView your card: ${cardUrl}\n\nBookmark this link for easy access!`;
           
           const twilioResponse = await fetch(
             `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`,
@@ -173,16 +130,15 @@ serve(async (req) => {
 
     return new Response(JSON.stringify({
       success: true,
-      passUrl: downloadUrl,
-      appleWalletUrl: appleUrl,
-      googlePayUrl: passSource?.google,
+      cardUrl: cardUrl,
       memberData: {
         memberName: name,
         memberEmail: email,
         memberPhone: phone,
         memberId,
         memberSince,
-        credit: "$20.00"
+        credit: "$20.00",
+        points: 2000
       }
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

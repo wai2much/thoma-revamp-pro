@@ -12,6 +12,7 @@ import Scanner from "./pages/Scanner";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import Loyalty from "./pages/Loyalty";
+import LoyaltyCard from "./pages/LoyaltyCard";
 import PassEntrySetup from "./pages/PassEntrySetup";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/shop" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/loyalty" element={<Loyalty />} />
+          <Route path="/loyalty-card/:memberId" element={<LoyaltyCard />} />
           <Route path="/passentry-setup" element={<PassEntrySetup />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
