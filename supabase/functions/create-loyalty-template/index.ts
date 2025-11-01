@@ -27,49 +27,61 @@ serve(async (req) => {
     const templatePayload = {
       passTemplate: {
         name: "TyrePlus Loyalty Card",
-        templateType: "loyalty",
-        centralTitle: "TyrePlus",
-        notificationHeader: "TyrePlus",
+        templateType: "generic",
+        centralTitle: "TyrePlus Loyalty",
+        notificationHeader: "TyrePlus Loyalty Card",
         description: "TyrePlus Loyalty Card - Earn rewards and save on tyres",
         colors: {
           background: "#D4AF37",
-          text: "#000000",
-          label: "#333333"
-        },
-        images: {
-          strip: {
-            enabled: true
-          }
-        },
-        barcode: {
-          enabled: true,
-          type: "qr",
-          source: "extId"
+          label: "#333333",
+          text: "#000000"
         },
         fields: {
-          balanceLabel: {
-            label: "Points",
-            position: "auxiliary"
+          central: {
+            one: {
+              id: "memberName",
+              label: "Member",
+              defaultValue: "Loyalty Member"
+            }
           },
-          centralLabel: {
-            label: "Welcome Credit",
-            position: "header"
+          auxiliary: {
+            one: {
+              id: "balanceLabel",
+              label: "Points",
+              defaultValue: "0"
+            },
+            two: {
+              id: "centralLabel",
+              label: "Welcome Credit",
+              defaultValue: "$20"
+            },
+            three: {
+              id: "label1",
+              label: "Member ID",
+              defaultValue: "0000"
+            },
+            four: {
+              id: "label2",
+              label: "Name",
+              defaultValue: "Member"
+            }
           },
-          label1: {
-            label: "Member ID",
-            position: "primary"
-          },
-          label2: {
-            label: "Name",
-            position: "secondary"
-          },
-          label3: {
-            label: "Member Since",
-            position: "back"
-          },
-          label4: {
-            label: "Valid Until",
-            position: "back"
+          back: {
+            one: {
+              id: "label3",
+              label: "Member Since",
+              defaultValue: "2025"
+            },
+            two: {
+              id: "label4",
+              label: "Valid Until",
+              defaultValue: "2026"
+            }
+          }
+        },
+        images: {
+          stripImage: {
+            default: "https://64a7bebe-dd72-4b4c-ba13-a98f02a39d2a.lovableproject.com/assets/banner-speed-branded.png"
           }
         }
       }
