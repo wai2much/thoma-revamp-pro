@@ -23,8 +23,25 @@ serve(async (req) => {
     const to = formData.get('To');
     const callSid = formData.get('CallSid');
     const digits = formData.get('Digits');
+    const messageBody = formData.get('Body'); // SMS message body
+    const messageSid = formData.get('MessageSid'); // SMS identifier
     
-    console.log('Call data:', { from, to, callSid, digits, action });
+    console.log('Request data:', { from, to, callSid, messageSid, messageBody, digits, action });
+
+    // Handle SMS messages
+    if (messageBody && messageSid) {
+      console.log('Processing SMS message:', { from, messageBody });
+      
+      // Respond to SMS
+      const smsTwiml = `<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Message>Thank you for contacting Tyre Plus! For membership inquiries, please call ${to} or visit our website. Our AI assistant is ready to help you with your membership benefits.</Message>
+</Response>`;
+      
+      return new Response(smsTwiml, {
+        headers: { 'Content-Type': 'text/xml', ...corsHeaders },
+      });
+    }
 
     // Handle menu selection
     if (action === 'menu' && digits) {
