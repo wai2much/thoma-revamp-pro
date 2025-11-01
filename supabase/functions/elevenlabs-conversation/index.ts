@@ -25,7 +25,7 @@ serve(async (req) => {
 
     // Get signed URL from ElevenLabs for conversational AI
     const agentResponse = await fetch(
-      'https://api.elevenlabs.io/v1/convai/conversation/get_signed_url?agent_id=YOUR_AGENT_ID',
+      'https://api.elevenlabs.io/v1/convai/conversation/get_signed_url?agent_id=agent_3701k8x8cscmet1s4447mm48m8d7',
       {
         method: 'GET',
         headers: {
