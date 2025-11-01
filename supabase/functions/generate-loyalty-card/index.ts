@@ -6,8 +6,8 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const PASSENTRY_TEMPLATE = "d83788a55d1c58"; // TyrePlus Loyalty Program template
 const LOYALTY_PREFIX = "635BF"; // Stripe purple #635BFF
+const LOYALTY_PRODUCT_ID = "loyalty_card"; // Special identifier for loyalty card template
 
 // Car banner images for random selection (1125px x 432px) - branded with Business Velocity Pack
 const CAR_BANNERS = [
@@ -15,6 +15,22 @@ const CAR_BANNERS = [
   "banner-city-sunset-branded.png",
   "banner-racing-sunset-branded.png"
 ];
+
+// Fetch template ID from database
+async function getTemplateId(supabaseClient: any): Promise<string | null> {
+  const { data, error } = await supabaseClient
+    .from('passentry_config')
+    .select('template_id')
+    .eq('product_id', LOYALTY_PRODUCT_ID)
+    .single();
+
+  if (error) {
+    console.error('[LOYALTY-CARD] Error fetching template:', error);
+    return null;
+  }
+
+  return data?.template_id || null;
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -52,6 +68,13 @@ serve(async (req) => {
     validUntil.setFullYear(validUntil.getFullYear() + 1);
     const validity = validUntil.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
+    // Get template ID from database
+    const templateId = await getTemplateId(supabaseClient);
+    if (!templateId) {
+      throw new Error("Loyalty card template not configured. Please add a template with product_id 'loyalty_card' in PassEntry configuration.");
+    }
+    console.log("[LOYALTY-CARD] Using template ID:", templateId);
+
     // Create PassEntry loyalty card
     const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
     if (!passEntryKey) throw new Error("PassEntry API key not configured");
@@ -62,7 +85,7 @@ serve(async (req) => {
     const bannerUrl = `${origin}/assets/${randomBanner}`;
     console.log("[LOYALTY-CARD] Using random banner:", bannerUrl);
 
-    const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${PASSENTRY_TEMPLATE}&includePassSource=apple`, {
+    const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${templateId}&includePassSource=apple`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${passEntryKey}`,
