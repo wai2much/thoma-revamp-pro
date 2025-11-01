@@ -94,13 +94,12 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
-          stripImage: bannerUrl,                // Random car banner
-          balanceLabel: { value: "99" },        // Loyalty points
-          centralLabel: { value: "$20 Welcome Card" },
-          label1: { value: memberId },
-          label2: { value: name.toUpperCase() },
+          stripImage: bannerUrl,
+          backgroundColor: "#D4AF37",           // Gold color for loyalty
+          label1: { value: name.toUpperCase() },
+          label2: { value: memberId },
           label3: { value: memberSince },
-          label4: { value: validity },
+          label4: { value: "$20 WELCOME CARD" },
           barcode: {
             enabled: true,
             type: "qr",
