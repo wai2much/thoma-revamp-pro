@@ -46,14 +46,14 @@ serve(async (req) => {
       );
     }
 
-    // Grant $20 sign-up bonus (2000 points)
+    // Grant $200 sign-up bonus (2000 points, 10 points = $1)
     const { error: insertError } = await supabaseAdmin
       .from("loyalty_points")
       .insert({
         user_id: user.id,
         points: 2000,
         transaction_type: "bonus",
-        description: "Welcome Bonus - $20 credit"
+        description: "Welcome Bonus - $200 credit"
       });
 
     if (insertError) throw insertError;

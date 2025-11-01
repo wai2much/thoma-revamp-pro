@@ -167,7 +167,7 @@ export default function Loyalty() {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="text-2xl">Your Points Balance</CardTitle>
-                <CardDescription>1 point = $1 | 1000 points = $100 reward</CardDescription>
+                <CardDescription>10 points = $1 | 1000 points = $100 value</CardDescription>
               </div>
               <Award className="w-12 h-12 text-primary" />
             </div>
@@ -177,12 +177,12 @@ export default function Loyalty() {
               {pointsBalance.toLocaleString()} pts
             </div>
             <div className="text-muted-foreground mb-4">
-              ≈ ${(pointsBalance / 1).toFixed(2)} value
+              ≈ ${(pointsBalance / 10).toFixed(2)} value
             </div>
             {transactions.length === 0 && (
               <Button onClick={handleClaimBonus} className="w-full">
                 <Gift className="w-4 h-4 mr-2" />
-                Claim $20 Welcome Bonus
+                Claim $200 Welcome Bonus
               </Button>
             )}
           </CardContent>
