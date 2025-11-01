@@ -34,6 +34,23 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Handle GET requests (for testing/info)
+  if (req.method === 'GET') {
+    return new Response(
+      JSON.stringify({ 
+        status: 'ready', 
+        message: 'Twilio webhook is configured and ready to receive calls and SMS',
+        endpoints: {
+          voice: '/twilio-webhook',
+          menu: '/twilio-webhook/menu'
+        }
+      }), 
+      { 
+        headers: { 'Content-Type': 'application/json', ...corsHeaders } 
+      }
+    );
+  }
+
   try {
     const url = new URL(req.url);
     const pathSegments = url.pathname.split('/');
@@ -42,7 +59,23 @@ serve(async (req) => {
     console.log('Twilio webhook called, action:', action);
     
     // Parse incoming form data from Twilio
-    const formData = await req.formData();
+    let formData;
+    try {
+      formData = await req.formData();
+    } catch (parseError) {
+      console.error('Failed to parse form data:', parseError);
+      
+      const errorTwiml = `<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say voice="alice">Unable to process request. Invalid data format.</Say>
+  <Hangup/>
+</Response>`;
+      
+      return new Response(errorTwiml, {
+        headers: { 'Content-Type': 'text/xml', ...corsHeaders },
+      });
+    }
+    
     const from = formData.get('From');
     const to = formData.get('To');
     const callSid = formData.get('CallSid');
