@@ -42,7 +42,7 @@ export default function LoyaltyCard() {
             memberPhone: data.description.split(" - ")[2] || "",
             memberId: memberId,
             memberSince: new Date(data.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
-            credit: `$${(data.points / 10).toFixed(2)}`,
+            credit: `$${(data.points / 1).toFixed(2)}`,
             points: data.points
           };
 

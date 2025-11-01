@@ -68,7 +68,7 @@ serve(async (req) => {
       .from('loyalty_points')
       .insert({
         user_id: '00000000-0000-0000-0000-000000000000', // Anonymous user for leads
-        points: 2000, // $200 welcome credit = 2000 points (10 points = $1)
+        points: 20, // $20 welcome credit = 20 points (1 point = $1)
         description: `${name} - ${email} - ${phone || 'No phone'}`,
         transaction_type: 'bonus',
         order_id: `MEMBER-${memberId}` // Store member ID in order_id for easy lookup
@@ -95,7 +95,7 @@ serve(async (req) => {
       
       if (twilioAccountSid && twilioAuthToken && twilioPhoneNumber) {
         try {
-          const smsBody = `Hi ${name}! 🎉 Welcome to TyrePlus Loyalty!\n\nYour $200 welcome credit is ready!\nMember ID: ${memberId}\n\nView your card: ${cardUrl}\n\nBookmark this link for easy access!`;
+          const smsBody = `Hi ${name}! 🎉 Welcome to TyrePlus Loyalty!\n\nYour $20 welcome credit is ready!\nMember ID: ${memberId}\n\nView your card: ${cardUrl}\n\nBookmark this link for easy access!`;
           
           const twilioResponse = await fetch(
             `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`,
@@ -137,8 +137,8 @@ serve(async (req) => {
         memberPhone: phone,
         memberId,
         memberSince,
-        credit: "$200.00",
-        points: 2000
+        credit: "$20.00",
+        points: 20
       }
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

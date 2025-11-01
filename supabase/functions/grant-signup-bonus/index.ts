@@ -46,14 +46,14 @@ serve(async (req) => {
       );
     }
 
-    // Grant $200 sign-up bonus (2000 points, 10 points = $1)
+    // Grant $20 sign-up bonus (20 points, 1 point = $1)
     const { error: insertError } = await supabaseAdmin
       .from("loyalty_points")
       .insert({
         user_id: user.id,
-        points: 2000,
+        points: 20,
         transaction_type: "bonus",
-        description: "Welcome Bonus - $200 credit"
+        description: "Welcome Bonus - $20 credit"
       });
 
     if (insertError) throw insertError;
@@ -61,7 +61,7 @@ serve(async (req) => {
     console.log("[SIGNUP-BONUS] Bonus granted successfully");
     
     return new Response(
-      JSON.stringify({ success: true, points: 2000 }),
+      JSON.stringify({ success: true, points: 20 }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
     );
   } catch (error) {
