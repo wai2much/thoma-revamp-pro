@@ -1,9 +1,33 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createHmac } from "https://deno.land/std@0.168.0/node/crypto.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Validate Twilio signature to prevent spoofing
+function validateTwilioSignature(
+  signature: string | null,
+  url: string,
+  params: Record<string, string>,
+  authToken: string
+): boolean {
+  if (!signature) return false;
+
+  // Sort parameters and concatenate with URL
+  const data = url + Object.keys(params)
+    .sort()
+    .map(key => `${key}${params[key]}`)
+    .join('');
+
+  // Compute HMAC-SHA1
+  const hmac = createHmac('sha1', authToken);
+  hmac.update(data);
+  const computedSignature = hmac.digest('base64');
+
+  return computedSignature === signature;
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -27,6 +51,33 @@ serve(async (req) => {
     const messageSid = formData.get('MessageSid'); // SMS identifier
     
     console.log('Request data:', { from, to, callSid, messageSid, messageBody, digits, action });
+
+    // Validate Twilio signature for security
+    const authToken = Deno.env.get('TWILIO_AUTH_TOKEN');
+    if (authToken) {
+      const twilioSignature = req.headers.get('X-Twilio-Signature');
+      const fullUrl = url.protocol + '//' + url.host + url.pathname;
+      
+      // Convert formData to params object for validation
+      const params: Record<string, string> = {};
+      formData.forEach((value, key) => {
+        params[key] = value.toString();
+      });
+      
+      const isValid = validateTwilioSignature(twilioSignature, fullUrl, params, authToken);
+      
+      if (!isValid) {
+        console.error('Invalid Twilio signature - possible spoofing attempt');
+        return new Response('Forbidden', { 
+          status: 403,
+          headers: corsHeaders 
+        });
+      }
+      
+      console.log('Twilio signature validated successfully');
+    } else {
+      console.warn('TWILIO_AUTH_TOKEN not configured - skipping signature validation');
+    }
 
     // Handle SMS messages
     if (messageBody && messageSid) {
