@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MessageCircle, Star } from "lucide-react";
+import { ArrowRight, MessageCircle, Star, Phone } from "lucide-react";
 import { useState, useEffect } from "react";
 import bannerSuperGt from "@/assets/banner-super-gt.png";
 import bannerSports from "@/assets/banner-sports.png";
@@ -102,6 +102,16 @@ export const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* Phone floating button - positioned above WhatsApp button */}
+      <a
+        href="tel:94624400"
+        className="fixed bottom-44 right-6 z-[60] bg-primary hover:bg-primary/90 text-primary-foreground p-4 rounded-full shadow-2xl transition-all hover:scale-110 pulse-glow animate-fade-in"
+        style={{ boxShadow: '0 0 30px rgba(var(--primary-rgb), 0.3)', animationDelay: '0.2s' }}
+        aria-label="Call shop: 9462 4400"
+      >
+        <Phone className="h-6 w-6" />
+      </a>
 
       {/* WhatsApp floating button - positioned on the right side above Tessa */}
       <a
