@@ -116,6 +116,33 @@ export type Database = {
         }
         Relationships: []
       }
+      passentry_config: {
+        Row: {
+          created_at: string | null
+          id: string
+          product_id: string
+          template_id: string
+          tier_name: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          product_id: string
+          template_id: string
+          tier_name: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          product_id?: string
+          template_id?: string
+          tier_name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       user_loyalty_summary: {

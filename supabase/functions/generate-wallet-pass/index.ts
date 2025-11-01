@@ -31,13 +31,21 @@ const PRODUCT_COLORS: Record<string, string> = {
   "prod_TIKmurHwJ5bDWJ": "#FFD700",  // Business Velocity - Gold
 };
 
-// Map Stripe product IDs to PassEntry template IDs (tier-specific templates)
-const TEMPLATE_IDS: Record<string, string> = {
-  "prod_TIKlo107LUfRkP": "TEMPLATE_ID_SINGLE",     // Single Pack - Black
-  "prod_TIKmAWTileFjnm": "TEMPLATE_ID_FAMILY",     // Family Pack - Green
-  "prod_TIKmxYafsqTXwO": "TEMPLATE_ID_BUSINESS",   // Business Starter - Blue
-  "prod_TIKmurHwJ5bDWJ": "TEMPLATE_ID_VELOCITY",   // Business Velocity - Gold
-};
+// Function to get template ID from database
+async function getTemplateId(supabaseClient: any, productId: string): Promise<string | null> {
+  const { data, error } = await supabaseClient
+    .from("passentry_config")
+    .select("template_id")
+    .eq("product_id", productId)
+    .single();
+
+  if (error) {
+    console.error("[WALLET-PASS] Error fetching template ID:", error);
+    return null;
+  }
+
+  return data?.template_id || null;
+}
 
 // Car banner images for random selection (1125px x 432px)
 const CAR_BANNERS = [
@@ -163,10 +171,10 @@ serve(async (req) => {
     const bannerUrl = `${origin}/assets/${randomBanner}`;
     console.log("[WALLET-PASS] Using random banner:", bannerUrl);
 
-    // Get tier-specific template ID
-    const templateId = TEMPLATE_IDS[productId];
+    // Get tier-specific template ID from database
+    const templateId = await getTemplateId(supabaseClient, productId);
     if (!templateId) {
-      throw new Error(`No template configured for product: ${productId}`);
+      throw new Error(`No template configured for product: ${productId}. Please configure templates at /passentry-setup`);
     }
     console.log("[WALLET-PASS] Using template:", templateId, "for product:", productId);
 
