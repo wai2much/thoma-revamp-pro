@@ -128,6 +128,49 @@ serve(async (req) => {
     const passSource = passData.data?.attributes?.passSource;
     const appleUrl = passSource?.apple || downloadUrl;
 
+    // Send SMS if phone number provided
+    if (phone) {
+      console.log("[LOYALTY-CARD] Sending SMS to:", phone);
+      
+      const twilioAccountSid = Deno.env.get("TWILIO_ACCOUNT_SID");
+      const twilioAuthToken = Deno.env.get("TWILIO_AUTH_TOKEN");
+      const twilioPhoneNumber = Deno.env.get("TWILIO_PHONE_NUMBER");
+      
+      if (twilioAccountSid && twilioAuthToken && twilioPhoneNumber) {
+        try {
+          const smsBody = `Hi ${name}! 🎉 Welcome to TyrePlus Loyalty!\n\nYour $20 welcome credit is ready!\nMember ID: ${memberId}\n\nAdd to wallet: ${appleUrl}\n\nStart earning points today!`;
+          
+          const twilioResponse = await fetch(
+            `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`,
+            {
+              method: "POST",
+              headers: {
+                "Authorization": `Basic ${btoa(`${twilioAccountSid}:${twilioAuthToken}`)}`,
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({
+                To: phone,
+                From: twilioPhoneNumber,
+                Body: smsBody,
+              }),
+            }
+          );
+
+          if (twilioResponse.ok) {
+            console.log("[LOYALTY-CARD] SMS sent successfully");
+          } else {
+            const errorText = await twilioResponse.text();
+            console.error("[LOYALTY-CARD] SMS send failed:", errorText);
+          }
+        } catch (smsError) {
+          console.error("[LOYALTY-CARD] SMS error:", smsError);
+          // Don't fail the whole request if SMS fails
+        }
+      } else {
+        console.log("[LOYALTY-CARD] Twilio not configured, skipping SMS");
+      }
+    }
+
     return new Response(JSON.stringify({
       success: true,
       passUrl: downloadUrl,
