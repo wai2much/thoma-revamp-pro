@@ -29,3 +29,6 @@ verify_jwt = false
 
 [functions.setup-pass-templates]
 verify_jwt = true
+
+[functions.create-loyalty-template]
+verify_jwt = false
