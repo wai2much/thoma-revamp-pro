@@ -150,15 +150,36 @@ export default function LoyaltyCard() {
           </div>
         </Card>
 
-        {/* Instructions */}
-        <div className="mt-6 text-center space-y-2">
-          <p className="text-sm text-muted-foreground">
-            💡 Bookmark this page or add it to your home screen for easy access
+        {/* Save Instructions */}
+        <Card className="mt-6 p-6 space-y-4">
+          <h3 className="font-semibold text-lg text-center">💾 How to Save Your Card</h3>
+          <div className="space-y-3 text-sm">
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+              <span className="text-xl">📱</span>
+              <div>
+                <div className="font-bold">iPhone/iPad</div>
+                <div className="text-muted-foreground">Tap Share button → "Add to Home Screen" or "Add Bookmark"</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+              <span className="text-xl">🤖</span>
+              <div>
+                <div className="font-bold">Android</div>
+                <div className="text-muted-foreground">Tap Menu (⋮) → "Add to Home screen"</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+              <span className="text-xl">💻</span>
+              <div>
+                <div className="font-bold">Desktop</div>
+                <div className="text-muted-foreground">Press Ctrl+D (Windows) or Cmd+D (Mac) to bookmark</div>
+              </div>
+            </div>
+          </div>
+          <p className="text-center text-sm text-muted-foreground pt-2 border-t">
+            💡 Your card will always be available at this link - save it for instant access!
           </p>
-          <p className="text-xs text-muted-foreground">
-            Your card is always available at this link
-          </p>
-        </div>
+        </Card>
       </div>
     </div>
   );

@@ -54,8 +54,18 @@ serve(async (req) => {
 
     console.log("[LOYALTY-CARD] Generating card for lead", { email, name });
 
-    // Generate unique member ID (simple numeric for loyalty card)
-    const memberId = Math.floor(1000 + Math.random() * 9000).toString();
+    // Generate sequential member ID starting at 1000
+    // Count existing members to get next ID
+    const { count, error: countError } = await supabaseClient
+      .from('loyalty_points')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', '00000000-0000-0000-0000-000000000000');
+    
+    if (countError) {
+      console.error("[LOYALTY-CARD] Error counting members:", countError);
+    }
+    
+    const memberId = (1000 + (count || 0)).toString();
     console.log("[LOYALTY-CARD] Generated member ID:", memberId);
     
     // Member since as month name

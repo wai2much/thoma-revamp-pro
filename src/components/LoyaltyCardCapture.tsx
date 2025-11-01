@@ -88,6 +88,27 @@ export const LoyaltyCardCapture = () => {
               className="w-full h-12 bg-black hover:bg-black/90 text-white"
             />
           </div>
+          
+          <div className="mt-6 p-4 bg-primary/10 rounded-lg space-y-3">
+            <h3 className="font-semibold text-lg">💾 Save Your Card</h3>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-start gap-2">
+                <span className="font-bold">📱 iOS:</span>
+                <span>Tap "Add to Apple Wallet" above or bookmark this page (Share → Add Bookmark)</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="font-bold">🤖 Android:</span>
+                <span>Tap "Add to Google Pay" or save to home screen (Menu ⋮ → Add to Home Screen)</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="font-bold">🔖 Desktop:</span>
+                <span>Bookmark this page (Ctrl/Cmd + D)</span>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">
+              💡 Keep this link safe - it's your access to your loyalty card and $20 credit!
+            </p>
+          </div>
 
           <p className="text-sm text-muted-foreground mt-6">
             Check your email for details on how to use your $20 credit
