@@ -11,12 +11,18 @@ serve(async (req) => {
   }
 
   try {
-    console.log('ElevenLabs conversation webhook called');
+    console.log('[ELEVENLABS-CONVERSATION] Webhook called', {
+      method: req.method,
+      timestamp: new Date().toISOString()
+    });
     
     const formData = await req.formData();
     const callSid = formData.get('CallSid');
     
-    console.log('Starting ElevenLabs conversation for call:', callSid);
+    console.log('[ELEVENLABS-CONVERSATION] Processing call', {
+      callSid,
+      timestamp: new Date().toISOString()
+    });
 
     const elevenLabsApiKey = Deno.env.get('ELEVENLABS_API_KEY');
     if (!elevenLabsApiKey) {
@@ -35,11 +41,15 @@ serve(async (req) => {
     );
 
     if (!agentResponse.ok) {
-      console.error('Failed to get ElevenLabs signed URL');
+      console.error('[ELEVENLABS-CONVERSATION] Failed to get signed URL', {
+        status: agentResponse.status,
+        statusText: agentResponse.statusText
+      });
       throw new Error('Failed to initialize conversation');
     }
 
     const { signed_url } = await agentResponse.json();
+    console.log('[ELEVENLABS-CONVERSATION] Got signed URL successfully');
 
     // Generate TwiML to connect call to ElevenLabs
     const twiml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -58,7 +68,10 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('Error in ElevenLabs conversation:', error);
+    console.error('[ELEVENLABS-CONVERSATION] Error occurred', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      timestamp: new Date().toISOString()
+    });
     
     const errorTwiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>

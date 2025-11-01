@@ -11,10 +11,19 @@ serve(async (req) => {
   }
 
   try {
+    console.log('[TYRE-ASSISTANT] Request received', {
+      timestamp: new Date().toISOString()
+    });
+    
     const { messages } = await req.json();
+    console.log('[TYRE-ASSISTANT] Messages parsed', {
+      messageCount: messages?.length || 0
+    });
+    
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
+      console.error('[TYRE-ASSISTANT] API key not configured');
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
@@ -65,30 +74,41 @@ Always be warm, friendly, and helpful. If asked about traffic or weather, acknow
 
     if (!response.ok) {
       if (response.status === 429) {
+        console.warn('[TYRE-ASSISTANT] Rate limit exceeded');
         return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again later." }), {
           status: 429,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       if (response.status === 402) {
+        console.error('[TYRE-ASSISTANT] Payment required');
         return new Response(JSON.stringify({ error: "Service unavailable. Please contact support." }), {
           status: 402,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       const errorText = await response.text();
-      console.error("AI gateway error:", response.status, errorText);
+      console.error('[TYRE-ASSISTANT] AI gateway error', {
+        status: response.status,
+        error: errorText
+      });
       return new Response(JSON.stringify({ error: "AI service error" }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
+    console.log('[TYRE-ASSISTANT] Response successful, streaming to client');
+
     return new Response(response.body, {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (error) {
-    console.error("Error in tyre-assistant:", error);
+    console.error('[TYRE-ASSISTANT] Error occurred', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      timestamp: new Date().toISOString()
+    });
     return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
