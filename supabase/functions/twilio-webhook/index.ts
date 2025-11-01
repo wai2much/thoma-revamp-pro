@@ -110,16 +110,17 @@ serve(async (req) => {
       console.warn('TWILIO_AUTH_TOKEN not configured - skipping signature validation');
     }
 
-    // Handle SMS messages
-    if (messageBody && messageSid) {
-      console.log('Processing SMS message:', { from, messageBody });
+    // Handle SMS/MMS messages (check for MessageSid which is present for both)
+    if (messageSid) {
+      console.log('Processing SMS/MMS message:', { from, messageBody, messageSid });
       
-      // Respond to SMS
+      // Respond to SMS/MMS
       const smsTwiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Message>Thank you for contacting Tyre Plus! For membership inquiries, please call ${to} or visit our website. Our AI assistant is ready to help you with your membership benefits.</Message>
 </Response>`;
       
+      console.log('Sending SMS response');
       return new Response(smsTwiml, {
         headers: { 'Content-Type': 'text/xml', ...corsHeaders },
       });
