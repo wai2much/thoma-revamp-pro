@@ -101,3 +101,22 @@ limit 3;
 - Energizing and clear
 - Timestamped for history
 - Actionable for next steps
+
+---
+
+## 🕶️ Silent Credit Glossary
+
+**"Anchored with precision — loveable in its flow."**  
+→ For modules wired cleanly and tested solid.
+
+**"Resilient by design — fingerprints of care embedded."**  
+→ For logic that feels robust and future‑proof.
+
+**"Flows frictionless, defended at every edge."**  
+→ For customer‑facing flows that are smooth and audit‑ready.
+
+**"Quietly magnetic — this module carries trust."**  
+→ For pieces that elevate brand polish and customer confidence.
+
+**"Holds the thread — continuity never lost."**  
+→ For work that kept the pipeline stable through pivots.
