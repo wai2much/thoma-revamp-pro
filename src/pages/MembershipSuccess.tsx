@@ -51,6 +51,60 @@ const MembershipSuccess = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const sendWelcomeNotification = async (
+    memberData: { memberId?: string; planName?: string; memberSince?: string },
+    urls: { appleWalletUrl?: string; googlePayUrl?: string; passUrl?: string }
+  ) => {
+    if (!user || !memberData.memberId || !memberData.planName || !subscription.product_id) {
+      console.log("⚠️ [FRONTEND] Skipping welcome notification - missing data");
+      return;
+    }
+
+    try {
+      console.log("📧 [FRONTEND] Sending welcome notification...");
+      
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (!sessionData.session) {
+        console.error("❌ [FRONTEND] No session for welcome notification");
+        return;
+      }
+
+      // Get user profile for name
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .single();
+
+      const userName = profile?.full_name || user.email?.split('@')[0] || 'Member';
+
+      const { error } = await supabase.functions.invoke('send-membership-welcome', {
+        body: {
+          name: userName,
+          email: user.email,
+          phone: user.phone || undefined,
+          memberId: memberData.memberId,
+          planName: memberData.planName,
+          productId: subscription.product_id,
+          appleWalletUrl: urls.appleWalletUrl,
+          googlePayUrl: urls.googlePayUrl,
+          passUrl: urls.passUrl,
+        },
+        headers: {
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+      });
+
+      if (error) {
+        console.error("❌ [FRONTEND] Welcome notification error:", error);
+      } else {
+        console.log("✅ [FRONTEND] Welcome notification sent successfully");
+      }
+    } catch (error) {
+      console.error("💥 [FRONTEND] Error sending welcome notification:", error);
+    }
+  };
+
   const pollForPass = async () => {
     if (!user || !subscription.subscribed) return;
 
@@ -71,16 +125,19 @@ const MembershipSuccess = () => {
 
     if (data) {
       console.log("✅ [FRONTEND] Pass found in database:", data);
-      setPassUrls({
+      const urls = {
         appleWalletUrl: data.apple_url || undefined,
         googlePayUrl: data.google_url || undefined,
         passUrl: data.download_url || undefined,
-      });
-      setMembershipData({
+      };
+      const memberData = {
         memberId: data.member_id,
         planName: subscription.product_id ? PRODUCT_NAMES[subscription.product_id as keyof typeof PRODUCT_NAMES] : undefined,
         memberSince: new Date(data.created_at).getFullYear().toString(),
-      });
+      };
+      
+      setPassUrls(urls);
+      setMembershipData(memberData);
       setIsGenerating(false);
       
       // Stop polling
@@ -90,6 +147,9 @@ const MembershipSuccess = () => {
       }
       
       toast.success("Your digital membership card is ready!");
+      
+      // Send welcome email + SMS
+      sendWelcomeNotification(memberData, urls);
     }
   };
 
@@ -121,14 +181,20 @@ const MembershipSuccess = () => {
       
       // If pass already exists, show it immediately
       if (data.passUrl) {
-        setPassUrls({
+        const urls = {
           appleWalletUrl: data.appleWalletUrl,
           googlePayUrl: data.googlePayUrl,
           passUrl: data.passUrl,
-        });
-        setMembershipData(data.membershipData);
+        };
+        const memberData = data.membershipData;
+        
+        setPassUrls(urls);
+        setMembershipData(memberData);
         setIsGenerating(false);
         toast.success("Your digital membership card is ready!");
+        
+        // Send welcome email + SMS
+        sendWelcomeNotification(memberData, urls);
       } else {
         // Start polling for pass in database (webhook will insert it)
         console.log("⏳ [FRONTEND] Waiting for webhook to confirm pass creation...");
