@@ -69,14 +69,8 @@ const MembershipSuccess = () => {
         return;
       }
 
-      // Get user profile for name
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('full_name')
-        .eq('id', user.id)
-        .single();
-
-      const userName = profile?.full_name || user.email?.split('@')[0] || 'Member';
+      // Extract name from email or use default
+      const userName = user.email?.split('@')[0] || 'Member';
 
       const { error } = await supabase.functions.invoke('send-membership-welcome', {
         body: {

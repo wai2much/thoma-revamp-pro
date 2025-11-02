@@ -32,3 +32,6 @@ verify_jwt = true
 
 [functions.create-loyalty-template]
 verify_jwt = false
+
+[functions.send-membership-welcome]
+verify_jwt = true
