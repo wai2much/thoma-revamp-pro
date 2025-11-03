@@ -178,6 +178,35 @@ serve(async (req) => {
     }
     console.log("[WALLET-PASS] Using template:", templateId, "for product:", productId);
 
+    // DIAGNOSTIC: Fetch template details to see actual field IDs
+    try {
+      const templateResponse = await fetch(`https://api.passentry.com/api/v1/pass-templates/${templateId}`, {
+        headers: { "Authorization": `Bearer ${passEntryKey}` }
+      });
+      
+      if (templateResponse.ok) {
+        const templateData = await templateResponse.json();
+        const fields = templateData.data?.attributes?.fields || {};
+        
+        // Extract all field IDs
+        const allFieldIds: string[] = [];
+        for (const section of Object.values(fields)) {
+          if (section && typeof section === 'object') {
+            for (const field of Object.values(section as any)) {
+              if (field && typeof field === 'object' && 'id' in field) {
+                allFieldIds.push((field as any).id);
+              }
+            }
+          }
+        }
+        
+        console.log("[WALLET-PASS] DIAGNOSTIC - Template field IDs available:", [...new Set(allFieldIds)]);
+        console.log("[WALLET-PASS] DIAGNOSTIC - Full template fields structure:", JSON.stringify(fields, null, 2));
+      }
+    } catch (diagError) {
+      console.error("[WALLET-PASS] Failed to fetch template for diagnostics:", diagError);
+    }
+
     // Create PassEntry wallet pass - include metadata for webhook
     // Note: Custom fields must be wrapped in { value: "..." } format
     const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${templateId}&includePassSource=apple,google`, {
