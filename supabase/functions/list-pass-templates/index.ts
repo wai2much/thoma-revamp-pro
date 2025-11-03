@@ -34,22 +34,64 @@ serve(async (req) => {
     const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
     if (!passEntryKey) throw new Error("PassEntry API key not configured");
 
-    // List all pass templates
-    const response = await fetch("https://api.passentry.com/api/v1/pass-templates", {
-      headers: {
-        "Authorization": `Bearer ${passEntryKey}`,
-      },
-    });
+    // Get all template IDs from database
+    const { data: templates, error: dbError } = await supabaseClient
+      .from("passentry_config")
+      .select("*");
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`PassEntry API error: ${response.status} - ${errorText}`);
+    if (dbError) throw dbError;
+    console.log("[LIST-TEMPLATES] Found templates in DB:", templates);
+
+    // Fetch detailed info for each template including field IDs
+    const templateDetails = [];
+    for (const template of templates || []) {
+      try {
+        console.log(`[LIST-TEMPLATES] Fetching template ${template.template_id} for ${template.tier_name}`);
+        const response = await fetch(`https://api.passentry.com/api/v1/pass-templates/${template.template_id}`, {
+          headers: {
+            "Authorization": `Bearer ${passEntryKey}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const fields = data.data?.attributes?.fields || {};
+          
+          // Extract all field IDs from all sections
+          const allFieldIds: string[] = [];
+          for (const section of Object.values(fields)) {
+            if (section && typeof section === 'object') {
+              for (const field of Object.values(section as any)) {
+                if (field && typeof field === 'object' && 'id' in field) {
+                  allFieldIds.push((field as any).id);
+                }
+              }
+            }
+          }
+          
+          console.log(`[LIST-TEMPLATES] Template ${template.tier_name} has field IDs:`, allFieldIds);
+          
+          templateDetails.push({
+            tier: template.tier_name,
+            product_id: template.product_id,
+            template_id: template.template_id,
+            field_ids: [...new Set(allFieldIds)], // unique field IDs
+            fields: fields,
+            colors: data.data?.attributes?.colors || {},
+            images: data.data?.attributes?.images || {}
+          });
+        } else {
+          const errorText = await response.text();
+          console.error(`[LIST-TEMPLATES] Failed to fetch template ${template.template_id}:`, errorText);
+        }
+      } catch (error) {
+        console.error(`[LIST-TEMPLATES] Error fetching template ${template.template_id}:`, error);
+      }
     }
 
-    const data = await response.json();
-    console.log("[LIST-TEMPLATES] Templates retrieved", { count: data.data?.length });
+    console.log("[LIST-TEMPLATES] All template details:", JSON.stringify(templateDetails, null, 2));
 
-    return new Response(JSON.stringify(data), {
+    return new Response(JSON.stringify({ templates: templateDetails }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
