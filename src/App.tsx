@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
+import Dashboard from "./pages/Dashboard";
 import Membership from "./pages/Membership";
 import MembershipSuccess from "./pages/MembershipSuccess";
 import Scanner from "./pages/Scanner";
@@ -26,6 +27,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/membership" element={<Membership />} />
           <Route path="/membership-success" element={<MembershipSuccess />} />
           <Route path="/scanner" element={<Scanner />} />

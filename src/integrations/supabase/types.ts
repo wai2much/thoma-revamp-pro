@@ -143,6 +143,54 @@ export type Database = {
         }
         Relationships: []
       }
+      slack_events: {
+        Row: {
+          channel: string
+          created_at: string | null
+          event_type: string
+          id: string
+          message: string
+          metadata: Json | null
+        }
+        Insert: {
+          channel: string
+          created_at?: string | null
+          event_type: string
+          id?: string
+          message: string
+          metadata?: Json | null
+        }
+        Update: {
+          channel?: string
+          created_at?: string | null
+          event_type?: string
+          id?: string
+          message?: string
+          metadata?: Json | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          assigned_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          assigned_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          assigned_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       user_loyalty_summary: {
@@ -157,9 +205,16 @@ export type Database = {
     }
     Functions: {
       get_user_points_balance: { Args: { p_user_id: string }; Returns: number }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "operator" | "narrator" | "responder" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -286,6 +341,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["operator", "narrator", "responder", "admin"],
+    },
   },
 } as const
