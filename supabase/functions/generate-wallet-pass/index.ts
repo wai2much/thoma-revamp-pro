@@ -190,10 +190,10 @@ serve(async (req) => {
         pass: {
           stripImage: bannerUrl,
           backgroundColor: tierColor,
-          label1: { value: memberName.toUpperCase() },
-          label2: { value: memberId },
-          label3: { value: memberSince },
-          label4: { value: planName.toUpperCase() }
+          member_name: memberName.toUpperCase(),
+          member_id: memberId,
+          Custom: memberSince,
+          tier_name: planName.toUpperCase()
         },
         metadata: {
           user_id: user.id,

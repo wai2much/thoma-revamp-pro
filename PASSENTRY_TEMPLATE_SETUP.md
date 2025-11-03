@@ -21,7 +21,7 @@ Create 4 separate templates at [https://app.passentry.com/pass-templates](https:
 
 3. **Member Since** (Text Field)
    - Label: "Member Since"
-   - Key: `member_since`
+   - Key: `Custom`
 
 4. **Tier Name** (Text Field)
    - Label: "Plan"
@@ -50,7 +50,7 @@ Upload a banner image (1500x600px recommended) or use dynamic banner via API
 
 3. **Member Since** (Text Field)
    - Label: "Member Since"
-   - Key: `member_since`
+   - Key: `Custom`
 
 4. **Tier Name** (Text Field)
    - Label: "Plan"
@@ -79,7 +79,7 @@ Upload a banner image (1500x600px recommended) or use dynamic banner via API
 
 3. **Member Since** (Text Field)
    - Label: "Member Since"
-   - Key: `member_since`
+   - Key: `Custom`
 
 4. **Tier Name** (Text Field)
    - Label: "Plan"
@@ -108,7 +108,7 @@ Upload a banner image (1500x600px recommended) or use dynamic banner via API
 
 3. **Member Since** (Text Field)
    - Label: "Member Since"
-   - Key: `member_since`
+   - Key: `Custom`
 
 4. **Tier Name** (Text Field)
    - Label: "Plan"
