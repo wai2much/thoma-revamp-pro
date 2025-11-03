@@ -179,6 +179,7 @@ serve(async (req) => {
     console.log("[WALLET-PASS] Using template:", templateId, "for product:", productId);
 
     // Create PassEntry wallet pass - include metadata for webhook
+    // Note: Custom fields must be wrapped in { value: "..." } format
     const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${templateId}&includePassSource=apple,google`, {
       method: "POST",
       headers: {
@@ -188,12 +189,10 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
-          stripImage: bannerUrl,
-          backgroundColor: tierColor,
-          member_name: memberName.toUpperCase(),
-          member_id: memberId,
-          Custom: memberSince,
-          tier_name: planName.toUpperCase()
+          member_name: { value: memberName.toUpperCase() },
+          member_id: { value: memberId },
+          Custom: { value: memberSince },
+          tier_name: { value: planName.toUpperCase() }
         },
         metadata: {
           user_id: user.id,
