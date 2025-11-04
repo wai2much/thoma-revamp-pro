@@ -220,7 +220,7 @@ serve(async (req) => {
         pass: {
           member_name: { value: memberName.toUpperCase() },
           member_id: { value: memberId },
-          Custom: { value: memberSince },
+          Member: { value: memberSince },
           tier_name: { value: planName.toUpperCase() }
         },
         metadata: {
