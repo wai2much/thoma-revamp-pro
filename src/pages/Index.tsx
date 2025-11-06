@@ -62,8 +62,8 @@ const Index = () => {
                     </a>
                   </p>
                   <p>
-                    <a href="https://onlinetyreplusthomastown.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                      onlinetyreplusthomastown.com
+                    <a href="https://hausoftechnik.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                      hausoftechnik.com
                     </a>
                   </p>
                 </div>

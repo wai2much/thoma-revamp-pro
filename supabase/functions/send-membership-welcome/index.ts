@@ -132,13 +132,13 @@ serve(async (req) => {
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-              <a href="https://tyreplusthomastown.com/membership" style="display: inline-block; padding: 12px 32px; background: #635BFF; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
+              <a href="https://hausoftechnik.com/membership" style="display: inline-block; padding: 12px 32px; background: #635BFF; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
                 View My Dashboard
               </a>
             </div>
             
             <p style="font-size: 14px; color: #6b7280; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-              Questions? Contact us at <a href="mailto:support@tyreplusthomastown.com" style="color: #635BFF;">support@tyreplusthomastown.com</a>
+              Questions? Contact us at <a href="mailto:info@hausoftechnik.com.au" style="color: #635BFF;">info@hausoftechnik.com.au</a>
             </p>
           </div>
           
@@ -169,7 +169,7 @@ serve(async (req) => {
       
       if (twilioAccountSid && twilioAuthToken && twilioPhoneNumber) {
         try {
-          const cardUrl = `https://tyreplusthomastown.com/membership`;
+          const cardUrl = `https://hausoftechnik.com/membership`;
           const smsBody = `Hi ${name}! 🎉 Welcome to TyrePlus ${planName}!\n\nMember ID: ${memberId}\n\nView your dashboard: ${cardUrl}\n\nYour digital membership card has been sent to your email!`;
           
           const twilioResponse = await fetch(

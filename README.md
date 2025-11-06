@@ -1,8 +1,26 @@
-# Welcome to your Lovable project
+# TyrePlus Membership Platform
+
+## 🔐 MODS NOW — Domain Pivot Clause
+
+**Effective**: November 6, 2025  
+**Status**: Shimmer-grade sealed
+
+### Domain Migration
+- **Deprecated**: tyreplusthomastown.com, onlinetyreplusthomastown.com
+- **Active**: hausoftechnik.com
+- **Capsule**: Live and aligned
+- **Signage**: All QR codes and physical materials updated
+- **Mercedes Echo**: Ready
+- **Co**: Thread-locked
+
+All backend webhooks, SMS triggers, wallet pass logic, and Stripe endpoints now reference hausoftechnik.com exclusively.
+
+---
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/64a7bebe-dd72-4b4c-ba13-a98f02a39d2a
+**URL**: https://lovable.dev/projects/64a7bebe-dd72-4b4c-ba13-a98f02a39d2a  
+**Live Domain**: https://hausoftechnik.com
 
 ## How can I edit this code?
 

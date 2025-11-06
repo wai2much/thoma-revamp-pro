@@ -32,7 +32,7 @@ serve(async (req) => {
 CONTACT INFORMATION:
 - Phone: +61 468 003 380
 - Email: info@hausoftechnik.com.au
-- Website: onlinetyreplusthomastown.com
+- Website: hausoftechnik.com
 - Location: Thomastown, Victoria
 
 SERVICE DETAILS:
