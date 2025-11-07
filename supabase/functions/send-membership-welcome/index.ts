@@ -138,7 +138,7 @@ serve(async (req) => {
             </div>
             
             <p style="font-size: 14px; color: #6b7280; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-              Questions? Contact us at <a href="mailto:info@hausoftechnik.com.au" style="color: #635BFF;">info@hausoftechnik.com.au</a>
+              Questions? Contact us at <a href="mailto:info@hausoftechnik.com" style="color: #635BFF;">info@hausoftechnik.com</a>
             </p>
           </div>
           
@@ -150,7 +150,7 @@ serve(async (req) => {
     `;
 
     const emailResponse = await resend.emails.send({
-      from: "TyrePlus Membership <onboarding@resend.dev>",
+      from: "TyrePlus Membership <membership@hausoftechnik.com>",
       to: [email],
       subject: `🎉 Welcome to TyrePlus ${planName}!`,
       html: emailHtml,

@@ -31,7 +31,7 @@ serve(async (req) => {
 
 CONTACT INFORMATION:
 - Phone: +61 468 003 380
-- Email: info@hausoftechnik.com.au
+- Email: info@hausoftechnik.com
 - Website: hausoftechnik.com
 - Location: Thomastown, Victoria
 
