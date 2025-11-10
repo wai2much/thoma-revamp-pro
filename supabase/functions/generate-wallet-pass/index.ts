@@ -209,6 +209,7 @@ serve(async (req) => {
 
     // Create PassEntry wallet pass - include metadata for webhook
     // Note: Custom fields must be wrapped in { value: "..." } format
+    // Map to actual template field IDs (with exact casing and spaces!)
     const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${templateId}&includePassSource=apple,google`, {
       method: "POST",
       headers: {
@@ -218,10 +219,10 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
-          member_name: { value: memberName.toUpperCase() },
-          member_id: { value: memberId },
-          Member: { value: memberSince },
-          tier_name: { value: planName.toUpperCase() }
+          "First_Last": { value: memberName.toUpperCase() },
+          "ID ": { value: memberId },  // Note: space after "ID" is required!
+          "Monthly_Yearly ": { value: `Member Since ${memberSince}` },  // Note: space after "Monthly_Yearly" is required!
+          "Custom": { value: planName.toUpperCase() }
         },
         metadata: {
           user_id: user.id,
