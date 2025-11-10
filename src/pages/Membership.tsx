@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Loader2, Shield, Calendar, CreditCard, LogOut, Wallet } from "lucide-react";
+import { Loader2, Shield, Calendar, CreditCard, LogOut, Wallet, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { WalletPassButton } from "@/components/WalletPassButton";
@@ -20,6 +20,7 @@ const Membership = () => {
   const { user, subscription, loading, signOut, refreshSubscription } = useAuth();
   const [portalLoading, setPortalLoading] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [testEmailLoading, setTestEmailLoading] = useState(false);
   const [passUrls, setPassUrls] = useState<{
     appleUrl?: string;
     googleUrl?: string;
@@ -117,6 +118,67 @@ const Membership = () => {
       });
     } finally {
       setPortalLoading(false);
+    }
+  };
+
+  const handleSendTestEmail = async () => {
+    if (!user || !subscription.subscribed || !subscription.product_id) {
+      sonnerToast.error("Missing required data for test email");
+      return;
+    }
+
+    setTestEmailLoading(true);
+    try {
+      // Get member ID from database
+      const { data: passData } = await supabase
+        .from("membership_passes")
+        .select("member_id")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (!passData?.member_id) {
+        sonnerToast.error("No membership pass found. Generate a pass first.");
+        return;
+      }
+
+      const userName = user.email?.split('@')[0] || 'Member';
+      const planName = PRODUCT_NAMES[subscription.product_id] || "Unknown Plan";
+
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (!sessionData.session) {
+        sonnerToast.error("Session expired. Please sign in again.");
+        return;
+      }
+
+      const { error } = await supabase.functions.invoke('send-membership-welcome', {
+        body: {
+          name: userName,
+          email: user.email,
+          phone: user.phone || undefined,
+          memberId: passData.member_id,
+          planName: planName,
+          productId: subscription.product_id,
+          appleWalletUrl: passUrls.appleUrl,
+          googlePayUrl: passUrls.googleUrl,
+          passUrl: passUrls.url,
+        },
+        headers: {
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      sonnerToast.success("Test welcome email sent! Check your inbox.");
+    } catch (error: any) {
+      console.error("Test email error:", error);
+      sonnerToast.error(error.message || "Failed to send test email");
+    } finally {
+      setTestEmailLoading(false);
     }
   };
 
@@ -237,13 +299,34 @@ const Membership = () => {
             </Button>
 
             {subscription.subscribed && (
-              <Button
-                variant="outline"
-                onClick={refreshSubscription}
-                className="w-full"
-              >
-                Refresh Status
-              </Button>
+              <>
+                <Button
+                  variant="outline"
+                  onClick={refreshSubscription}
+                  className="w-full"
+                >
+                  Refresh Status
+                </Button>
+                
+                <Button
+                  variant="secondary"
+                  onClick={handleSendTestEmail}
+                  disabled={testEmailLoading}
+                  className="w-full"
+                >
+                  {testEmailLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="mr-2 h-4 w-4" />
+                      Send Test Welcome Email
+                    </>
+                  )}
+                </Button>
+              </>
             )}
           </div>
 
