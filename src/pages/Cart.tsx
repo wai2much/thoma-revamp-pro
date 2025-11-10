@@ -1,11 +1,16 @@
 import { useCartStore } from '@/stores/cartStore';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { PriceDisplay } from '@/components/PriceDisplay';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, createCheckout, isLoading, getTotal, getItemCount } = useCartStore();
+  const { items, updateQuantity, removeItem, createCheckout, isLoading, getTotal, getItemCount, getTotalSavings } = useCartStore();
+  const { subscription } = useAuth();
+  const isMember = subscription.subscribed;
 
   if (items.length === 0) {
     return (
@@ -55,8 +60,17 @@ const Cart = () => {
                       </div>
                       
                       <div className="flex-1">
-                        <h3 className="font-semibold text-lg">{item.product.title}</h3>
-                        <p className="text-sm text-muted-foreground">{item.variantTitle}</p>
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <h3 className="font-semibold text-lg">{item.product.title}</h3>
+                            <p className="text-sm text-muted-foreground">{item.variantTitle}</p>
+                          </div>
+                          {item.memberPrice && isMember && (
+                            <Badge variant="secondary" className="bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/30">
+                              Member Price
+                            </Badge>
+                          )}
+                        </div>
                         
                         <div className="mt-4 flex items-center justify-between">
                           <div className="flex items-center gap-2">
@@ -78,9 +92,16 @@ const Cart = () => {
                           </div>
                           
                           <div className="flex items-center gap-4">
-                            <span className="text-lg font-bold">
-                              ${(parseFloat(item.price.amount) * item.quantity).toFixed(2)}
-                            </span>
+                            <div className="text-right">
+                              <div className="text-lg font-bold">
+                                ${((isMember && item.memberPrice ? item.memberPrice : parseFloat(item.price.amount)) * item.quantity).toFixed(2)}
+                              </div>
+                              {isMember && item.memberPrice && (
+                                <div className="text-xs text-muted-foreground line-through">
+                                  ${(parseFloat(item.price.amount) * item.quantity).toFixed(2)}
+                                </div>
+                              )}
+                            </div>
                             <Button
                               variant="ghost"
                               size="icon"
@@ -106,8 +127,14 @@ const Cart = () => {
               <CardContent className="space-y-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Items ({getItemCount()})</span>
-                  <span>${getTotal()}</span>
+                  <span>${getTotal(isMember).toFixed(2)}</span>
                 </div>
+                {isMember && getTotalSavings(isMember) > 0 && (
+                  <div className="flex justify-between text-sm text-green-600 dark:text-green-500">
+                    <span className="font-medium">Member Savings</span>
+                    <span className="font-medium">-${getTotalSavings(isMember).toFixed(2)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Shipping</span>
                   <span>Calculated at checkout</span>
@@ -115,8 +142,13 @@ const Cart = () => {
                 <div className="border-t pt-4">
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span>${getTotal()} USD</span>
+                    <span>${getTotal(isMember).toFixed(2)} AUD</span>
                   </div>
+                  {isMember && getTotalSavings(isMember) > 0 && (
+                    <p className="text-xs text-green-600 dark:text-green-500 mt-1 text-right">
+                      You're saving ${getTotalSavings(isMember).toFixed(2)} with your membership!
+                    </p>
+                  )}
                 </div>
               </CardContent>
               <CardFooter className="flex flex-col gap-2">

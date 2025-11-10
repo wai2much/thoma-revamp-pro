@@ -12,6 +12,7 @@ export interface ShopifyProduct {
   title: string;
   description: string;
   handle: string;
+  vendor: string;
   images: {
     edges: Array<{
       node: {
@@ -101,6 +102,7 @@ export async function fetchProducts(limit = 20): Promise<ShopifyProduct[]> {
             title
             description
             handle
+            vendor
             images(first: 5) {
               edges {
                 node {
@@ -162,6 +164,7 @@ export async function fetchProduct(handle: string): Promise<ShopifyProduct | nul
         title
         description
         handle
+        vendor
         images(first: 5) {
           edges {
             node {

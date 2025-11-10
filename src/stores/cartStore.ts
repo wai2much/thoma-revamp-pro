@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
+import { createStorefrontCheckout } from '@/lib/shopify';
+import { ShopifyProduct } from '@/lib/shopify';
+import { getMemberPrice, isVapeHeadProduct } from '@/lib/memberPricing';
 import { toast } from 'sonner';
 
 export interface CartItem {
@@ -11,6 +13,7 @@ export interface CartItem {
     amount: string;
     currencyCode: string;
   };
+  memberPrice?: number;
   quantity: number;
   selectedOptions: Array<{
     name: string;
@@ -34,7 +37,8 @@ interface CartStore {
   setLoading: (loading: boolean) => void;
   createCheckout: () => Promise<void>;
   getItemCount: () => number;
-  getTotal: () => string;
+  getTotal: (isMember?: boolean) => number;
+  getTotalSavings: (isMember?: boolean) => number;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -134,12 +138,26 @@ export const useCartStore = create<CartStore>()(
         return get().items.reduce((total, item) => total + item.quantity, 0);
       },
 
-      getTotal: () => {
-        const total = get().items.reduce((sum, item) => {
-          return sum + (parseFloat(item.price.amount) * item.quantity);
+      getTotal: (isMember = false) => {
+        return get().items.reduce((total, item) => {
+          const price = isMember && item.memberPrice 
+            ? item.memberPrice 
+            : parseFloat(item.price.amount);
+          return total + (price * item.quantity);
         }, 0);
-        return total.toFixed(2);
-      }
+      },
+
+      getTotalSavings: (isMember = false) => {
+        if (!isMember) return 0;
+        return get().items.reduce((total, item) => {
+          if (item.memberPrice) {
+            const regularPrice = parseFloat(item.price.amount);
+            const savings = (regularPrice - item.memberPrice) * item.quantity;
+            return total + savings;
+          }
+          return total;
+        }, 0);
+      },
     }),
     {
       name: 'tyreplus-cart',
