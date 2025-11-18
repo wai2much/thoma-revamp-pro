@@ -12,6 +12,7 @@ import MembershipSuccess from "./pages/MembershipSuccess";
 import Scanner from "./pages/Scanner";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
+import CapsuleLanding from "./pages/CapsuleLanding";
 import Cart from "./pages/Cart";
 import Loyalty from "./pages/Loyalty";
 import LoyaltyCard from "./pages/LoyaltyCard";
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/scanner" element={<Scanner />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/:handle" element={<ProductDetail />} />
+          <Route path="/capsule/:handle" element={<CapsuleLanding />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/loyalty" element={<Loyalty />} />
           <Route path="/loyalty-card/:memberId" element={<LoyaltyCard />} />
