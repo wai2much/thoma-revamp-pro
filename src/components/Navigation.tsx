@@ -21,7 +21,7 @@ export const Navigation = () => {
       
       <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-2">
-          <img src={hausLogo} alt="Haus of Technik" className="h-16 w-auto" />
+          <img src={hausLogo} alt="Haus of Technik" className="h-24 w-auto" />
         </div>
 
         <div className="flex items-center gap-3">
