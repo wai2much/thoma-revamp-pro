@@ -232,6 +232,14 @@ All colors MUST be HSL.
       0 0 10px hsl(var(--jade-light) / 0.3);
   }
   
+  .text-flat, .no-3d {
+    text-shadow: none !important;
+  }
+  
+  [class*="price"] * {
+    text-shadow: none !important;
+  }
+  
   .perspective-1000 {
     perspective: 1000px;
   }
