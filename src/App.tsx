@@ -29,6 +29,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <div className="purple-dust-overlay" />
+        <div className="liquid-glass" />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
