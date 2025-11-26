@@ -28,7 +28,6 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="purple-dust-overlay" />
         <div className="liquid-glass" />
         <Routes>
           <Route path="/" element={<Index />} />
