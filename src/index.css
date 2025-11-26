@@ -259,7 +259,7 @@ All colors MUST be HSL.
       radial-gradient(ellipse at 30% 20%, hsla(0, 0%, 100%, 0.35) 0%, transparent 50%),
       radial-gradient(ellipse at 70% 60%, hsla(0, 0%, 100%, 0.28) 0%, transparent 50%),
       radial-gradient(ellipse at 50% 90%, hsla(0, 0%, 100%, 0.25) 0%, transparent 50%);
-    backdrop-filter: blur(2px) saturate(150%);
+    backdrop-filter: blur(0.5px) saturate(150%);
     animation: liquid-flow 25s ease-in-out infinite;
     background-size: 300% 300%;
     mix-blend-mode: overlay;
