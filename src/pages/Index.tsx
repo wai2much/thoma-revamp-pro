@@ -80,7 +80,7 @@ const Index = () => {
             </div>
             
             <div className="text-center text-sm text-muted-foreground pt-6 border-t border-border/50">
-              <p>© 2025 Tyreplus Thomastown. All rights reserved.</p>
+              <p>© 2025 Haus of Technik. All rights reserved.</p>
             </div>
           </div>
         </footer>

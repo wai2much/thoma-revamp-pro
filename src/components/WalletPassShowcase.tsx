@@ -42,7 +42,7 @@ export const WalletPassShowcase = () => {
               {/* Banner */}
               <img 
                 src={bannerImage} 
-                alt="TyrePlus membership wallet pass banner with premium sports car" 
+                alt="Haus of Technik membership wallet pass banner with premium sports car" 
                 className="w-full h-48 object-cover"
                 loading="lazy"
               />
@@ -85,7 +85,7 @@ export const WalletPassShowcase = () => {
                 {/* QR Code */}
                 <div className="bg-white p-4 rounded-lg flex items-center justify-center">
                   {qrCodeUrl ? (
-                    <img src={qrCodeUrl} alt="QR code for TyrePlus membership digital wallet pass" className="w-32 h-32" loading="lazy" />
+                    <img src={qrCodeUrl} alt="QR code for Haus of Technik membership digital wallet pass" className="w-32 h-32" loading="lazy" />
                   ) : (
                     <div className="w-32 h-32 bg-black/10 rounded flex items-center justify-center">
                       <span className="text-xs text-black/40">Loading...</span>

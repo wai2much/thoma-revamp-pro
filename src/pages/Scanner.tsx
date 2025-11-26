@@ -29,8 +29,8 @@ const Scanner = () => {
 
   const validateMember = async (memberId: string) => {
     try {
-      // Extract customer ID from QR code format: TYREPLUS-{memberId}
-      const customerId = memberId.replace("TYREPLUS-", "").toLowerCase();
+      // Extract customer ID from QR code format: HAUS-{memberId}
+      const customerId = memberId.replace("HAUS-", "").toLowerCase();
       
       // Check subscription via our edge function
       const { data: { user } } = await supabase.auth.getUser();

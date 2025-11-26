@@ -46,7 +46,7 @@ export const Hero = () => {
         {/* Trust badge */}
         <div className="flex items-center justify-center gap-2 mb-8 opacity-0 animate-fade-in">
           <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <p className="text-sm text-muted-foreground font-medium">Tyreplus Thomastown - Growing membership base</p>
+          <p className="text-sm text-muted-foreground font-medium">Haus of Technik - Growing membership base</p>
         </div>
 
         {/* Main headline */}
