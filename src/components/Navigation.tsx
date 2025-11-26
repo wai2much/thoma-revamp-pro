@@ -24,7 +24,7 @@ export const Navigation = () => {
           <img 
             src={hausLogo} 
             alt="Haus of Technik" 
-            className="h-24 w-auto transition-transform duration-300 group-hover:scale-105" 
+            className="h-36 w-auto transition-transform duration-300 group-hover:scale-105" 
           />
         </div>
 
