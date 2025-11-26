@@ -69,7 +69,7 @@ export const LuxuryMembershipCard = () => {
       <div className="container max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-12 space-y-4">
           <h2 className="text-5xl md:text-6xl font-semibold tracking-tight text-foreground">
-            Your TyrePlus
+            Your Haus of Technik
             <br />
             <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
               Loyalty Card
@@ -91,7 +91,7 @@ export const LuxuryMembershipCard = () => {
               <div className="relative h-full">
                 <img 
                   src={loyaltyCardTemplate} 
-                  alt="TyrePlus premium membership loyalty card with exclusive benefits" 
+                  alt="Haus of Technik premium membership loyalty card with exclusive benefits" 
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />

@@ -141,7 +141,7 @@ export const LoyaltyCardCapture = () => {
             <div className="absolute inset-0">
               <img 
                 src={bannerImage} 
-                alt="Premium sports car at TyrePlus Thomastown service center" 
+                alt="Premium sports car at Haus of Technik service center" 
                 className="w-full h-full object-cover opacity-60"
                 loading="lazy"
               />
@@ -153,7 +153,7 @@ export const LoyaltyCardCapture = () => {
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-400">TyrePlus</div>
+                    <div className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-400">Haus of Technik</div>
                     <div className="text-sm font-light tracking-wide text-zinc-300 mt-1">Loyalty Card</div>
                   </div>
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20">

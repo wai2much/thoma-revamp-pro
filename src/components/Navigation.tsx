@@ -2,7 +2,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { User, LogIn, ScanLine, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import tyrePlusLogo from "@/assets/tyreplus-logo.png";
+import hausLogo from "@/assets/haus-logo.png";
 import { useCartStore } from "@/stores/cartStore";
 import { Badge } from "@/components/ui/badge";
 
@@ -21,7 +21,7 @@ export const Navigation = () => {
       
       <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-2">
-          <img src={tyrePlusLogo} alt="TyrePlus Thomastown - Premium Tyre Services & Car Membership" className="h-12 w-auto" />
+          <img src={hausLogo} alt="Haus of Technik" className="h-10 w-auto" />
         </div>
 
         <div className="flex items-center gap-3">

@@ -49,7 +49,7 @@ export default function LoyaltyCard() {
           setMemberData(parsedData);
 
           // Generate QR code
-          const qrData = `TYREPLUS-LOYALTY-${memberId}`;
+          const qrData = `HAUS-LOYALTY-${memberId}`;
           const qrUrl = await QRCode.toDataURL(qrData, {
             width: 200,
             margin: 2,
@@ -93,7 +93,7 @@ export default function LoyaltyCard() {
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-background p-4">
       <div className="max-w-md mx-auto pt-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-2">TyrePlus Loyalty Card</h1>
+          <h1 className="text-3xl font-bold mb-2">Haus of Technik Loyalty Card</h1>
           <p className="text-muted-foreground">Your digital membership card</p>
         </div>
 

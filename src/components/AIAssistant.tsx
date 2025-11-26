@@ -122,7 +122,7 @@ export const AIAssistant = () => {
           </div>
           <div>
             <h3 className="font-semibold">Tessa</h3>
-            <p className="text-xs text-muted-foreground">Your Tyreplus Expert</p>
+            <p className="text-xs text-muted-foreground">Your Haus of Technik Expert</p>
           </div>
         </div>
         <Button 
