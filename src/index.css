@@ -17,24 +17,24 @@ All colors MUST be HSL.
     --popover: 222 40% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 245 100% 68%;
+    --primary: 165 75% 48%;
     --primary-foreground: 210 40% 98%;
-    --primary-glow: 249 100% 69%;
+    --primary-glow: 165 80% 55%;
 
-    --secondary: 210 72% 15%;
+    --secondary: 160 60% 20%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 160 20% 18%;
+    --muted-foreground: 160 15% 65%;
 
-    --accent: 271 91% 65%;
+    --accent: 155 70% 42%;
     --accent-foreground: 210 40% 98%;
-    --accent-glow: 271 91% 75%;
+    --accent-glow: 155 75% 50%;
     
-    --stripe-pink: 355 100% 64%;
-    --stripe-orange: 25 100% 75%;
-    --stripe-purple: 271 91% 65%;
-    --stripe-violet: 249 100% 69%;
+    --jade-light: 165 85% 65%;
+    --jade-medium: 165 75% 48%;
+    --jade-dark: 160 70% 35%;
+    --jade-deeper: 155 65% 25%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
@@ -45,26 +45,26 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
-    /* Stripe-inspired gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(245 100% 68%), hsl(271 91% 65%));
-    --gradient-accent: linear-gradient(135deg, hsl(271 91% 65%), hsl(355 100% 64%));
-    --gradient-hero: linear-gradient(135deg, hsl(245 100% 68%) 0%, hsl(271 91% 65%) 50%, hsl(355 100% 64%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(245 100% 68% / 0.05), hsl(271 91% 65% / 0.05));
-    --gradient-stripe: radial-gradient(circle at 20% 50%, hsl(355 100% 64% / 0.25) 0%, transparent 50%),
-                       radial-gradient(circle at 80% 20%, hsl(271 91% 65% / 0.25) 0%, transparent 50%),
-                       radial-gradient(circle at 40% 80%, hsl(249 100% 69% / 0.25) 0%, transparent 50%),
-                       radial-gradient(circle at 70% 70%, hsl(25 100% 75% / 0.25) 0%, transparent 50%),
-                       radial-gradient(circle at 90% 90%, hsl(355 100% 64% / 0.15) 0%, transparent 50%);
-    --gradient-mesh: radial-gradient(at 0% 0%, hsl(245 100% 68% / 0.2) 0px, transparent 50%),
-                     radial-gradient(at 100% 0%, hsl(271 91% 65% / 0.2) 0px, transparent 50%),
-                     radial-gradient(at 100% 100%, hsl(25 100% 75% / 0.2) 0px, transparent 50%),
-                     radial-gradient(at 0% 100%, hsl(355 100% 64% / 0.2) 0px, transparent 50%);
+    /* Jade-inspired gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(165 75% 48%), hsl(155 70% 42%));
+    --gradient-accent: linear-gradient(135deg, hsl(155 70% 42%), hsl(165 85% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(165 75% 48%) 0%, hsl(160 70% 35%) 50%, hsl(165 85% 65%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(165 75% 48% / 0.05), hsl(155 70% 42% / 0.05));
+    --gradient-stripe: radial-gradient(circle at 20% 50%, hsl(165 85% 65% / 0.25) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, hsl(155 70% 42% / 0.25) 0%, transparent 50%),
+                       radial-gradient(circle at 40% 80%, hsl(165 75% 48% / 0.25) 0%, transparent 50%),
+                       radial-gradient(circle at 70% 70%, hsl(160 70% 35% / 0.25) 0%, transparent 50%),
+                       radial-gradient(circle at 90% 90%, hsl(165 85% 65% / 0.15) 0%, transparent 50%);
+    --gradient-mesh: radial-gradient(at 0% 0%, hsl(165 75% 48% / 0.2) 0px, transparent 50%),
+                     radial-gradient(at 100% 0%, hsl(155 70% 42% / 0.2) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, hsl(165 85% 65% / 0.2) 0px, transparent 50%),
+                     radial-gradient(at 0% 100%, hsl(160 70% 35% / 0.2) 0px, transparent 50%);
     
     /* Enhanced shadows with depth */
-    --shadow-glow: 0 0 80px hsl(217 91% 60% / 0.5), 0 0 120px hsl(217 91% 60% / 0.2);
-    --shadow-glow-accent: 0 0 80px hsl(271 91% 65% / 0.5), 0 0 120px hsl(271 91% 65% / 0.2);
-    --shadow-card: 0 30px 60px -20px hsl(0 0% 0% / 0.8), 0 10px 30px -10px hsl(217 91% 60% / 0.2);
-    --shadow-card-hover: 0 40px 80px -20px hsl(217 91% 60% / 0.4), 0 20px 40px -10px hsl(271 91% 65% / 0.3);
+    --shadow-glow: 0 0 80px hsl(165 75% 48% / 0.5), 0 0 120px hsl(165 75% 48% / 0.2);
+    --shadow-glow-accent: 0 0 80px hsl(155 70% 42% / 0.5), 0 0 120px hsl(155 70% 42% / 0.2);
+    --shadow-card: 0 30px 60px -20px hsl(0 0% 0% / 0.8), 0 10px 30px -10px hsl(165 75% 48% / 0.2);
+    --shadow-card-hover: 0 40px 80px -20px hsl(165 75% 48% / 0.4), 0 20px 40px -10px hsl(155 70% 42% / 0.3);
     --shadow-elevation-1: 0 2px 8px hsl(0 0% 0% / 0.4);
     --shadow-elevation-2: 0 8px 24px hsl(0 0% 0% / 0.5);
     --shadow-elevation-3: 0 16px 48px hsl(0 0% 0% / 0.6);
