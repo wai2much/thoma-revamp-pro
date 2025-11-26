@@ -210,20 +210,26 @@ All colors MUST be HSL.
       3px 3px 0 hsl(var(--jade-deeper)),
       4px 4px 0 hsl(var(--jade-deeper)),
       5px 5px 10px rgba(0, 0, 0, 0.4),
-      6px 6px 15px rgba(0, 0, 0, 0.3);
+      6px 6px 15px rgba(0, 0, 0, 0.3),
+      0 0 20px hsl(var(--jade-light) / 0.6),
+      0 0 30px hsl(var(--jade-medium) / 0.4),
+      0 0 40px hsl(var(--jade-light) / 0.2);
   }
   
   .text-3d-light {
     text-shadow: 
       1px 1px 0 hsl(var(--jade-medium)),
       2px 2px 0 hsl(var(--jade-dark)),
-      3px 3px 5px rgba(0, 0, 0, 0.3);
+      3px 3px 5px rgba(0, 0, 0, 0.3),
+      0 0 15px hsl(var(--jade-light) / 0.5),
+      0 0 25px hsl(var(--jade-medium) / 0.3);
   }
   
   .text-3d-subtle {
     text-shadow: 
       1px 1px 0 hsl(var(--jade-dark)),
-      2px 2px 3px rgba(0, 0, 0, 0.2);
+      2px 2px 3px rgba(0, 0, 0, 0.2),
+      0 0 10px hsl(var(--jade-light) / 0.3);
   }
   
   .perspective-1000 {
