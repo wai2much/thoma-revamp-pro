@@ -19,7 +19,7 @@ export const Navigation = () => {
       background: 'var(--gradient-stripe)'
     }} />
       
-      <div className="container max-w-7xl mx-auto px-4 py-2 flex items-center justify-between relative z-10">
+      <div className="container max-w-7xl mx-auto px-4 py-1 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate("/")}>
           <img src={hausLogo} alt="Haus of Technik" className="h-60 w-auto transition-transform duration-300 group-hover:scale-105 object-cover" />
         </div>
