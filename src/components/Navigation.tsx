@@ -20,7 +20,7 @@ export const Navigation = () => {
     }} />
       
       <div className="container max-w-7xl mx-auto px-4 py-0 flex flex-col items-center justify-center relative z-10">
-        <div className="flex items-center gap-2 cursor-pointer group -mb-16" onClick={() => navigate("/")}>
+        <div className="flex items-center gap-2 cursor-pointer group -mb-20" onClick={() => navigate("/")}>
           <img src={hausLogo} alt="Haus of Technik" className="h-72 w-auto scale-125 transition-transform duration-300 group-hover:scale-[1.3] object-cover" />
         </div>
 
