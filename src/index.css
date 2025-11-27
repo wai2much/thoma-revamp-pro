@@ -8,36 +8,36 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 222 47% 5%;
-    --foreground: 210 40% 98%;
+    --background: 220 30% 8%;
+    --foreground: 180 100% 98%;
 
-    --card: 222 40% 8%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 25% 12%;
+    --card-foreground: 180 100% 98%;
 
-    --popover: 222 40% 8%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 25% 12%;
+    --popover-foreground: 180 100% 98%;
 
-    --primary: 250 85% 60%;
-    --primary-foreground: 210 40% 98%;
-    --primary-glow: 260 90% 70%;
+    --primary: 328 100% 60%;
+    --primary-foreground: 180 100% 98%;
+    --primary-glow: 328 100% 70%;
 
-    --secondary: 240 60% 25%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 180 100% 50%;
+    --secondary-foreground: 220 30% 8%;
 
-    --muted: 240 20% 18%;
-    --muted-foreground: 240 15% 65%;
+    --muted: 220 20% 20%;
+    --muted-foreground: 180 30% 65%;
 
-    --accent: 270 75% 55%;
-    --accent-foreground: 210 40% 98%;
-    --accent-glow: 270 80% 65%;
+    --accent: 280 100% 65%;
+    --accent-foreground: 180 100% 98%;
+    --accent-glow: 280 100% 75%;
     
-    --jade-light: 260 85% 70%;
-    --jade-medium: 250 80% 60%;
-    --jade-dark: 240 70% 45%;
-    --jade-deeper: 230 65% 35%;
+    --neon-pink: 328 100% 60%;
+    --neon-cyan: 180 100% 50%;
+    --neon-magenta: 310 100% 55%;
+    --neon-purple: 280 100% 65%;
     
-    --purple-dust: 271 91% 65%;
-    --purple-glow: 245 100% 68%;
+    --cyber-pink: 328 100% 60%;
+    --cyber-cyan: 180 100% 50%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
@@ -48,40 +48,40 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
-    /* Purple-blue liquid glass gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(250 85% 60%), hsl(270 80% 65%));
-    --gradient-accent: linear-gradient(135deg, hsl(270 75% 55%), hsl(260 85% 70%));
-    --gradient-hero: linear-gradient(135deg, hsl(230 90% 55%) 0%, hsl(250 85% 60%) 50%, hsl(270 90% 70%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(250 85% 60% / 0.1), hsl(270 80% 65% / 0.1));
-    --gradient-stripe: radial-gradient(circle at 20% 50%, hsl(260 85% 70% / 0.25) 0%, transparent 50%),
-                       radial-gradient(circle at 80% 20%, hsl(250 80% 60% / 0.25) 0%, transparent 50%),
-                       radial-gradient(circle at 40% 80%, hsl(240 75% 55% / 0.25) 0%, transparent 50%),
-                       radial-gradient(circle at 70% 70%, hsl(230 70% 50% / 0.25) 0%, transparent 50%),
-                       radial-gradient(circle at 90% 90%, hsl(270 85% 70% / 0.15) 0%, transparent 50%);
-    --gradient-mesh: radial-gradient(at 0% 0%, hsl(250 85% 60% / 0.2) 0px, transparent 50%),
-                     radial-gradient(at 100% 0%, hsl(270 80% 65% / 0.2) 0px, transparent 50%),
-                     radial-gradient(at 100% 100%, hsl(260 85% 70% / 0.2) 0px, transparent 50%),
-                     radial-gradient(at 0% 100%, hsl(240 75% 55% / 0.2) 0px, transparent 50%);
+    /* Cyberpunk neon gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(328 100% 60%), hsl(180 100% 50%));
+    --gradient-accent: linear-gradient(135deg, hsl(280 100% 65%), hsl(328 100% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(328 100% 60%) 0%, hsl(280 100% 65%) 50%, hsl(180 100% 50%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(328 100% 60% / 0.15), hsl(180 100% 50% / 0.15));
+    --gradient-stripe: radial-gradient(circle at 20% 50%, hsl(328 100% 60% / 0.3) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, hsl(180 100% 50% / 0.3) 0%, transparent 50%),
+                       radial-gradient(circle at 40% 80%, hsl(280 100% 65% / 0.25) 0%, transparent 50%),
+                       radial-gradient(circle at 70% 70%, hsl(310 100% 55% / 0.25) 0%, transparent 50%),
+                       radial-gradient(circle at 90% 90%, hsl(328 100% 70% / 0.2) 0%, transparent 50%);
+    --gradient-mesh: radial-gradient(at 0% 0%, hsl(328 100% 60% / 0.25) 0px, transparent 50%),
+                     radial-gradient(at 100% 0%, hsl(180 100% 50% / 0.25) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, hsl(280 100% 65% / 0.25) 0px, transparent 50%),
+                     radial-gradient(at 0% 100%, hsl(310 100% 55% / 0.25) 0px, transparent 50%);
     
-    /* Enhanced shadows with purple-blue glow */
-    --shadow-glow: 0 0 80px hsl(250 85% 60% / 0.5), 0 0 120px hsl(250 85% 60% / 0.2);
-    --shadow-glow-accent: 0 0 80px hsl(270 75% 55% / 0.5), 0 0 120px hsl(270 75% 55% / 0.2);
-    --shadow-card: 0 30px 60px -20px hsl(0 0% 0% / 0.8), 0 10px 30px -10px hsl(250 85% 60% / 0.2);
-    --shadow-card-hover: 0 40px 80px -20px hsl(250 85% 60% / 0.4), 0 20px 40px -10px hsl(270 75% 55% / 0.3);
-    --shadow-elevation-1: 0 2px 8px hsl(0 0% 0% / 0.4);
-    --shadow-elevation-2: 0 8px 24px hsl(0 0% 0% / 0.5);
-    --shadow-elevation-3: 0 16px 48px hsl(0 0% 0% / 0.6);
-    --shadow-neon: 0 0 20px hsl(var(--primary) / 0.6), 0 0 40px hsl(var(--primary) / 0.3), inset 0 0 20px hsl(var(--primary) / 0.1);
+    /* Enhanced neon glow shadows */
+    --shadow-glow: 0 0 80px hsl(328 100% 60% / 0.6), 0 0 120px hsl(328 100% 60% / 0.3);
+    --shadow-glow-accent: 0 0 80px hsl(180 100% 50% / 0.6), 0 0 120px hsl(180 100% 50% / 0.3);
+    --shadow-card: 0 30px 60px -20px hsl(0 0% 0% / 0.9), 0 10px 30px -10px hsl(328 100% 60% / 0.3);
+    --shadow-card-hover: 0 40px 80px -20px hsl(328 100% 60% / 0.5), 0 20px 40px -10px hsl(180 100% 50% / 0.4);
+    --shadow-elevation-1: 0 2px 8px hsl(0 0% 0% / 0.5);
+    --shadow-elevation-2: 0 8px 24px hsl(0 0% 0% / 0.6), 0 0 30px hsl(328 100% 60% / 0.2);
+    --shadow-elevation-3: 0 16px 48px hsl(0 0% 0% / 0.7), 0 0 50px hsl(328 100% 60% / 0.3);
+    --shadow-neon: 0 0 25px hsl(var(--primary) / 0.8), 0 0 50px hsl(var(--primary) / 0.4), inset 0 0 25px hsl(var(--primary) / 0.15);
     
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     --transition-spring: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
-    /* Blue-purple liquid glass gradient */
+    /* Cyberpunk neon liquid glass gradient */
     --gradient-vercel: linear-gradient(135deg, 
-      hsl(230, 90%, 60%) 0%,
-      hsl(260, 85%, 65%) 50%,
-      hsl(280, 90%, 70%) 100%);
+      hsl(328, 100%, 60%) 0%,
+      hsl(280, 100%, 65%) 50%,
+      hsl(180, 100%, 50%) 100%);
   }
 }
 
@@ -166,17 +166,17 @@ All colors MUST be HSL.
   
   .liquid-glass {
     background: linear-gradient(135deg, 
-      hsl(230 90% 60% / 0.15) 0%,
-      hsl(250 85% 65% / 0.15) 50%,
-      hsl(270 90% 70% / 0.15) 100%);
+      hsl(328 100% 60% / 0.2) 0%,
+      hsl(280 100% 65% / 0.2) 50%,
+      hsl(180 100% 50% / 0.2) 100%);
     background-size: 200% 200%;
     animation: liquid-flow 8s ease infinite;
     backdrop-filter: blur(24px) saturate(200%);
-    border: 1px solid hsl(var(--primary) / 0.3);
+    border: 1px solid hsl(var(--primary) / 0.4);
     box-shadow: 
-      0 8px 32px hsl(250 85% 60% / 0.2),
-      inset 0 1px 0 hsl(260 90% 70% / 0.2),
-      0 0 60px hsl(250 85% 60% / 0.15);
+      0 8px 32px hsl(328 100% 60% / 0.3),
+      inset 0 1px 0 hsl(180 100% 50% / 0.3),
+      0 0 60px hsl(328 100% 60% / 0.25);
     position: relative;
     overflow: hidden;
   }
@@ -187,17 +187,17 @@ All colors MUST be HSL.
     inset: -100%;
     background: linear-gradient(135deg, 
       transparent 0%,
-      hsl(260 90% 70% / 0.1) 50%,
+      hsl(180 100% 50% / 0.15) 50%,
       transparent 100%);
     animation: liquid-flow 10s ease infinite reverse;
   }
   
   .liquid-glass:hover {
-    border-color: hsl(var(--primary) / 0.6);
+    border-color: hsl(var(--primary) / 0.7);
     box-shadow: 
-      0 12px 48px hsl(250 85% 60% / 0.3),
-      inset 0 1px 0 hsl(260 90% 70% / 0.3),
-      0 0 80px hsl(250 85% 60% / 0.25);
+      0 12px 48px hsl(328 100% 60% / 0.4),
+      inset 0 1px 0 hsl(180 100% 50% / 0.4),
+      0 0 80px hsl(328 100% 60% / 0.35);
   }
   
   .tilt-card {
@@ -253,31 +253,31 @@ All colors MUST be HSL.
   
   .text-3d {
     text-shadow: 
-      1px 1px 0 hsl(var(--jade-dark)),
-      2px 2px 0 hsl(var(--jade-dark)),
-      3px 3px 0 hsl(var(--jade-deeper)),
-      4px 4px 0 hsl(var(--jade-deeper)),
-      5px 5px 10px rgba(0, 0, 0, 0.4),
-      6px 6px 15px rgba(0, 0, 0, 0.3),
-      0 0 20px hsl(var(--jade-light) / 0.6),
-      0 0 30px hsl(var(--jade-medium) / 0.4),
-      0 0 40px hsl(var(--jade-light) / 0.2);
+      1px 1px 0 hsl(var(--neon-magenta)),
+      2px 2px 0 hsl(var(--neon-magenta)),
+      3px 3px 0 hsl(var(--neon-purple)),
+      4px 4px 0 hsl(var(--neon-purple)),
+      5px 5px 10px rgba(0, 0, 0, 0.5),
+      6px 6px 15px rgba(0, 0, 0, 0.4),
+      0 0 20px hsl(var(--neon-pink) / 0.7),
+      0 0 30px hsl(var(--cyber-pink) / 0.5),
+      0 0 40px hsl(var(--neon-cyan) / 0.3);
   }
   
   .text-3d-light {
     text-shadow: 
-      1px 1px 0 hsl(var(--jade-medium)),
-      2px 2px 0 hsl(var(--jade-dark)),
-      3px 3px 5px rgba(0, 0, 0, 0.3),
-      0 0 15px hsl(var(--jade-light) / 0.5),
-      0 0 25px hsl(var(--jade-medium) / 0.3);
+      1px 1px 0 hsl(var(--cyber-cyan)),
+      2px 2px 0 hsl(var(--neon-magenta)),
+      3px 3px 5px rgba(0, 0, 0, 0.4),
+      0 0 15px hsl(var(--neon-pink) / 0.6),
+      0 0 25px hsl(var(--cyber-cyan) / 0.4);
   }
   
   .text-3d-subtle {
     text-shadow: 
-      1px 1px 0 hsl(var(--jade-dark)),
-      2px 2px 3px rgba(0, 0, 0, 0.2),
-      0 0 10px hsl(var(--jade-light) / 0.3);
+      1px 1px 0 hsl(var(--neon-magenta)),
+      2px 2px 3px rgba(0, 0, 0, 0.3),
+      0 0 10px hsl(var(--neon-pink) / 0.4);
   }
   
   .text-flat, .no-3d {
@@ -296,7 +296,7 @@ All colors MUST be HSL.
     transform-style: preserve-3d;
   }
   
-  .purple-dust-overlay {
+  .neon-dust-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -304,35 +304,35 @@ All colors MUST be HSL.
     height: 100%;
     pointer-events: none;
     z-index: 1;
-    background: radial-gradient(circle at 20% 30%, hsl(var(--purple-dust) / 0.35) 0%, transparent 50%),
-                radial-gradient(circle at 80% 60%, hsl(var(--purple-glow) / 0.28) 0%, transparent 45%),
-                radial-gradient(circle at 50% 80%, hsl(var(--purple-dust) / 0.25) 0%, transparent 55%),
-                radial-gradient(circle at 10% 70%, hsl(var(--purple-glow) / 0.2) 0%, transparent 40%),
-                radial-gradient(circle at 90% 20%, hsl(var(--purple-dust) / 0.22) 0%, transparent 48%);
-    animation: purple-float 8s ease-in-out infinite;
+    background: radial-gradient(circle at 20% 30%, hsl(var(--cyber-pink) / 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 60%, hsl(var(--cyber-cyan) / 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 50% 80%, hsl(var(--neon-magenta) / 0.3) 0%, transparent 55%),
+                radial-gradient(circle at 10% 70%, hsl(var(--neon-purple) / 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 90% 20%, hsl(var(--cyber-pink) / 0.3) 0%, transparent 48%);
+    animation: neon-float 8s ease-in-out infinite;
     background-size: 200% 200%;
   }
   
-  @keyframes purple-float {
+  @keyframes neon-float {
     0%, 100% { 
       background-position: 0% 0%;
-      opacity: 0.6;
+      opacity: 0.7;
     }
     25% {
       background-position: 100% 50%;
-      opacity: 0.8;
+      opacity: 0.9;
     }
     50% { 
       background-position: 50% 100%;
-      opacity: 0.7;
+      opacity: 0.8;
     }
     75% {
       background-position: 100% 0%;
-      opacity: 0.9;
+      opacity: 1;
     }
   }
   
-  .liquid-glass {
+  .cyber-liquid-glass {
     position: fixed;
     top: 0;
     left: 0;
@@ -341,13 +341,13 @@ All colors MUST be HSL.
     pointer-events: none;
     z-index: 2;
     background: 
-      radial-gradient(ellipse at 30% 20%, hsl(165 85% 65% / 0.25) 0%, transparent 50%),
-      radial-gradient(ellipse at 70% 60%, hsl(165 75% 48% / 0.2) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 90%, hsl(160 70% 35% / 0.18) 0%, transparent 50%);
+      radial-gradient(ellipse at 30% 20%, hsl(328 100% 60% / 0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, hsl(180 100% 50% / 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 90%, hsl(280 100% 65% / 0.22) 0%, transparent 50%);
     backdrop-filter: blur(0.5px) saturate(150%);
     animation: liquid-flow 25s ease-in-out infinite;
     background-size: 300% 300%;
-    mix-blend-mode: overlay;
+    mix-blend-mode: screen;
   }
   
   @keyframes liquid-flow {
