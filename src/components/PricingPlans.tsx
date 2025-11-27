@@ -295,22 +295,29 @@ export const PricingPlans = () => {
                       ${plan.value}+ Value for
                     </div>
                   )}
-                  <div className="text-4xl font-bold text-flat" style={{ 
+                  <div className="text-4xl font-bold text-flat relative" style={{ 
                     background: 'var(--gradient-vercel)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text'
+                    backgroundClip: 'text',
+                    filter: 'drop-shadow(0 2px 8px rgba(99, 102, 241, 0.3))'
                   }}>
+                    <div className="absolute inset-0 blur-xl opacity-40" style={{
+                      background: 'var(--gradient-vercel)',
+                      zIndex: -1
+                    }} />
                     ${billingPeriod === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
                     <span className={`text-lg ${mutedColor}`} style={{ 
                       WebkitTextFillColor: 'inherit',
-                      background: 'none'
+                      background: 'none',
+                      filter: 'none'
                     }}>
                       /{billingPeriod === "monthly" ? "mo" : "yr"}
                     </span>
                     {plan.perVehicle && <span className={`text-sm ${mutedColor}`} style={{ 
                       WebkitTextFillColor: 'inherit',
-                      background: 'none'
+                      background: 'none',
+                      filter: 'none'
                     }}>/vehicle</span>}
                   </div>
                   {plan.savings > 0 && (
