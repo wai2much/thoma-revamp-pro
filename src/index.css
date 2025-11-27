@@ -77,11 +77,11 @@ All colors MUST be HSL.
     --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     --transition-spring: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
-    /* Vercel-style gradient */
+    /* Blue-purple liquid glass gradient */
     --gradient-vercel: linear-gradient(135deg, 
-      hsl(210, 100%, 50%) 0%,
-      hsl(280, 100%, 65%) 50%,
-      hsl(330, 100%, 70%) 100%);
+      hsl(230, 90%, 60%) 0%,
+      hsl(260, 85%, 65%) 50%,
+      hsl(280, 90%, 70%) 100%);
   }
 }
 
