@@ -297,6 +297,8 @@ export const PricingPlans = () => {
                   )}
                   <div className="text-4xl font-bold text-flat relative" style={{ 
                     background: 'var(--gradient-vercel)',
+                    backgroundSize: '200% 200%',
+                    animation: 'liquid-flow 8s ease infinite',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -304,6 +306,8 @@ export const PricingPlans = () => {
                   }}>
                     <div className="absolute inset-0 blur-xl opacity-40" style={{
                       background: 'var(--gradient-vercel)',
+                      backgroundSize: '200% 200%',
+                      animation: 'liquid-flow 8s ease infinite',
                       zIndex: -1
                     }} />
                     ${billingPeriod === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
