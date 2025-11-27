@@ -295,12 +295,23 @@ export const PricingPlans = () => {
                       ${plan.value}+ Value for
                     </div>
                   )}
-                  <div className={`text-4xl font-bold ${textColor}`}>
+                  <div className="text-4xl font-bold text-flat" style={{ 
+                    background: 'var(--gradient-vercel)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}>
                     ${billingPeriod === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
-                    <span className={`text-lg ${mutedColor}`}>
+                    <span className={`text-lg ${mutedColor}`} style={{ 
+                      WebkitTextFillColor: 'inherit',
+                      background: 'none'
+                    }}>
                       /{billingPeriod === "monthly" ? "mo" : "yr"}
                     </span>
-                    {plan.perVehicle && <span className={`text-sm ${mutedColor}`}>/vehicle</span>}
+                    {plan.perVehicle && <span className={`text-sm ${mutedColor}`} style={{ 
+                      WebkitTextFillColor: 'inherit',
+                      background: 'none'
+                    }}>/vehicle</span>}
                   </div>
                   {plan.savings > 0 && (
                     <div className={`text-sm mt-2 ${plan.id === 'family' ? 'text-purple-600 font-semibold' : mutedColor}`}>
