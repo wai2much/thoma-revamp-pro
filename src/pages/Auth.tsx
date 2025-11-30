@@ -18,7 +18,7 @@ const Auth = () => {
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("handleAuth called", { email, password: "***", isLogin });
+    console.log("🔥 FORM SUBMITTED!", { email, isLogin });
     setLoading(true);
 
     try {
@@ -103,8 +103,11 @@ const Auth = () => {
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full relative z-50"
             disabled={loading}
+            onClick={(e) => {
+              console.log("🎯 BUTTON CLICKED!");
+            }}
           >
             {loading ? (
               <>
