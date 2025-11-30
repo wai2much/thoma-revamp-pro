@@ -42,63 +42,69 @@ export const Hero = () => {
       <div className="absolute top-40 right-20 w-3 h-3 bg-accent rounded-full pulse-glow" style={{ animationDelay: '1s' }} />
       <div className="absolute bottom-40 left-20 w-2 h-2 bg-primary rounded-full pulse-glow" style={{ animationDelay: '2s' }} />
       
-      <div className="container max-w-6xl mx-auto relative z-10">
-        {/* Trust badge */}
-        <div className="flex items-center justify-center gap-2 mb-8 opacity-0 animate-fade-in">
-          <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <p className="text-sm text-muted-foreground font-medium">Haus of Technik - Growing membership base</p>
-        </div>
-
-        {/* Main headline */}
-        <div className="text-center space-y-6 mb-12">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight opacity-0 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            Car care made
-            <br />
-            <span className="gradient-text">simple and affordable</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            Membership-based car maintenance that saves you time and money. All-inclusive plans starting at <span className="text-primary font-semibold">$55/month</span>.
-          </p>
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 opacity-0 animate-scale-in" style={{ animationDelay: '0.5s' }}>
-          <Button 
-            size="lg" 
-            onClick={scrollToPlans}
-            className="group bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-glow-accent transition-all duration-300 hover:scale-105"
-          >
-            View Membership Plans
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
-          <Button 
-            size="lg" 
-            variant="outline"
-            onClick={scrollToLocations}
-            className="border-primary/30 hover:bg-primary/10 hover:border-primary/50 transition-all duration-300"
-          >
-            Find a Location
-          </Button>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto opacity-0 animate-fade-in" style={{ animationDelay: '0.7s' }}>
-          <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
-            <div className="text-5xl font-display font-bold mb-2 gradient-text group-hover:scale-110 transition-transform duration-300">Growing</div>
-            <div className="text-sm text-muted-foreground uppercase tracking-wider">Customer Base</div>
+      <div className="container max-w-6xl mx-auto relative z-10" style={{ perspective: '1500px' }}>
+        <div className="animate-fade-in" style={{ 
+          transform: 'rotateX(15deg) translateY(-20px)',
+          transformStyle: 'preserve-3d',
+          transition: 'transform 0.3s ease-out'
+        }}>
+          {/* Trust badge */}
+          <div className="flex items-center justify-center gap-2 mb-8 opacity-0 animate-fade-in">
+            <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <p className="text-sm text-muted-foreground font-medium drop-shadow-lg">Haus of Technik - Growing membership base</p>
           </div>
-          <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
-            <div className="text-5xl font-display font-bold mb-2 gradient-text group-hover:scale-110 transition-transform duration-300">Premium</div>
-            <div className="text-sm text-muted-foreground uppercase tracking-wider">Service Quality</div>
+
+          {/* Main headline */}
+          <div className="text-center space-y-6 mb-12">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight opacity-0 animate-slide-up drop-shadow-2xl" style={{ animationDelay: '0.1s', textShadow: '0 4px 12px rgba(0,0,0,0.3)' }}>
+              Car care made
+              <br />
+              <span className="gradient-text">simple and affordable</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto opacity-0 animate-fade-in drop-shadow-lg" style={{ animationDelay: '0.3s', textShadow: '0 2px 8px rgba(0,0,0,0.2)' }}>
+              Membership-based car maintenance that saves you time and money. All-inclusive plans starting at <span className="text-primary font-semibold">$55/month</span>.
+            </p>
           </div>
-          <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
-            <div className="text-5xl font-display font-bold mb-2 text-primary group-hover:scale-110 transition-transform duration-300">4.9</div>
-            <div className="flex justify-center gap-1 mb-2">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-5 w-5 fill-primary text-primary" />
-              ))}
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 opacity-0 animate-scale-in" style={{ animationDelay: '0.5s' }}>
+            <Button 
+              size="lg" 
+              onClick={scrollToPlans}
+              className="group bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-glow-accent transition-all duration-300 hover:scale-105"
+            >
+              View Membership Plans
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline"
+              onClick={scrollToLocations}
+              className="border-primary/30 hover:bg-primary/10 hover:border-primary/50 transition-all duration-300"
+            >
+              Find a Location
+            </Button>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto opacity-0 animate-fade-in" style={{ animationDelay: '0.7s' }}>
+            <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
+              <div className="text-5xl font-display font-bold mb-2 gradient-text group-hover:scale-110 transition-transform duration-300">Growing</div>
+              <div className="text-sm text-muted-foreground uppercase tracking-wider">Customer Base</div>
             </div>
-            <div className="text-sm text-muted-foreground uppercase tracking-wider">Customer Rating</div>
+            <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
+              <div className="text-5xl font-display font-bold mb-2 gradient-text group-hover:scale-110 transition-transform duration-300">Premium</div>
+              <div className="text-sm text-muted-foreground uppercase tracking-wider">Service Quality</div>
+            </div>
+            <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
+              <div className="text-5xl font-display font-bold mb-2 text-primary group-hover:scale-110 transition-transform duration-300">4.9</div>
+              <div className="flex justify-center gap-1 mb-2">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                ))}
+              </div>
+              <div className="text-sm text-muted-foreground uppercase tracking-wider">Customer Rating</div>
+            </div>
           </div>
         </div>
       </div>
