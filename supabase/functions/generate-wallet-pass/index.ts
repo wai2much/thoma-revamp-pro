@@ -219,10 +219,12 @@ serve(async (req) => {
       body: JSON.stringify({
         externalId: memberId,
         pass: {
-          "First_Last": { value: memberName.toUpperCase() },
-          "ID ": { value: memberId },  // Note: space after "ID" is required!
-          "Monthly_Yearly ": { value: `Member Since ${memberSince}` },  // Note: space after "Monthly_Yearly" is required!
-          "Custom": { value: planName.toUpperCase() }
+          stripImage: bannerUrl,
+          backgroundColor: tierColor,
+          member_name: memberName.toUpperCase(),
+          member_id: memberId,
+          Custom: memberSince,
+          tier_name: planName.toUpperCase()
         },
         metadata: {
           user_id: user.id,
