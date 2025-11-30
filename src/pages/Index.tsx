@@ -36,7 +36,7 @@ const Index = () => {
       </main>
         
         {/* Footer */}
-        <footer className="relative border-t border-border/50 py-12 px-4">
+        <footer className="relative border-t border-border/50 py-12 px-4 liquid-glass">
           <div className="absolute inset-0 bg-secondary/20" />
           <div className="absolute inset-0 opacity-30" 
                style={{ background: 'var(--gradient-stripe)' }} 

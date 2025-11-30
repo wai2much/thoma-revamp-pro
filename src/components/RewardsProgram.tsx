@@ -27,7 +27,7 @@ export const RewardsProgram = () => {
   ];
 
   return (
-    <section className="py-24 px-4 relative overflow-hidden">
+    <section className="py-24 px-4 relative overflow-hidden liquid-glass">
       {/* Stripe gradient overlay */}
       <div className="absolute inset-0 opacity-25" 
            style={{ background: 'var(--gradient-stripe)' }} 
