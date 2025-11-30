@@ -81,7 +81,7 @@ export default function LoyaltyCard() {
   if (!memberData) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-accent/5 to-background p-4">
-        <Card className="p-8 text-center">
+        <Card className="glass-card p-8 text-center">
           <h1 className="text-2xl font-bold mb-2">Card Not Found</h1>
           <p className="text-muted-foreground">This loyalty card doesn't exist.</p>
         </Card>
@@ -97,7 +97,7 @@ export default function LoyaltyCard() {
           <p className="text-muted-foreground">Your digital membership card</p>
         </div>
 
-        <Card className="overflow-hidden shadow-2xl">
+        <Card className="glass-card overflow-hidden">
           {/* Banner */}
           <div className="h-32 bg-gradient-to-r from-primary via-primary-glow to-accent relative overflow-hidden">
             <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.8),rgba(255,255,255,0))]" />
@@ -151,7 +151,7 @@ export default function LoyaltyCard() {
         </Card>
 
         {/* Save Instructions */}
-        <Card className="mt-6 p-6 space-y-4">
+        <Card className="glass-card mt-6 p-6 space-y-4">
           <h3 className="font-semibold text-lg text-center">💾 How to Save Your Card</h3>
           <div className="space-y-3 text-sm">
             <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">

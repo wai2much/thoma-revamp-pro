@@ -41,7 +41,7 @@ export const SlackChannelCard = ({
   const config = channelConfig[channel] || channelConfig["doctrine-log"];
 
   return (
-    <Card className="group hover-scale overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-200">
+    <Card className="glass-card group hover:glow-border transition-all overflow-hidden">
       <div className="p-4 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

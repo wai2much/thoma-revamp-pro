@@ -162,7 +162,7 @@ export default function Loyalty() {
         </div>
 
         {/* Points Balance Card */}
-        <Card className="mb-8 border-primary/20">
+        <Card className="glass-card mb-8 border-primary/20">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
@@ -199,7 +199,7 @@ export default function Loyalty() {
               {rewards.map((reward) => {
                 const canAfford = pointsBalance >= reward.points_required;
                 return (
-                  <Card key={reward.id} className={canAfford ? "border-primary/40" : ""}>
+                  <Card key={reward.id} className={`glass-card ${canAfford ? "border-primary/40" : ""}`}>
                     <CardHeader>
                       <div className="flex items-start justify-between">
                         <div>
@@ -246,7 +246,7 @@ export default function Loyalty() {
             </h2>
             <div className="space-y-3">
               {transactions.map((transaction) => (
-                <Card key={transaction.id}>
+                <Card key={transaction.id} className="glass-card">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
@@ -281,7 +281,7 @@ export default function Loyalty() {
                 </Card>
               ))}
               {transactions.length === 0 && (
-                <Card>
+                <Card className="glass-card">
                   <CardContent className="pt-6 text-center text-muted-foreground">
                     No transactions yet. Start earning points!
                   </CardContent>
@@ -292,7 +292,7 @@ export default function Loyalty() {
         </div>
 
         {/* How to Earn Points */}
-        <Card className="mt-8">
+        <Card className="glass-card mt-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="w-6 h-6" />

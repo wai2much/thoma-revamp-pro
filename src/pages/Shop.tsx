@@ -160,7 +160,7 @@ const Shop = () => {
               : undefined;
 
             return (
-              <Card key={product.id} className="group hover:shadow-lg transition-shadow">
+              <Card key={product.id} className="glass-card group hover:glow-border transition-all">
                 <CardHeader className="p-0">
                   <div 
                     className="relative h-48 overflow-hidden rounded-t-lg cursor-pointer"

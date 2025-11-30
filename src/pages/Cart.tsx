@@ -42,7 +42,7 @@ const Cart = () => {
               const image = item.product.images.edges[0]?.node;
               
               return (
-                <Card key={item.variantId}>
+                <Card key={item.variantId} className="glass-card">
                   <CardContent className="p-6">
                     <div className="flex gap-4">
                       <div className="w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-muted">
@@ -120,7 +120,7 @@ const Cart = () => {
           </div>
           
           <div className="lg:col-span-1">
-            <Card className="sticky top-24">
+            <Card className="glass-card sticky top-24">
               <CardHeader>
                 <CardTitle>Order Summary</CardTitle>
               </CardHeader>

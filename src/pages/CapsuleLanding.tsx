@@ -133,7 +133,7 @@ const CapsuleLanding = () => {
 
         {/* Member Pricing Card */}
         {hasVapeHeadPricing && (
-          <Card className="mb-6 border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10">
+          <Card className="glass-card mb-6 border-primary/20">
             <CardContent className="p-6">
               <div className="flex items-start gap-4 mb-4">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -194,7 +194,7 @@ const CapsuleLanding = () => {
 
         {/* Member Benefits Section */}
         {isSubscribed && (
-          <Card className="mb-6 border-accent/20 bg-accent/5">
+          <Card className="glass-card mb-6 border-accent/20">
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-4">
                 <CheckCircle className="h-5 w-5 text-accent" />

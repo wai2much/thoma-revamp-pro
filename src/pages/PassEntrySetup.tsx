@@ -96,7 +96,7 @@ export default function PassEntrySetup() {
     <div className="min-h-screen bg-background">
       <Navigation />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <Card>
+        <Card className="glass-card">
           <CardHeader>
             <CardTitle>PassEntry Template Setup</CardTitle>
             <CardDescription>

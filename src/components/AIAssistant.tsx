@@ -114,7 +114,7 @@ export const AIAssistant = () => {
   }
 
   return (
-    <Card className="fixed bottom-6 right-6 w-96 h-[500px] flex flex-col shadow-2xl z-50">
+    <Card className="glass-card fixed bottom-6 right-6 w-96 h-[500px] flex flex-col z-50">
       <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-primary/5 to-transparent">
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
