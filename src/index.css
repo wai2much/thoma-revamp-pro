@@ -106,7 +106,6 @@ All colors MUST be HSL.
     background: hsl(var(--card) / 0.6);
     border-color: hsl(var(--primary) / 0.5);
     box-shadow: var(--shadow-card-hover);
-    transform: translateY(-4px);
   }
   
   .glass-card-premium {
@@ -131,7 +130,6 @@ All colors MUST be HSL.
   }
   
   .glass-card-premium:hover {
-    transform: translateY(-6px) scale(1.01);
     box-shadow: var(--shadow-elevation-3), 0 0 50px hsl(var(--primary) / 0.25);
   }
   
@@ -206,7 +204,6 @@ All colors MUST be HSL.
   }
   
   .tilt-card:hover {
-    transform: translateY(-4px);
   }
   
   .depth-layer-1 {
@@ -353,19 +350,15 @@ All colors MUST be HSL.
   @keyframes liquid-flow {
     0%, 100% { 
       background-position: 0% 50%;
-      transform: scale(1) rotate(0deg);
     }
     25% {
       background-position: 50% 100%;
-      transform: scale(1.05) rotate(2deg);
     }
     50% { 
       background-position: 100% 50%;
-      transform: scale(1.02) rotate(-1deg);
     }
     75% {
       background-position: 50% 0%;
-      transform: scale(1.03) rotate(1deg);
     }
   }
 }
