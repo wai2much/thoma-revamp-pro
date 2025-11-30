@@ -45,8 +45,7 @@ export const Hero = () => {
       <div className="container max-w-6xl mx-auto relative z-10" style={{ perspective: '1500px' }}>
         <div className="animate-fade-in" style={{ 
           transform: 'rotateX(15deg) translateY(-20px)',
-          transformStyle: 'preserve-3d',
-          transition: 'transform 0.3s ease-out'
+          transformStyle: 'preserve-3d'
         }}>
           {/* Trust badge */}
           <div className="flex items-center justify-center gap-2 mb-8 opacity-0 animate-fade-in">
