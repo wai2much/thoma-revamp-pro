@@ -21,44 +21,44 @@ export const Navigation = () => {
       
       <div className="container max-w-7xl mx-auto px-4 py-0 flex flex-col items-center justify-center gap-4 relative z-10">
         <div className="flex items-center gap-2 cursor-pointer group -mb-28" onClick={() => navigate("/")}>
-          <img src={hausLogo} alt="Haus of Technik" className="h-72 w-auto scale-125 transition-transform duration-300 group-hover:scale-[1.3] object-cover -mt-28" />
+          <img src={hausLogo} alt="Haus of Technik" className="h-72 w-auto scale-125 object-cover -mt-28" />
         </div>
 
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="sm" onClick={() => navigate("/shop")} className="hidden sm:flex transition-all duration-300 hover:scale-105 hover:bg-primary/10 relative group">
+          <Button variant="ghost" size="sm" onClick={() => navigate("/shop")} className="hidden sm:flex hover:bg-primary/10 relative group">
             <span className="relative">
               Shop
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </span>
           </Button>
           
-          <Button variant="ghost" size="sm" onClick={() => navigate("/loyalty")} className="hidden sm:flex transition-all duration-300 hover:scale-105 hover:bg-primary/10 relative group">
+          <Button variant="ghost" size="sm" onClick={() => navigate("/loyalty")} className="hidden sm:flex hover:bg-primary/10 relative group">
             <span className="relative">
               Rewards
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </span>
           </Button>
           
-          <Button variant="ghost" size="icon" onClick={() => navigate("/cart")} className="relative transition-all duration-300 hover:scale-110 hover:bg-primary/10">
-            <ShoppingCart className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
+          <Button variant="ghost" size="icon" onClick={() => navigate("/cart")} className="relative hover:bg-primary/10">
+            <ShoppingCart className="h-5 w-5" />
             {itemCount > 0 && <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs animate-pulse">
                 {itemCount}
               </Badge>}
           </Button>
 
           {user ? <>
-              {subscription.subscribed && <span className="text-sm text-primary font-semibold px-3 py-1 bg-primary/10 rounded-full transition-all duration-300 hover:bg-primary/20 hover:scale-105">
+              {subscription.subscribed && <span className="text-sm text-primary font-semibold px-3 py-1 bg-primary/10 rounded-full hover:bg-primary/20">
                   Active Member
                 </span>}
-              <Button variant="ghost" size="sm" onClick={() => navigate("/scanner")} className="hidden sm:flex transition-all duration-300 hover:scale-105 hover:bg-primary/10">
-                <ScanLine className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:rotate-12" />
+              <Button variant="ghost" size="sm" onClick={() => navigate("/scanner")} className="hidden sm:flex hover:bg-primary/10">
+                <ScanLine className="mr-2 h-4 w-4" />
                 Scanner
               </Button>
-              <Button variant="outline" size="sm" onClick={() => navigate("/membership")} className="transition-all duration-300 hover:scale-105 hover:border-primary hover:bg-primary/5">
+              <Button variant="outline" size="sm" onClick={() => navigate("/membership")} className="hover:border-primary hover:bg-primary/5">
                 <User className="mr-2 h-4 w-4" />
                 My Account
               </Button>
-            </> : <Button size="sm" onClick={() => navigate("/auth")} className="transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20">
+            </> : <Button size="sm" onClick={() => navigate("/auth")} className="hover:shadow-lg hover:shadow-primary/20">
               <LogIn className="mr-2 h-4 w-4" />
               Sign In
             </Button>}

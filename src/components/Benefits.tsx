@@ -82,7 +82,7 @@ export const Benefits = () => {
                   key={idx}
                   className="glass-card p-6 hover:glow-border transition-all group"
                 >
-                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <Icon className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl font-bold mb-2">{benefit.title}</h3>

@@ -79,7 +79,7 @@ export const SavingsCalculator = () => {
 
             <Button 
               size="lg" 
-              className="w-full bg-primary hover:bg-primary/90 shadow-lg hover:shadow-glow transition-all duration-300 hover:scale-[1.02] font-semibold"
+              className="w-full bg-primary hover:bg-primary/90 shadow-lg hover:shadow-glow font-semibold"
               onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Get Started with {currentPlan.name}
