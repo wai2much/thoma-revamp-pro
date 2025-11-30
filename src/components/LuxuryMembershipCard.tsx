@@ -84,7 +84,7 @@ export const LuxuryMembershipCard = () => {
           <div className="relative group">
             <div className="absolute -inset-8 bg-gradient-to-r from-primary/30 via-accent/30 to-primary/30 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             
-            <Card className="glass-card relative w-[380px] h-[600px] overflow-hidden transition-all duration-500 group-hover:scale-[1.02]">
+            <Card className="glass-card relative w-[380px] h-[600px] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-accent/[0.03]" />
               
               {/* Loyalty Card Template Display */}

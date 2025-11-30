@@ -24,7 +24,7 @@ export const CTA = () => {
             onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Choose Your Plan
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
           <Button 
             size="lg"
@@ -48,7 +48,7 @@ export const CTA = () => {
               href="tel:94624400"
               className="flex items-center gap-2 text-lg hover:text-primary transition-colors group"
             >
-              <Phone className="h-5 w-5 group-hover:scale-110 transition-transform" />
+              <Phone className="h-5 w-5" />
               <span className="font-semibold">Shop: 9462 4400</span>
             </a>
             <div className="hidden sm:block text-muted-foreground">|</div>
@@ -56,7 +56,7 @@ export const CTA = () => {
               href="tel:+61468003380"
               className="flex items-center gap-2 text-lg hover:text-primary transition-colors group"
             >
-              <Phone className="h-5 w-5 group-hover:scale-110 transition-transform" />
+              <Phone className="h-5 w-5" />
               <span className="font-semibold">AI Assistant: 0468 003 380</span>
             </a>
           </div>

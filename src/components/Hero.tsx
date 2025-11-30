@@ -70,16 +70,16 @@ export const Hero = () => {
             <Button 
               size="lg" 
               onClick={scrollToPlans}
-              className="group bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-glow-accent transition-all duration-300 hover:scale-105"
+              className="group bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-glow-accent"
             >
               View Membership Plans
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button 
               size="lg" 
               variant="outline"
               onClick={scrollToLocations}
-              className="border-primary/30 hover:bg-primary/10 hover:border-primary/50 transition-all duration-300"
+              className="border-primary/30 hover:bg-primary/10 hover:border-primary/50"
             >
               Find a Location
             </Button>
@@ -88,15 +88,15 @@ export const Hero = () => {
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto opacity-0 animate-fade-in" style={{ animationDelay: '0.7s' }}>
             <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
-              <div className="text-5xl font-display font-bold mb-2 gradient-text group-hover:scale-110 transition-transform duration-300">Growing</div>
+              <div className="text-5xl font-display font-bold mb-2 gradient-text">Growing</div>
               <div className="text-sm text-muted-foreground uppercase tracking-wider">Customer Base</div>
             </div>
             <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
-              <div className="text-5xl font-display font-bold mb-2 gradient-text group-hover:scale-110 transition-transform duration-300">Premium</div>
+              <div className="text-5xl font-display font-bold mb-2 gradient-text">Premium</div>
               <div className="text-sm text-muted-foreground uppercase tracking-wider">Service Quality</div>
             </div>
             <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
-              <div className="text-5xl font-display font-bold mb-2 text-primary group-hover:scale-110 transition-transform duration-300">4.9</div>
+              <div className="text-5xl font-display font-bold mb-2 text-primary">4.9</div>
               <div className="flex justify-center gap-1 mb-2">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-primary text-primary" />
@@ -111,7 +111,7 @@ export const Hero = () => {
       {/* Phone floating button - positioned above WhatsApp button */}
       <a
         href="tel:94624400"
-        className="fixed bottom-44 right-6 z-[60] bg-primary hover:bg-primary/90 text-primary-foreground p-4 rounded-full shadow-2xl transition-all hover:scale-110 pulse-glow animate-fade-in"
+        className="fixed bottom-44 right-6 z-[60] bg-primary hover:bg-primary/90 text-primary-foreground p-4 rounded-full shadow-2xl pulse-glow animate-fade-in"
         style={{ boxShadow: '0 0 30px rgba(var(--primary-rgb), 0.3)', animationDelay: '0.2s' }}
         aria-label="Call shop: 9462 4400"
       >
@@ -123,7 +123,7 @@ export const Hero = () => {
         href="https://wa.me/61451590517?text=Hi!%20I%27m%20interested%20in%20your%20car%20service%20membership"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-24 right-6 z-[60] bg-[#25D366] hover:bg-[#20BA5A] text-white p-4 rounded-full shadow-2xl transition-all hover:scale-110 pulse-glow animate-fade-in"
+        className="fixed bottom-24 right-6 z-[60] bg-[#25D366] hover:bg-[#20BA5A] text-white p-4 rounded-full shadow-2xl pulse-glow animate-fade-in"
         style={{ boxShadow: '0 0 30px rgba(37, 211, 102, 0.3)' }}
         aria-label="Contact us on WhatsApp"
       >

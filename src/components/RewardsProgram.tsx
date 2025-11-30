@@ -52,7 +52,7 @@ export const RewardsProgram = () => {
                 className="glass-card p-6 hover:glow-border transition-all group"
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
+                  <div className="p-3 rounded-xl bg-primary/10 text-primary">
                     <Icon className="h-6 w-6" />
                   </div>
                   <div>
