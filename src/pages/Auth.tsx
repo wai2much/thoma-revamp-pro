@@ -18,6 +18,7 @@ const Auth = () => {
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("handleAuth called", { email, password: "***", isLogin });
     setLoading(true);
 
     try {
