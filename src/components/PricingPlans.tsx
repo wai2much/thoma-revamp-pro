@@ -203,7 +203,7 @@ export const PricingPlans = () => {
   };
 
   return (
-    <section id="pricing" className="py-24 px-4 relative overflow-hidden">
+    <section id="pricing" className="py-24 px-4 relative overflow-hidden liquid-glass">
       {/* Subtle Stripe gradient overlay */}
       <div className="absolute inset-0 opacity-20" 
            style={{ background: 'var(--gradient-stripe)' }} 

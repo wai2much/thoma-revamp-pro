@@ -18,7 +18,7 @@ export const WalletPassShowcase = () => {
     }).then(setQrCodeUrl);
   }, []);
   return (
-    <section className="relative py-24 px-4 overflow-hidden">
+    <section className="relative py-24 px-4 overflow-hidden liquid-glass">
       <div className="absolute inset-0 bg-secondary/30" />
       <div className="absolute inset-0 opacity-20" 
            style={{ background: 'var(--gradient-stripe)' }} 

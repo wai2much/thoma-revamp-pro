@@ -24,7 +24,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 pt-20" aria-label="Hero section">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 pt-20 liquid-glass" aria-label="Hero section">
       {/* Stripe-inspired gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary/30 to-background" />
       <div className="absolute inset-0 opacity-80 animate-[gradient-shift_20s_ease_infinite]" 
