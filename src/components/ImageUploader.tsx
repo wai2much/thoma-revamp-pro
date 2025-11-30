@@ -78,7 +78,7 @@ export const ImageUploader = () => {
   return (
     <div className="space-y-6">
       <Card
-        className={`border-2 border-dashed transition-colors ${
+        className={`glass-card border-2 border-dashed transition-colors ${
           isDragging
             ? "border-primary bg-primary/5"
             : "border-border hover:border-primary/50"
@@ -125,7 +125,7 @@ export const ImageUploader = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {images.map((image) => (
-              <Card key={image.id} className="relative group overflow-hidden">
+              <Card key={image.id} className="glass-card relative group overflow-hidden">
                 <img
                   src={image.preview}
                   alt={image.file.name}

@@ -110,7 +110,7 @@ export default function Dashboard() {
           <div className="lg:col-span-1 space-y-6">
             <ShimmerBotStatus />
             
-            <div className="p-6 rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm">
+            <div className="glass-card p-6">
               <h3 className="text-lg font-semibold mb-4">Quick Stats</h3>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
@@ -160,7 +160,7 @@ export default function Dashboard() {
             </div>
 
             {/* Event Stream Preview */}
-            <div className="p-6 rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm">
+            <div className="glass-card p-6">
               <h3 className="text-lg font-semibold mb-4">📡 Webhook Event Stream</h3>
               <div className="space-y-2 font-mono text-sm">
                 <div className="flex items-center gap-3 p-2 rounded bg-background/50">

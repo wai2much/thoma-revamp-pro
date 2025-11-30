@@ -27,7 +27,7 @@ export const ShimmerBotStatus = ({ variant = "default" }: ShimmerBotStatusProps)
 
   if (variant === "compact") {
     return (
-      <div className="flex items-center gap-2 p-2 rounded-lg bg-card/50 backdrop-blur-sm border border-primary/20">
+      <div className="glass-card p-2 border-primary/20">
         <img 
           src={shimmerBadge} 
           alt="Shimmer Bot" 
@@ -42,7 +42,7 @@ export const ShimmerBotStatus = ({ variant = "default" }: ShimmerBotStatusProps)
   }
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-sm p-6">
+    <div className="glass-card p-6 border-primary/20 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 animate-pulse" />
       
       <div className="relative space-y-4">

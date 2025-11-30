@@ -49,10 +49,10 @@ export const RewardsProgram = () => {
             return (
               <Card
                 key={index}
-                className="p-6 bg-card/50 backdrop-blur border-border/50 hover:border-primary/50 transition-all hover:shadow-lg"
+                className="glass-card p-6 hover:glow-border transition-all group"
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-primary/10 text-primary">
+                  <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
                     <Icon className="h-6 w-6" />
                   </div>
                   <div>
@@ -65,7 +65,7 @@ export const RewardsProgram = () => {
           })}
         </div>
 
-        <Card className="p-8 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-primary/20">
+        <Card className="glass-card p-8 border-primary/20">
           <div className="text-center">
             <h3 className="text-2xl font-bold mb-4">How It Works</h3>
             <div className="grid md:grid-cols-3 gap-6 mb-6">

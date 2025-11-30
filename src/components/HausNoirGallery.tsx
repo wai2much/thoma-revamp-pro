@@ -132,7 +132,7 @@ export const HausNoirGallery = () => {
         {filteredItems.map((item) => (
           <Card
             key={item.id}
-            className="group relative overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/50"
+            className="glass-card group relative overflow-hidden cursor-pointer hover:glow-border transition-all"
             onClick={() => setSelectedImage(item)}
           >
             <div className="aspect-[3/4] relative bg-gradient-to-br from-background to-muted">
