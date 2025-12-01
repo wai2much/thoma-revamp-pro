@@ -11,6 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { PriceDisplay } from '@/components/PriceDisplay';
 import { getMemberPrice, isVapeHeadProduct } from '@/lib/memberPricing';
 import { ShoppingCart, Info, Zap } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Shop = () => {
   const navigate = useNavigate();
@@ -41,6 +42,12 @@ const Shop = () => {
       quantity: 1,
       selectedOptions: variant.selectedOptions
     });
+
+    // Toast notification positioned at top
+    toast.success('Added to cart!', {
+      description: product.title,
+      position: 'top-center',
+    });
   };
 
   const handleProductClick = (handle: string) => {
@@ -51,13 +58,13 @@ const Shop = () => {
     return (
       <div className="min-h-screen pt-20 pb-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="mb-16 text-center">
+          <div className="mb-16 text-center animate-pulse">
             <Skeleton className="h-24 w-96 mx-auto mb-4" />
             <Skeleton className="h-6 w-64 mx-auto" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[...Array(6)].map((_, i) => (
-              <Skeleton key={i} className="h-[500px]" />
+              <Skeleton key={i} className="h-[500px] animate-pulse" />
             ))}
           </div>
         </div>
@@ -69,8 +76,8 @@ const Shop = () => {
     return (
       <div className="min-h-screen pt-20 pb-16 bg-background">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="font-display text-8xl mb-8 uppercase tracking-tight">ERROR</h1>
-          <p className="text-muted-foreground text-lg">Failed to load products. Try again later.</p>
+          <h1 className="font-display text-8xl mb-8 uppercase tracking-tight animate-pop-in">ERROR</h1>
+          <p className="text-muted-foreground text-lg animate-fade-in">Failed to load products. Try again later.</p>
         </div>
       </div>
     );
@@ -80,8 +87,8 @@ const Shop = () => {
     return (
       <div className="min-h-screen pt-20 pb-16 bg-background">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="font-display text-8xl mb-8 uppercase tracking-tight">SHOP</h1>
-          <p className="text-muted-foreground text-lg">No products available yet. Check back soon!</p>
+          <h1 className="font-display text-8xl mb-8 uppercase tracking-tight animate-pop-in">SHOP</h1>
+          <p className="text-muted-foreground text-lg animate-fade-in">No products available yet. Check back soon!</p>
         </div>
       </div>
     );
@@ -96,41 +103,41 @@ const Shop = () => {
   const showMemberBanner = !subscription.subscribed && hasVapeHeadProducts;
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section - Streetwear Magazine Style */}
+    <div className="min-h-screen bg-background overflow-x-hidden">
+      {/* Hero Section - Streetwear Magazine Style with Animations */}
       <div className="relative overflow-hidden border-b-4 border-primary bg-gradient-to-br from-background via-card to-background">
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-6xl mx-auto">
-            {/* Overline */}
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-px w-12 bg-primary"></div>
+            {/* Overline - Slide in from left */}
+            <div className="flex items-center gap-3 mb-6 animate-slide-in-left">
+              <div className="h-px w-12 bg-primary animate-slide-line"></div>
               <span className="text-primary font-bold text-sm tracking-[0.3em] uppercase">Latest Drop</span>
-              <Zap className="w-4 h-4 text-primary" fill="currentColor" />
+              <Zap className="w-4 h-4 text-primary animate-bounce-in" fill="currentColor" />
             </div>
             
-            {/* Main Headline */}
-            <h1 className="font-display text-[clamp(3rem,15vw,12rem)] leading-[0.85] uppercase tracking-tighter mb-6 text-flat">
+            {/* Main Headline - Pop in with bounce */}
+            <h1 className="font-display text-[clamp(3rem,15vw,12rem)] leading-[0.85] uppercase tracking-tighter mb-6 text-flat animate-pop-in">
               SHOP<br/>
-              <span className="text-primary">NOW</span>
+              <span className="text-primary inline-block animate-bounce-in" style={{ animationDelay: '0.2s' }}>NOW</span>
             </h1>
             
-            {/* Subheadline */}
-            <p className="text-muted-foreground text-lg md:text-xl max-w-xl font-medium mb-8 text-flat">
+            {/* Subheadline - Fade in with delay */}
+            <p className="text-muted-foreground text-lg md:text-xl max-w-xl font-medium mb-8 text-flat animate-fade-in" style={{ animationDelay: '0.4s' }}>
               Premium automotive culture. Street-certified performance. 
               <span className="text-primary font-bold"> No compromises.</span>
             </p>
             
-            {/* Stats Bar */}
+            {/* Stats Bar - Staggered pop in */}
             <div className="flex flex-wrap gap-6 text-sm font-bold">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.5s' }}>
                 <div className="w-2 h-2 bg-primary animate-pulse"></div>
                 <span className="text-flat">{products.length} PRODUCTS</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.6s' }}>
                 <div className="w-2 h-2 bg-secondary animate-pulse"></div>
                 <span className="text-flat">FAST SHIPPING</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.7s' }}>
                 <div className="w-2 h-2 bg-accent animate-pulse"></div>
                 <span className="text-flat">MEMBERS SAVE 25-33%</span>
               </div>
@@ -138,19 +145,19 @@ const Shop = () => {
           </div>
         </div>
         
-        {/* Decorative Elements */}
-        <div className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
-          <div className="absolute top-1/4 right-10 font-display text-[20vw] text-primary leading-none opacity-30 rotate-12">
+        {/* Decorative Elements - Animated */}
+        <div className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/4 right-10 font-display text-[20vw] text-primary leading-none opacity-30 rotate-12 animate-float">
             SHOP
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        {/* Member Savings Banner - Streetwear Style */}
+        {/* Member Savings Banner - Slide in from top */}
         {showMemberBanner && (
-          <Alert className="mb-12 border-2 border-primary bg-card/50 backdrop-blur">
-            <Info className="h-5 w-5 text-primary" />
+          <Alert className="mb-12 border-2 border-primary bg-card/50 backdrop-blur animate-slide-up">
+            <Info className="h-5 w-5 text-primary animate-bounce" />
             <AlertDescription className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <span className="font-display text-xl uppercase text-flat">Members Only Pricing</span>
@@ -161,7 +168,7 @@ const Shop = () => {
               <Button 
                 size="lg" 
                 onClick={() => navigate('/membership')}
-                className="font-bold tracking-wide bg-primary hover:bg-primary/90 shrink-0"
+                className="font-bold tracking-wide bg-primary hover:bg-primary/90 shrink-0 transition-all hover:scale-105 hover:shadow-lg hover:shadow-primary/50"
               >
                 JOIN NOW
               </Button>
@@ -169,22 +176,23 @@ const Shop = () => {
           </Alert>
         )}
 
-        {/* Vendor Filter - Hypebeast Style */}
+        {/* Vendor Filter - Hypebeast Style with animations */}
         {uniqueVendors.length > 1 && (
-          <div className="flex flex-wrap gap-3 mb-12 border-l-4 border-primary pl-6">
+          <div className="flex flex-wrap gap-3 mb-12 border-l-4 border-primary pl-6 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
             <Button
               variant={vendorFilter === 'all' ? 'default' : 'outline'}
               onClick={() => setVendorFilter('all')}
-              className="font-bold tracking-wider uppercase text-sm"
+              className="font-bold tracking-wider uppercase text-sm transition-all hover:scale-105"
             >
               All
             </Button>
-            {uniqueVendors.map((vendor) => (
+            {uniqueVendors.map((vendor, i) => (
               <Button
                 key={vendor}
                 variant={vendorFilter === vendor ? 'default' : 'outline'}
                 onClick={() => setVendorFilter(vendor)}
-                className="font-bold tracking-wider uppercase text-sm"
+                className="font-bold tracking-wider uppercase text-sm transition-all hover:scale-105"
+                style={{ animationDelay: `${0.1 * (i + 1)}s` }}
               >
                 {vendor}
               </Button>
@@ -192,7 +200,7 @@ const Shop = () => {
           </div>
         )}
         
-        {/* Product Grid - Magazine Layout */}
+        {/* Product Grid - Magazine Layout with staggered animations */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {filteredProducts.map((product, index) => {
             const image = product.images.edges[0]?.node;
@@ -206,9 +214,10 @@ const Shop = () => {
             return (
               <div 
                 key={product.id} 
-                className="group relative bg-card border-2 border-border hover:border-primary transition-all duration-300 overflow-hidden"
+                className="group relative bg-card border-2 border-border hover:border-primary transition-all duration-500 overflow-hidden animate-pop-in"
                 style={{ 
-                  animationDelay: `${index * 50}ms` 
+                  animationDelay: `${index * 100}ms`,
+                  animationFillMode: 'backwards'
                 }}
               >
                 {/* Product Image */}
@@ -220,34 +229,37 @@ const Shop = () => {
                     <img 
                       src={image.url} 
                       alt={image.altText || product.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <ShoppingCart className="h-16 w-16 text-muted-foreground/50" />
+                      <ShoppingCart className="h-16 w-16 text-muted-foreground/50 animate-float" />
                     </div>
                   )}
                   
-                  {/* Vendor Badge */}
+                  {/* Vendor Badge - Animated */}
                   {isVapeHeadProduct(product.vendor) && (
-                    <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground font-display text-lg px-3 py-1 tracking-wider">
+                    <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground font-display text-lg px-3 py-1 tracking-wider animate-bounce-in">
                       VAPE HEAD
                     </Badge>
                   )}
                   
-                  {/* Quick View Overlay */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="font-display text-2xl text-white uppercase tracking-wider text-flat">
+                  {/* Quick View Overlay - Slide up on hover */}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center translate-y-full group-hover:translate-y-0">
+                    <span className="font-display text-2xl text-white uppercase tracking-wider text-flat transform scale-75 group-hover:scale-100 transition-transform duration-300">
                       View Details
                     </span>
                   </div>
+                  
+                  {/* Animated corner accent */}
+                  <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-r-[40px] border-t-primary border-r-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 transform rotate-0 group-hover:rotate-180"></div>
                 </div>
                 
                 {/* Product Info */}
                 <div className="p-4 space-y-3">
                   {/* Title */}
                   <h3 
-                    className="font-headline text-xl uppercase leading-tight cursor-pointer hover:text-primary transition-colors text-flat"
+                    className="font-headline text-xl uppercase leading-tight cursor-pointer hover:text-primary transition-all duration-300 text-flat transform hover:translate-x-2"
                     onClick={() => handleProductClick(product.handle)}
                   >
                     {product.title}
@@ -269,19 +281,31 @@ const Shop = () => {
                     />
                   </div>
                   
-                  {/* CTA */}
+                  {/* CTA - Enhanced hover */}
                   <Button 
                     onClick={() => handleAddToCart(product)}
-                    className="w-full font-display text-lg tracking-wider uppercase bg-foreground text-background hover:bg-primary hover:text-primary-foreground transition-all"
+                    className="w-full font-display text-lg tracking-wider uppercase bg-foreground text-background hover:bg-primary hover:text-primary-foreground transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-primary/50 active:scale-95"
                     disabled={!variant?.availableForSale}
                     size="lg"
                   >
-                    {variant?.availableForSale ? 'Add to Cart' : 'Sold Out'}
+                    {variant?.availableForSale ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <ShoppingCart className="w-5 h-5" />
+                        Add to Cart
+                      </span>
+                    ) : (
+                      'Sold Out'
+                    )}
                   </Button>
                 </div>
                 
-                {/* Accent Line */}
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                {/* Accent Line - Animated on hover */}
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"></div>
+                
+                {/* Glow effect on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 animate-pulse"></div>
+                </div>
               </div>
             );
           })}
