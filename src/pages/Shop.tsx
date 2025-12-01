@@ -156,29 +156,29 @@ const Shop = () => {
               {/* Right: Figurines Display */}
               <div className="relative h-[500px] hidden lg:flex items-center justify-center gap-8">
                 {/* Figurine 1 */}
-                <div className="w-40 xl:w-48">
+                <div className="w-48 h-[400px] flex items-center justify-center">
                   <img 
                     src={hausonsuitImg} 
                     alt="Hauson Suit Edition" 
-                    className="w-full h-auto object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
+                    className="w-full h-full object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
                   />
                 </div>
                 
                 {/* Figurine 2 */}
-                <div className="w-40 xl:w-48">
+                <div className="w-48 h-[400px] flex items-center justify-center">
                   <img 
                     src={hausoncasualImg} 
                     alt="Hauson Casual Edition" 
-                    className="w-full h-auto object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
+                    className="w-full h-full object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
                   />
                 </div>
                 
                 {/* Figurine 3 */}
-                <div className="w-40 xl:w-48">
+                <div className="w-48 h-[400px] flex items-center justify-center">
                   <img 
                     src={hausonwizardImg} 
                     alt="Hauson Wizard Edition" 
-                    className="w-full h-auto object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
+                    className="w-full h-full object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
                   />
                 </div>
               </div>
