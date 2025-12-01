@@ -128,9 +128,8 @@ const Shop = () => {
                 </div>
                 
                 {/* Main Headline - Pop in with bounce */}
-                <h1 className="font-display text-[clamp(3rem,12vw,10rem)] leading-[0.85] uppercase tracking-tighter text-flat animate-pop-in">
-                  SHOP<br/>
-                  <span className="text-primary inline-block animate-bounce-in" style={{ animationDelay: '0.2s' }}>NOW</span>
+                <h1 className="font-display text-[clamp(4rem,15vw,14rem)] leading-[1] uppercase tracking-tighter text-flat animate-pop-in">
+                  SHOP <span className="text-primary inline-block animate-bounce-in" style={{ animationDelay: '0.2s' }}>NOW</span>
                 </h1>
                 
                 {/* Subheadline - Fade in with delay */}
