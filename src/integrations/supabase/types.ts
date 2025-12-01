@@ -116,6 +116,30 @@ export type Database = {
         }
         Relationships: []
       }
+      memories: {
+        Row: {
+          category: string | null
+          content: string
+          created_at: string | null
+          id: string
+          tags: string[] | null
+        }
+        Insert: {
+          category?: string | null
+          content: string
+          created_at?: string | null
+          id?: string
+          tags?: string[] | null
+        }
+        Update: {
+          category?: string | null
+          content?: string
+          created_at?: string | null
+          id?: string
+          tags?: string[] | null
+        }
+        Relationships: []
+      }
       passentry_config: {
         Row: {
           created_at: string | null
