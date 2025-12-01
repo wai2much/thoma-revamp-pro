@@ -15,7 +15,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Space Grotesk", "system-ui", "sans-serif"],
+        display: ["Bebas Neue", "Impact", "sans-serif"],
+        headline: ["Archivo Black", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
