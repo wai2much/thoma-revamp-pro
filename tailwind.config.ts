@@ -207,6 +207,14 @@ export default {
             transform: "translateY(-10px)",
           },
         },
+        "shimmer": {
+          "0%": {
+            backgroundPosition: "200% center",
+          },
+          "100%": {
+            backgroundPosition: "-200% center",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -222,6 +230,10 @@ export default {
         "pulse-border": "pulse-border 2s ease-in-out infinite",
         "slide-line": "slide-line 0.6s ease-out forwards",
         "float": "float 3s ease-in-out infinite",
+        "shimmer": "shimmer 3s linear infinite",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
     },
   },

@@ -13,6 +13,12 @@ import { getMemberPrice, isVapeHeadProduct } from '@/lib/memberPricing';
 import { ShoppingCart, Info, Zap } from 'lucide-react';
 import { toast } from 'sonner';
 
+// Import figurine images
+import hausonsuitImg from "@/assets/figurines/hauson-suit.png";
+import hausoncasualImg from "@/assets/figurines/hauson-casual.png";
+import hausonwizardImg from "@/assets/figurines/hauson-wizard.png";
+import hausongrungeImg from "@/assets/figurines/hauson-grunge.png";
+
 const Shop = () => {
   const navigate = useNavigate();
   const addItem = useCartStore((state) => state.addItem);
@@ -104,49 +110,88 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      {/* Hero Section - Streetwear Magazine Style with Animations */}
+      {/* Hero Section - Streetwear Magazine Style with Figurines */}
       <div className="relative overflow-hidden border-b-4 border-primary bg-gradient-to-br from-background via-card to-background">
         <div className="container mx-auto px-4 py-20">
-          <div className="max-w-6xl mx-auto">
-            {/* Overline - Slide in from left */}
-            <div className="flex items-center gap-3 mb-6 animate-slide-in-left">
-              <div className="h-px w-12 bg-primary animate-slide-line"></div>
-              <span className="text-primary font-bold text-sm tracking-[0.3em] uppercase">Latest Drop</span>
-              <Zap className="w-4 h-4 text-primary animate-bounce-in" fill="currentColor" />
-            </div>
-            
-            {/* Main Headline - Pop in with bounce */}
-            <h1 className="font-display text-[clamp(3rem,15vw,12rem)] leading-[0.85] uppercase tracking-tighter mb-6 text-flat animate-pop-in">
-              SHOP<br/>
-              <span className="text-primary inline-block animate-bounce-in" style={{ animationDelay: '0.2s' }}>NOW</span>
-            </h1>
-            
-            {/* Subheadline - Fade in with delay */}
-            <p className="text-muted-foreground text-lg md:text-xl max-w-xl font-medium mb-8 text-flat animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              Premium automotive culture. Street-certified performance. 
-              <span className="text-primary font-bold"> No compromises.</span>
-            </p>
-            
-            {/* Stats Bar - Staggered pop in */}
-            <div className="flex flex-wrap gap-6 text-sm font-bold">
-              <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.5s' }}>
-                <div className="w-2 h-2 bg-primary animate-pulse"></div>
-                <span className="text-flat">{products.length} PRODUCTS</span>
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left: Text Content */}
+              <div className="space-y-8">
+                {/* Overline - Slide in from left */}
+                <div className="flex items-center gap-3 mb-6 animate-slide-in-left">
+                  <div className="h-px w-12 bg-primary animate-slide-line"></div>
+                  <span className="text-primary font-bold text-sm tracking-[0.3em] uppercase">Latest Drop</span>
+                  <Zap className="w-4 h-4 text-primary animate-bounce-in" fill="currentColor" />
+                </div>
+                
+                {/* Main Headline - Pop in with bounce */}
+                <h1 className="font-display text-[clamp(3rem,12vw,10rem)] leading-[0.85] uppercase tracking-tighter text-flat animate-pop-in">
+                  SHOP<br/>
+                  <span className="text-primary inline-block animate-bounce-in" style={{ animationDelay: '0.2s' }}>NOW</span>
+                </h1>
+                
+                {/* Subheadline - Fade in with delay */}
+                <p className="text-muted-foreground text-lg md:text-xl max-w-xl font-medium text-flat animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                  Premium automotive culture. Street-certified performance. 
+                  <span className="text-primary font-bold"> No compromises.</span>
+                </p>
+                
+                {/* Stats Bar - Staggered pop in */}
+                <div className="flex flex-wrap gap-6 text-sm font-bold">
+                  <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.5s' }}>
+                    <div className="w-2 h-2 bg-primary animate-pulse"></div>
+                    <span className="text-flat">{products.length} PRODUCTS</span>
+                  </div>
+                  <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.6s' }}>
+                    <div className="w-2 h-2 bg-secondary animate-pulse"></div>
+                    <span className="text-flat">FAST SHIPPING</span>
+                  </div>
+                  <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.7s' }}>
+                    <div className="w-2 h-2 bg-accent animate-pulse"></div>
+                    <span className="text-flat">MEMBERS SAVE 25-33%</span>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.6s' }}>
-                <div className="w-2 h-2 bg-secondary animate-pulse"></div>
-                <span className="text-flat">FAST SHIPPING</span>
-              </div>
-              <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.7s' }}>
-                <div className="w-2 h-2 bg-accent animate-pulse"></div>
-                <span className="text-flat">MEMBERS SAVE 25-33%</span>
+
+              {/* Right: Figurines Display */}
+              <div className="relative h-[500px] hidden lg:block">
+                {/* Figurine 1 - Left */}
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-40 xl:w-48 animate-float">
+                  <img 
+                    src={hausonsuitImg} 
+                    alt="Hauson Suit Edition" 
+                    className="w-full h-auto object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
+                  />
+                </div>
+                
+                {/* Figurine 2 - Center */}
+                <div className="absolute left-1/2 -translate-x-1/2 top-10 w-48 xl:w-56 animate-float z-10" style={{ animationDelay: '0.3s' }}>
+                  <img 
+                    src={hausoncasualImg} 
+                    alt="Hauson Casual Edition" 
+                    className="w-full h-auto object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
+                  />
+                </div>
+                
+                {/* Figurine 3 - Right */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-40 xl:w-48 animate-float" style={{ animationDelay: '0.6s' }}>
+                  <img 
+                    src={hausonwizardImg} 
+                    alt="Hauson Wizard Edition" 
+                    className="w-full h-auto object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
+                  />
+                </div>
+
+                {/* Glow Effects */}
+                <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-transparent to-transparent blur-3xl pointer-events-none" />
+                <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse pointer-events-none" />
               </div>
             </div>
           </div>
         </div>
         
         {/* Decorative Elements - Animated */}
-        <div className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full opacity-5 pointer-events-none overflow-hidden">
           <div className="absolute top-1/4 right-10 font-display text-[20vw] text-primary leading-none opacity-30 rotate-12 animate-float">
             SHOP
           </div>
@@ -200,7 +245,68 @@ const Shop = () => {
           </div>
         )}
         
-        {/* Product Grid - Magazine Layout with staggered animations */}
+        {/* Figurine Products Section */}
+        <div className="mb-16">
+          <div className="flex items-center gap-4 mb-8 border-l-4 border-accent pl-6">
+            <h2 className="font-display text-4xl uppercase tracking-tight text-flat">Limited Edition Figurines</h2>
+            <Badge className="bg-accent text-accent-foreground animate-pulse">COMING SOON</Badge>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[
+              { name: "Hauson Suit Edition", image: hausonsuitImg, price: "89.99" },
+              { name: "Hauson Casual Edition", image: hausoncasualImg, price: "79.99" },
+              { name: "Hauson Wizard Edition", image: hausonwizardImg, price: "94.99" },
+              { name: "Hauson Grunge Edition", image: hausongrungeImg, price: "99.99" }
+            ].map((figurine, index) => (
+              <div 
+                key={figurine.name}
+                className="group relative bg-card border-2 border-border hover:border-accent transition-all duration-500 overflow-hidden animate-pop-in"
+                style={{ 
+                  animationDelay: `${index * 100}ms`,
+                  animationFillMode: 'backwards'
+                }}
+              >
+                <div className="aspect-[3/4] p-4 bg-gradient-to-br from-background to-accent/5 flex items-center justify-center">
+                  <img 
+                    src={figurine.image}
+                    alt={figurine.name}
+                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3"
+                  />
+                </div>
+                
+                <div className="p-4 space-y-2">
+                  <h3 className="font-headline text-lg uppercase leading-tight text-flat">
+                    {figurine.name}
+                  </h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-display text-2xl font-bold text-accent">${figurine.price}</span>
+                    <span className="text-xs text-muted-foreground">AUD</span>
+                  </div>
+                  <Button 
+                    disabled
+                    className="w-full font-display tracking-wider uppercase opacity-50"
+                    size="lg"
+                  >
+                    Coming Soon
+                  </Button>
+                </div>
+                
+                <Badge className="absolute top-4 right-4 bg-accent text-accent-foreground animate-bounce-in">
+                  NEW
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Regular Product Grid - Magazine Layout with staggered animations */}
+        <div className="mb-8">
+          <div className="flex items-center gap-4 mb-8 border-l-4 border-primary pl-6">
+            <h2 className="font-display text-4xl uppercase tracking-tight text-flat">Shop Products</h2>
+          </div>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {filteredProducts.map((product, index) => {
             const image = product.images.edges[0]?.node;
