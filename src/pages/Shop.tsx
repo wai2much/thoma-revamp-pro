@@ -14,6 +14,9 @@ import { ShoppingCart, Info, Zap } from 'lucide-react';
 import { toast } from 'sonner';
 
 // Import figurine images
+import hausontechnikImg from "@/assets/figurines/hauson-technik.png";
+import hausonwhiskeyImg from "@/assets/figurines/hauson-whiskey.png";
+import hausonsuperImg from "@/assets/figurines/hauson-super.png";
 import hausonsuitImg from "@/assets/figurines/hauson-suit.png";
 import hausoncasualImg from "@/assets/figurines/hauson-casual.png";
 import hausonwizardImg from "@/assets/figurines/hauson-wizard.png";
@@ -158,8 +161,8 @@ const Shop = () => {
                 {/* Figurine 1 */}
                 <div className="w-48 h-[400px] flex items-center justify-center">
                   <img 
-                    src={hausonsuitImg} 
-                    alt="Hauson Suit Edition" 
+                    src={hausontechnikImg} 
+                    alt="Hauson Technik Edition" 
                     className="w-full h-full object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
                   />
                 </div>
@@ -167,8 +170,8 @@ const Shop = () => {
                 {/* Figurine 2 */}
                 <div className="w-48 h-[400px] flex items-center justify-center">
                   <img 
-                    src={hausoncasualImg} 
-                    alt="Hauson Casual Edition" 
+                    src={hausonwhiskeyImg} 
+                    alt="Hauson Whiskey Edition" 
                     className="w-full h-full object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
                   />
                 </div>
@@ -176,8 +179,8 @@ const Shop = () => {
                 {/* Figurine 3 */}
                 <div className="w-48 h-[400px] flex items-center justify-center">
                   <img 
-                    src={hausonwizardImg} 
-                    alt="Hauson Wizard Edition" 
+                    src={hausonsuperImg} 
+                    alt="Hauson Super Edition" 
                     className="w-full h-full object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
                   />
                 </div>
