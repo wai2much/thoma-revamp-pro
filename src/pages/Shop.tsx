@@ -179,8 +179,8 @@ const Shop = () => {
                 {/* Figurine 3 */}
                 <div className="w-48 h-[400px] flex items-center justify-center">
                   <img 
-                    src={hausonsuperImg} 
-                    alt="Hauson Super Edition" 
+                    src={hausongrungeImg} 
+                    alt="Hauson Grunge Edition" 
                     className="w-full h-full object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
                   />
                 </div>
