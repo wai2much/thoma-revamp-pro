@@ -154,9 +154,9 @@ const Shop = () => {
               </div>
 
               {/* Right: Figurines Display */}
-              <div className="relative h-[500px] hidden lg:block">
-                {/* Figurine 1 - Left */}
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-40 xl:w-48 animate-float">
+              <div className="relative h-[500px] hidden lg:flex items-center justify-center gap-8">
+                {/* Figurine 1 */}
+                <div className="w-40 xl:w-48">
                   <img 
                     src={hausonsuitImg} 
                     alt="Hauson Suit Edition" 
@@ -164,8 +164,8 @@ const Shop = () => {
                   />
                 </div>
                 
-                {/* Figurine 2 - Center */}
-                <div className="absolute left-1/2 -translate-x-1/2 top-10 w-48 xl:w-56 animate-float z-10" style={{ animationDelay: '0.3s' }}>
+                {/* Figurine 2 */}
+                <div className="w-40 xl:w-48">
                   <img 
                     src={hausoncasualImg} 
                     alt="Hauson Casual Edition" 
@@ -173,18 +173,14 @@ const Shop = () => {
                   />
                 </div>
                 
-                {/* Figurine 3 - Right */}
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-40 xl:w-48 animate-float" style={{ animationDelay: '0.6s' }}>
+                {/* Figurine 3 */}
+                <div className="w-40 xl:w-48">
                   <img 
                     src={hausonwizardImg} 
                     alt="Hauson Wizard Edition" 
                     className="w-full h-auto object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500 cursor-pointer"
                   />
                 </div>
-
-                {/* Glow Effects */}
-                <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-transparent to-transparent blur-3xl pointer-events-none" />
-                <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse pointer-events-none" />
               </div>
             </div>
           </div>
