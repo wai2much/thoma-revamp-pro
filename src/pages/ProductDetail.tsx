@@ -125,7 +125,7 @@ const ProductDetail = () => {
                 regularPrice={regularPrice}
                 memberPrice={memberPrice}
                 isSubscribed={subscription.subscribed}
-                currencyCode={selectedVariant?.price.currencyCode || 'AUD'}
+                currencyCode="AUD"
                 size="lg"
                 showSavings={true}
               />
