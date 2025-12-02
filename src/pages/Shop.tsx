@@ -305,7 +305,7 @@ const Shop = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
-              { name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "49.99" },
+              { name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "38.00" },
               { name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "25.00" },
               { name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "25.00" },
               { name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "25.00" },
