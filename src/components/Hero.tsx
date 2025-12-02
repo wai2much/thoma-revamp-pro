@@ -99,7 +99,7 @@ export const Hero = () => {
               <img 
                 src={amgBloomHero} 
                 alt="AMG Bloom Luxury Auto Fragrance" 
-                className="h-[400px] md:h-[500px] lg:h-[600px] w-auto object-contain relative z-10 drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
+                className="h-[280px] md:h-[350px] lg:h-[420px] w-auto object-contain relative z-10 drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
                 style={{ filter: 'drop-shadow(0 25px 50px rgba(0,0,0,0.3))' }}
               />
               <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-center">
