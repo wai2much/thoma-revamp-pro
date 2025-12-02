@@ -305,13 +305,13 @@ const Shop = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
-              { id: "fragrance-amg-bloom-250", name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "38.00" },
               { id: "fragrance-amg-bloom-100", name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "25.00" },
               { id: "fragrance-haus-noir", name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "25.00" },
               { id: "fragrance-m3-loing", name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "25.00" },
               { id: "fragrance-n-skrrt", name: "N Skrrt", description: "Luxury Auto Fragrance - 100ML", image: nSkrrtImg, price: "25.00" },
               { id: "fragrance-gtr-god", name: "GTR G.O.D", description: "Luxury Auto Fragrance - 100ML", image: gtrGodImg, price: "25.00" },
-              { id: "fragrance-911-brokie", name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "25.00" }
+              { id: "fragrance-911-brokie", name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "25.00" },
+              { id: "fragrance-amg-bloom-250", name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "38.00" }
             ].map((fragrance, index) => (
               <div 
                 key={fragrance.id}
