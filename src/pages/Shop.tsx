@@ -491,7 +491,7 @@ const Shop = () => {
                       regularPrice={regularPrice}
                       memberPrice={memberPrice}
                       isSubscribed={subscription.subscribed}
-                      currencyCode={price.currencyCode}
+                      currencyCode="AUD"
                       size="lg"
                     />
                   </div>
