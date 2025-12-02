@@ -111,17 +111,17 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      {/* Back to Membership Button */}
+      {/* Back to Home Button */}
       <div className="container mx-auto px-4 pt-24 pb-4">
         <Button
-          onClick={() => navigate('/membership')}
+          onClick={() => navigate('/')}
           variant="outline"
           className="group hover:bg-primary hover:text-primary-foreground transition-all duration-300"
         >
           <svg className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Back to Membership
+          Back to Home
         </Button>
       </div>
 
