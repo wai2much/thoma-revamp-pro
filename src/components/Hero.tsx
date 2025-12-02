@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import bannerSuperGt from "@/assets/banner-super-gt.png";
 import bannerSports from "@/assets/banner-sports.png";
 import banner190e from "@/assets/banner-190e.png";
+import amgBloomHero from "@/assets/products/amg-bloom-nobg.png";
 
 export const Hero = () => {
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -66,7 +67,7 @@ export const Hero = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 opacity-0 animate-scale-in" style={{ animationDelay: '0.5s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 opacity-0 animate-scale-in" style={{ animationDelay: '0.5s' }}>
             <Button 
               size="lg" 
               onClick={scrollToPlans}
@@ -83,6 +84,23 @@ export const Hero = () => {
             >
               Find a Location
             </Button>
+          </div>
+
+          {/* AMG Bloom Hero Product */}
+          <div className="flex justify-center mb-12 opacity-0 animate-scale-in" style={{ animationDelay: '0.6s' }}>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent blur-3xl scale-150 opacity-50 group-hover:opacity-70 transition-opacity duration-500" />
+              <img 
+                src={amgBloomHero} 
+                alt="AMG Bloom Luxury Auto Fragrance" 
+                className="h-[400px] md:h-[500px] lg:h-[600px] w-auto object-contain relative z-10 drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
+                style={{ filter: 'drop-shadow(0 25px 50px rgba(0,0,0,0.3))' }}
+              />
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-center">
+                <p className="text-sm font-medium text-primary uppercase tracking-widest">AMG Bloom</p>
+                <p className="text-xs text-muted-foreground">Luxury Auto Fragrance</p>
+              </div>
+            </div>
           </div>
 
           {/* Stats */}
