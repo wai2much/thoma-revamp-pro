@@ -306,12 +306,12 @@ const Shop = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
               { name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "49.99" },
-              { name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "34.99" },
-              { name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "39.99" },
-              { name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "34.99" },
-              { name: "N Skrrt", description: "Luxury Auto Fragrance - 100ML", image: nSkrrtImg, price: "34.99" },
-              { name: "GTR G.O.D", description: "Luxury Auto Fragrance - 100ML", image: gtrGodImg, price: "34.99" },
-              { name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "34.99" }
+              { name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "25.00" },
+              { name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "25.00" },
+              { name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "25.00" },
+              { name: "N Skrrt", description: "Luxury Auto Fragrance - 100ML", image: nSkrrtImg, price: "25.00" },
+              { name: "GTR G.O.D", description: "Luxury Auto Fragrance - 100ML", image: gtrGodImg, price: "25.00" },
+              { name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "25.00" }
             ].map((fragrance, index) => (
               <div 
                 key={fragrance.name}
