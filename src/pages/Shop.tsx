@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 
 // Import banner image
 import hausTechnikBanner from "@/assets/haus-technik-fragrances-banner.png";
+import amgBloomImg from "@/assets/products/amg-bloom-250ml.png";
 
 // Import figurine images
 import hausonsuitImg from "@/assets/figurines/hauson-suit.png";
@@ -283,6 +284,59 @@ const Shop = () => {
               alt="HAUS OF TECHNIK Luxury Auto Fragrances" 
               className="w-full h-auto object-cover"
             />
+          </div>
+        </div>
+
+        {/* HAUS OF TECHNIK Fragrances Section */}
+        <div className="mb-16">
+          <div className="flex items-center gap-4 mb-8 border-l-4 border-secondary pl-6">
+            <h2 className="font-display text-4xl uppercase tracking-tight text-flat">Luxury Auto Fragrances</h2>
+            <Badge className="bg-secondary text-secondary-foreground">NEW</Badge>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {[
+              { name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "49.99" }
+            ].map((fragrance, index) => (
+              <div 
+                key={fragrance.name}
+                className="group relative bg-card border-2 border-border hover:border-secondary transition-all duration-500 overflow-hidden animate-pop-in"
+                style={{ 
+                  animationDelay: `${index * 100}ms`,
+                  animationFillMode: 'backwards'
+                }}
+              >
+                <div className="aspect-[3/4] p-4 bg-gradient-to-br from-background to-secondary/5 flex items-center justify-center">
+                  <img 
+                    src={fragrance.image}
+                    alt={fragrance.name}
+                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                
+                <div className="p-4 space-y-2">
+                  <h3 className="font-headline text-lg uppercase leading-tight text-flat">
+                    {fragrance.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{fragrance.description}</p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-display text-2xl font-bold text-secondary">${fragrance.price}</span>
+                    <span className="text-xs text-muted-foreground">AUD</span>
+                  </div>
+                  <Button 
+                    disabled
+                    className="w-full font-display tracking-wider uppercase opacity-50"
+                    size="lg"
+                  >
+                    Coming Soon
+                  </Button>
+                </div>
+                
+                <Badge className="absolute top-4 right-4 bg-secondary text-secondary-foreground animate-bounce-in">
+                  NEW
+                </Badge>
+              </div>
+            ))}
           </div>
         </div>
 
