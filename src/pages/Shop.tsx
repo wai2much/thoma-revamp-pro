@@ -16,6 +16,12 @@ import { toast } from 'sonner';
 // Import banner image
 import hausTechnikBanner from "@/assets/haus-technik-fragrances-banner.png";
 
+// Import figurine images
+import hausonsuitImg from "@/assets/figurines/hauson-suit.png";
+import hausoncasualImg from "@/assets/figurines/hauson-casual.png";
+import hausonwizardImg from "@/assets/figurines/hauson-wizard.png";
+import hausongrungeImg from "@/assets/figurines/hauson-grunge.png";
+
 // Import artwork images for hero
 import artworkHauson from "@/assets/artwork/hauson-3-3.png";
 import artworkFriendvibe from "@/assets/artwork/day0friendvibe.png";
@@ -278,6 +284,61 @@ const Shop = () => {
               alt="HAUS OF TECHNIK Luxury Auto Fragrances" 
               className="w-full h-auto object-cover"
             />
+          </div>
+        </div>
+
+        {/* Figurine Products Section */}
+        <div className="mb-16">
+          <div className="flex items-center gap-4 mb-8 border-l-4 border-accent pl-6">
+            <h2 className="font-display text-4xl uppercase tracking-tight text-flat">Limited Edition Figurines</h2>
+            <Badge className="bg-accent text-accent-foreground animate-pulse">COMING SOON</Badge>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[
+              { name: "Hauson Suit Edition", image: hausonsuitImg, price: "89.99" },
+              { name: "Hauson Casual Edition", image: hausoncasualImg, price: "79.99" },
+              { name: "Hauson Wizard Edition", image: hausonwizardImg, price: "94.99" },
+              { name: "Hauson Grunge Edition", image: hausongrungeImg, price: "99.99" }
+            ].map((figurine, index) => (
+              <div 
+                key={figurine.name}
+                className="group relative bg-card border-2 border-border hover:border-accent transition-all duration-500 overflow-hidden animate-pop-in"
+                style={{ 
+                  animationDelay: `${index * 100}ms`,
+                  animationFillMode: 'backwards'
+                }}
+              >
+                <div className="aspect-[3/4] p-4 bg-gradient-to-br from-background to-accent/5 flex items-center justify-center">
+                  <img 
+                    src={figurine.image}
+                    alt={figurine.name}
+                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3"
+                  />
+                </div>
+                
+                <div className="p-4 space-y-2">
+                  <h3 className="font-headline text-lg uppercase leading-tight text-flat">
+                    {figurine.name}
+                  </h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-display text-2xl font-bold text-accent">${figurine.price}</span>
+                    <span className="text-xs text-muted-foreground">AUD</span>
+                  </div>
+                  <Button 
+                    disabled
+                    className="w-full font-display tracking-wider uppercase opacity-50"
+                    size="lg"
+                  >
+                    Coming Soon
+                  </Button>
+                </div>
+                
+                <Badge className="absolute top-4 right-4 bg-accent text-accent-foreground animate-bounce-in">
+                  NEW
+                </Badge>
+              </div>
+            ))}
           </div>
         </div>
 
