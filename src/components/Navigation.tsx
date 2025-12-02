@@ -20,9 +20,9 @@ export const Navigation = () => {
       background: 'var(--gradient-stripe)'
     }} />
       
-      <div className="container max-w-7xl mx-auto px-4 py-0 flex flex-col items-center justify-center gap-4 relative z-10">
-        <div className="flex items-center gap-2 cursor-pointer group -mb-28" onClick={() => navigate("/")}>
-          <img src={amgBloomHero} alt="AMG Bloom - Haus of Technik" className="h-80 w-auto object-contain -mt-24 drop-shadow-2xl hover:scale-105 transition-transform duration-500" />
+      <div className="container max-w-7xl mx-auto px-4 py-0 flex items-center justify-between gap-4 relative z-10">
+        <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate("/")}>
+          <img src={amgBloomHero} alt="AMG Bloom - Haus of Technik" className="h-32 w-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500" />
         </div>
 
         <div className="flex items-center gap-3">
