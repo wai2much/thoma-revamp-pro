@@ -306,7 +306,7 @@ All colors MUST be HSL.
                 radial-gradient(circle at 50% 80%, hsl(var(--neon-magenta) / 0.28) 0%, transparent 55%),
                 radial-gradient(circle at 10% 70%, hsl(var(--neon-purple) / 0.25) 0%, transparent 40%),
                 radial-gradient(circle at 90% 20%, hsl(var(--cyber-pink) / 0.28) 0%, transparent 48%);
-    animation: neon-float 8s ease-in-out infinite;
+    animation: neon-float 12s ease-in-out infinite;
     background-size: 200% 200%;
   }
   
@@ -342,7 +342,7 @@ All colors MUST be HSL.
       radial-gradient(ellipse at 70% 60%, hsl(180 100% 50% / 0.25) 0%, transparent 50%),
       radial-gradient(ellipse at 50% 90%, hsl(280 100% 65% / 0.22) 0%, transparent 50%);
     backdrop-filter: blur(0.5px) saturate(150%);
-    animation: liquid-flow 25s ease-in-out infinite;
+    animation: liquid-flow 35s ease-in-out infinite;
     background-size: 300% 300%;
     mix-blend-mode: screen;
   }
