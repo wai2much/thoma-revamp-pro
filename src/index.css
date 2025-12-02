@@ -313,19 +313,15 @@ All colors MUST be HSL.
   @keyframes neon-float {
     0%, 100% { 
       background-position: 0% 0%;
-      opacity: 0.7;
     }
     25% {
       background-position: 100% 50%;
-      opacity: 0.9;
     }
     50% { 
       background-position: 50% 100%;
-      opacity: 0.8;
     }
     75% {
       background-position: 100% 0%;
-      opacity: 1;
     }
   }
   
@@ -337,6 +333,7 @@ All colors MUST be HSL.
     height: 100%;
     pointer-events: none;
     z-index: 2;
+    opacity: 0.8;
     background: 
       radial-gradient(ellipse at 30% 20%, hsl(338 65% 60% / 0.25) 0%, transparent 50%),
       radial-gradient(ellipse at 70% 60%, hsl(180 100% 50% / 0.25) 0%, transparent 50%),
@@ -344,7 +341,7 @@ All colors MUST be HSL.
     backdrop-filter: blur(0.5px) saturate(150%);
     animation: liquid-flow 35s ease-in-out infinite;
     background-size: 300% 300%;
-    mix-blend-mode: screen;
+    mix-blend-mode: overlay;
   }
   
   @keyframes liquid-flow {
