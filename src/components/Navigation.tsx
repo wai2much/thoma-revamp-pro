@@ -20,15 +20,35 @@ export const Navigation = () => {
       background: 'var(--gradient-stripe)'
     }} />
       
-      <div className="container max-w-7xl mx-auto px-4 py-3 flex items-center justify-center gap-4 relative z-10">
-        <div className="flex items-center gap-3">
+      <div className="container max-w-7xl mx-auto px-4 py-3 flex items-center justify-between relative z-10">
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="sm" onClick={() => navigate("/")} className="hover:bg-primary/10 relative group">
+            <span className="relative">
+              Home
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+            </span>
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => navigate("/shop")} className="hover:bg-primary/10 relative group">
+            <span className="relative">
+              Shop
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+            </span>
+          </Button>
           <Button variant="ghost" size="sm" onClick={() => navigate("/loyalty")} className="hidden sm:flex hover:bg-primary/10 relative group">
             <span className="relative">
               Rewards
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </span>
           </Button>
-          
+          <Button variant="ghost" size="sm" onClick={() => navigate("/gallery")} className="hidden sm:flex hover:bg-primary/10 relative group">
+            <span className="relative">
+              Gallery
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+            </span>
+          </Button>
+        </div>
+        
+        <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" onClick={() => navigate("/cart")} className="relative hover:bg-primary/10">
             <ShoppingCart className="h-5 w-5" />
             {itemCount > 0 && <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs animate-pulse">
@@ -37,7 +57,7 @@ export const Navigation = () => {
           </Button>
 
           {user ? <>
-              {subscription.subscribed && <span className="text-sm text-primary font-semibold px-3 py-1 bg-primary/10 rounded-full hover:bg-primary/20">
+              {subscription.subscribed && <span className="text-sm text-primary font-semibold px-3 py-1 bg-primary/10 rounded-full hidden sm:inline-block">
                   Active Member
                 </span>}
               <Button variant="ghost" size="sm" onClick={() => navigate("/scanner")} className="hidden sm:flex hover:bg-primary/10">
