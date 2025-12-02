@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { User, LogIn, ScanLine, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import amgBloomHero from "@/assets/products/amg-bloom-nobg.png";
-import shopifyIcon from "@/assets/shopify-icon-nobg.png";
 import { useCartStore } from "@/stores/cartStore";
 import { Badge } from "@/components/ui/badge";
 export const Navigation = () => {
@@ -27,9 +26,9 @@ export const Navigation = () => {
 
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={() => navigate("/shop")} className="hidden sm:flex hover:bg-primary/10 relative group">
-            <img src={shopifyIcon} alt="Shopify" className="mr-2 h-10 w-10 object-contain" />
+            <img src={amgBloomHero} alt="Shop" className="mr-2 h-12 w-auto object-contain" />
             <span className="relative">
-              Shopify
+              Shop
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </span>
           </Button>
