@@ -29,6 +29,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        {/* Liquid glass overlay effects */}
+        <div className="neon-dust-overlay" />
+        <div className="cyber-liquid-glass" />
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
