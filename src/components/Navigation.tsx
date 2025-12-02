@@ -2,7 +2,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { User, LogIn, ScanLine, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import hausLogo from "@/assets/haus-logo.png";
+import amgBloomHero from "@/assets/products/amg-bloom-nobg.png";
 import shopifyIcon from "@/assets/shopify-icon-nobg.png";
 import { useCartStore } from "@/stores/cartStore";
 import { Badge } from "@/components/ui/badge";
@@ -22,7 +22,7 @@ export const Navigation = () => {
       
       <div className="container max-w-7xl mx-auto px-4 py-0 flex flex-col items-center justify-center gap-4 relative z-10">
         <div className="flex items-center gap-2 cursor-pointer group -mb-28" onClick={() => navigate("/")}>
-          <img src={hausLogo} alt="Haus of Technik" className="h-72 w-auto scale-125 object-cover -mt-28" />
+          <img src={amgBloomHero} alt="AMG Bloom - Haus of Technik" className="h-80 w-auto object-contain -mt-24 drop-shadow-2xl hover:scale-105 transition-transform duration-500" />
         </div>
 
         <div className="flex items-center gap-3">
