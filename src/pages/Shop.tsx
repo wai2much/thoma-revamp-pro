@@ -15,7 +15,16 @@ import { toast } from 'sonner';
 
 // Import banner image
 import hausTechnikBanner from "@/assets/haus-technik-fragrances-banner.png";
+
+// Import fragrance images
 import amgBloomImg from "@/assets/products/amg-bloom-250ml.png";
+import amgBloomBottleImg from "@/assets/products/amg-bloom-bottle.png";
+import amgBloom100Img from "@/assets/products/amg-bloom-100ml.png";
+import m3LoingImg from "@/assets/products/m3-loing-100ml.png";
+import nSkrrtImg from "@/assets/products/n-skrrt-100ml.png";
+import gtrGodImg from "@/assets/products/gtr-god-100ml.png";
+import brokieImg from "@/assets/products/911-brokie-100ml.png";
+import hausNoirImg from "@/assets/products/haus-noir-100ml.png";
 
 // Import figurine images
 import hausonsuitImg from "@/assets/figurines/hauson-suit.png";
@@ -296,7 +305,13 @@ const Shop = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
-              { name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "49.99" }
+              { name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "49.99" },
+              { name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "34.99" },
+              { name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "39.99" },
+              { name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "34.99" },
+              { name: "N Skrrt", description: "Luxury Auto Fragrance - 100ML", image: nSkrrtImg, price: "34.99" },
+              { name: "GTR G.O.D", description: "Luxury Auto Fragrance - 100ML", image: gtrGodImg, price: "34.99" },
+              { name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "34.99" }
             ].map((fragrance, index) => (
               <div 
                 key={fragrance.name}
