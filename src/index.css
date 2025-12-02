@@ -301,6 +301,7 @@ All colors MUST be HSL.
     height: 100%;
     pointer-events: none;
     z-index: 1;
+    opacity: 0.6;
     background: radial-gradient(circle at 20% 30%, hsl(var(--cyber-pink) / 0.35) 0%, transparent 50%),
                 radial-gradient(circle at 80% 60%, hsl(var(--cyber-cyan) / 0.35) 0%, transparent 45%),
                 radial-gradient(circle at 50% 80%, hsl(var(--neon-magenta) / 0.28) 0%, transparent 55%),
@@ -333,15 +334,15 @@ All colors MUST be HSL.
     height: 100%;
     pointer-events: none;
     z-index: 2;
-    opacity: 0.8;
+    opacity: 0.5;
     background: 
-      radial-gradient(ellipse at 30% 20%, hsl(338 65% 60% / 0.25) 0%, transparent 50%),
-      radial-gradient(ellipse at 70% 60%, hsl(180 100% 50% / 0.25) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 90%, hsl(280 100% 65% / 0.22) 0%, transparent 50%);
+      radial-gradient(ellipse at 30% 20%, hsl(338 65% 60% / 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, hsl(180 100% 50% / 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 90%, hsl(280 100% 65% / 0.18) 0%, transparent 50%);
     backdrop-filter: blur(0.5px) saturate(150%);
     animation: liquid-flow 35s ease-in-out infinite;
     background-size: 300% 300%;
-    mix-blend-mode: overlay;
+    mix-blend-mode: soft-light;
   }
   
   @keyframes liquid-flow {
