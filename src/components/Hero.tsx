@@ -5,6 +5,12 @@ import bannerSuperGt from "@/assets/banner-super-gt.png";
 import bannerSports from "@/assets/banner-sports.png";
 import banner190e from "@/assets/banner-190e.png";
 import amgBloomHero from "@/assets/products/amg-bloom-nobg.png";
+import amgBloom100 from "@/assets/products/amg-bloom-100ml.png";
+import hausNoir100 from "@/assets/products/haus-noir-100ml.png";
+import hausNoirGtr100 from "@/assets/products/haus-noir-gtr-100ml.png";
+import m3Loing100 from "@/assets/products/m3-loing-100ml.png";
+import nSkrrt100 from "@/assets/products/n-skrrt-100ml.png";
+import gtrGod100 from "@/assets/products/gtr-god-100ml.png";
 
 export const Hero = () => {
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -100,6 +106,38 @@ export const Hero = () => {
                 <p className="text-sm font-medium text-primary uppercase tracking-widest">AMG Bloom</p>
                 <p className="text-xs text-muted-foreground">Luxury Auto Fragrance</p>
               </div>
+            </div>
+          </div>
+
+          {/* Product Showcase - 6 Fragrances */}
+          <div className="mb-16 opacity-0 animate-fade-in" style={{ animationDelay: '0.65s' }}>
+            <p className="text-center text-sm text-muted-foreground uppercase tracking-widest mb-8">Our Collection</p>
+            <div className="flex flex-wrap justify-center items-end gap-4 md:gap-8">
+              {[
+                { src: amgBloom100, name: "AMG Bloom" },
+                { src: hausNoir100, name: "Haus Noir" },
+                { src: hausNoirGtr100, name: "GTR Edition" },
+                { src: m3Loing100, name: "M3 Lo-ing" },
+                { src: nSkrrt100, name: "N Skrrt" },
+                { src: gtrGod100, name: "GTR God" },
+              ].map((product, i) => (
+                <div 
+                  key={product.name} 
+                  className="group relative flex flex-col items-center"
+                  style={{ animationDelay: `${0.7 + i * 0.1}s` }}
+                >
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-primary/10 blur-2xl scale-125 opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
+                    <img 
+                      src={product.src} 
+                      alt={product.name}
+                      className="h-24 md:h-32 w-auto object-contain relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-2"
+                      style={{ filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.2))' }}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">{product.name}</p>
+                </div>
+              ))}
             </div>
           </div>
 
