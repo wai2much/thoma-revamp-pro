@@ -340,9 +340,22 @@ const Shop = () => {
                   </div>
                   <Button 
                     onClick={() => {
-                      toast.success('Added to cart!', {
-                        description: `${fragrance.name} - ${fragrance.description}`,
-                        position: 'top-center',
+                      addItem({
+                        product: {
+                          id: fragrance.id,
+                          title: fragrance.name,
+                          description: fragrance.description,
+                          handle: fragrance.id,
+                          vendor: 'HAUS OF TECHNIK',
+                          images: { edges: [{ node: { url: fragrance.image, altText: fragrance.name } }] },
+                          variants: { edges: [{ node: { id: fragrance.id, title: fragrance.description, price: { amount: fragrance.price, currencyCode: 'AUD' }, availableForSale: true, selectedOptions: [] } }] },
+                          priceRange: { minVariantPrice: { amount: fragrance.price, currencyCode: 'AUD' } }
+                        },
+                        variantId: fragrance.id,
+                        variantTitle: fragrance.description,
+                        price: { amount: fragrance.price, currencyCode: 'AUD' },
+                        quantity: 1,
+                        selectedOptions: []
                       });
                     }}
                     className="w-full font-display tracking-wider uppercase bg-secondary hover:bg-secondary/90 transition-all hover:scale-105"
