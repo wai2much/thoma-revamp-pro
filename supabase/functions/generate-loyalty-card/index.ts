@@ -1,10 +1,18 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// Input validation schema
+const loyaltyCardSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name is too long"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email is too long"),
+  phone: z.string().regex(/^\+?[1-9]\d{6,14}$/, "Invalid phone number format").optional().or(z.literal("")),
+});
 
 const LOYALTY_PREFIX = "635BF"; // Stripe purple #635BFF
 const LOYALTY_PRODUCT_ID = "loyalty_card"; // Special identifier for loyalty card template
@@ -46,11 +54,20 @@ serve(async (req) => {
   try {
     console.log("[LOYALTY-CARD] Function started");
 
-    const { name, email, phone } = await req.json();
+    const rawBody = await req.json();
     
-    if (!name || !email) {
-      throw new Error("Name and email are required");
+    // Validate input
+    const parseResult = loyaltyCardSchema.safeParse(rawBody);
+    if (!parseResult.success) {
+      const errorMessages = parseResult.error.errors.map(e => e.message).join(", ");
+      console.error("[LOYALTY-CARD] Validation failed:", errorMessages);
+      return new Response(JSON.stringify({ error: errorMessages }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      });
     }
+    
+    const { name, email, phone } = parseResult.data;
 
     console.log("[LOYALTY-CARD] Generating card for lead", { email, name });
 

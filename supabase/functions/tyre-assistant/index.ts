@@ -1,9 +1,20 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Message validation schema
+const messageSchema = z.object({
+  role: z.enum(["user", "assistant", "system"]),
+  content: z.string().max(10000, "Message content is too long"),
+});
+
+const requestSchema = z.object({
+  messages: z.array(messageSchema).min(1, "At least one message is required").max(50, "Too many messages"),
+});
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -15,9 +26,22 @@ serve(async (req) => {
       timestamp: new Date().toISOString()
     });
     
-    const { messages } = await req.json();
-    console.log('[TYRE-ASSISTANT] Messages parsed', {
-      messageCount: messages?.length || 0
+    const rawBody = await req.json();
+    
+    // Validate input
+    const parseResult = requestSchema.safeParse(rawBody);
+    if (!parseResult.success) {
+      const errorMessages = parseResult.error.errors.map(e => e.message).join(", ");
+      console.error('[TYRE-ASSISTANT] Validation failed:', errorMessages);
+      return new Response(JSON.stringify({ error: errorMessages }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    
+    const { messages } = parseResult.data;
+    console.log('[TYRE-ASSISTANT] Messages validated', {
+      messageCount: messages.length
     });
     
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
