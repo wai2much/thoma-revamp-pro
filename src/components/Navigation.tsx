@@ -19,11 +19,7 @@ export const Navigation = () => {
       background: 'var(--gradient-stripe)'
     }} />
       
-      <div className="container max-w-7xl mx-auto px-4 py-0 flex items-center justify-between gap-4 relative z-10">
-        <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate("/")}>
-          <img src={amgBloomHero} alt="AMG Bloom - Haus of Technik" className="h-32 w-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500" />
-        </div>
-
+      <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-center gap-4 relative z-10">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={() => navigate("/shop")} className="hidden sm:flex hover:bg-primary/10 relative group">
             <img src={amgBloomHero} alt="Shop" className="mr-2 h-12 w-auto object-contain" />
