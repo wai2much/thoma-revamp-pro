@@ -27,7 +27,7 @@ export const Navigation = () => {
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={() => navigate("/shop")} className="hidden sm:flex hover:bg-primary/10 relative group">
             <span className="relative">
-              Shop
+              Shopify
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </span>
           </Button>
