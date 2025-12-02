@@ -17,9 +17,9 @@ All colors MUST be HSL.
     --popover: 220 25% 12%;
     --popover-foreground: 180 100% 98%;
 
-    --primary: 145 100% 50%;
-    --primary-foreground: 180 100% 98%;
-    --primary-glow: 145 100% 60%;
+    --primary: 190 100% 50%;
+    --primary-foreground: 220 30% 8%;
+    --primary-glow: 190 100% 60%;
 
     --secondary: 180 100% 50%;
     --secondary-foreground: 220 30% 8%;
@@ -31,13 +31,13 @@ All colors MUST be HSL.
     --accent-foreground: 180 100% 98%;
     --accent-glow: 280 100% 75%;
     
-    --neon-green: 145 100% 50%;
-    --neon-cyan: 180 100% 50%;
-    --neon-lime: 120 100% 45%;
-    --neon-purple: 280 100% 65%;
+    --neon-cyan: 190 100% 50%;
+    --neon-blue: 210 100% 55%;
+    --neon-purple: 270 100% 65%;
+    --neon-violet: 260 100% 60%;
     
-    --cyber-green: 145 100% 50%;
-    --cyber-cyan: 180 100% 50%;
+    --cyber-cyan: 190 100% 50%;
+    --cyber-blue: 210 100% 55%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
@@ -49,28 +49,28 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Cyberpunk neon gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(145 100% 50%), hsl(180 100% 50%));
-    --gradient-accent: linear-gradient(135deg, hsl(280 100% 65%), hsl(145 100% 50%));
-    --gradient-hero: linear-gradient(135deg, hsl(145 100% 50%) 0%, hsl(280 100% 65%) 50%, hsl(180 100% 50%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(145 100% 50% / 0.15), hsl(180 100% 50% / 0.15));
-    --gradient-stripe: radial-gradient(circle at 20% 50%, hsl(145 100% 50% / 0.3) 0%, transparent 50%),
-                       radial-gradient(circle at 80% 20%, hsl(180 100% 50% / 0.3) 0%, transparent 50%),
-                       radial-gradient(circle at 40% 80%, hsl(280 100% 65% / 0.25) 0%, transparent 50%),
-                       radial-gradient(circle at 70% 70%, hsl(120 100% 45% / 0.25) 0%, transparent 50%),
-                       radial-gradient(circle at 90% 90%, hsl(145 100% 60% / 0.2) 0%, transparent 50%);
-    --gradient-mesh: radial-gradient(at 0% 0%, hsl(145 100% 50% / 0.25) 0px, transparent 50%),
-                     radial-gradient(at 100% 0%, hsl(180 100% 50% / 0.25) 0px, transparent 50%),
-                     radial-gradient(at 100% 100%, hsl(280 100% 65% / 0.25) 0px, transparent 50%),
-                     radial-gradient(at 0% 100%, hsl(120 100% 45% / 0.25) 0px, transparent 50%);
+    --gradient-primary: linear-gradient(135deg, hsl(190 100% 50%), hsl(210 100% 55%));
+    --gradient-accent: linear-gradient(135deg, hsl(270 100% 65%), hsl(190 100% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(190 100% 50%) 0%, hsl(270 100% 65%) 50%, hsl(210 100% 55%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(190 100% 50% / 0.15), hsl(270 100% 65% / 0.15));
+    --gradient-stripe: radial-gradient(circle at 20% 50%, hsl(190 100% 50% / 0.3) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, hsl(210 100% 55% / 0.3) 0%, transparent 50%),
+                       radial-gradient(circle at 40% 80%, hsl(270 100% 65% / 0.25) 0%, transparent 50%),
+                       radial-gradient(circle at 70% 70%, hsl(260 100% 60% / 0.25) 0%, transparent 50%),
+                       radial-gradient(circle at 90% 90%, hsl(190 100% 60% / 0.2) 0%, transparent 50%);
+    --gradient-mesh: radial-gradient(at 0% 0%, hsl(190 100% 50% / 0.25) 0px, transparent 50%),
+                     radial-gradient(at 100% 0%, hsl(210 100% 55% / 0.25) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, hsl(270 100% 65% / 0.25) 0px, transparent 50%),
+                     radial-gradient(at 0% 100%, hsl(260 100% 60% / 0.25) 0px, transparent 50%);
     
     /* Enhanced neon glow shadows */
-    --shadow-glow: 0 0 80px hsl(145 100% 50% / 0.6), 0 0 120px hsl(145 100% 50% / 0.3);
-    --shadow-glow-accent: 0 0 80px hsl(180 100% 50% / 0.6), 0 0 120px hsl(180 100% 50% / 0.3);
-    --shadow-card: 0 30px 60px -20px hsl(0 0% 0% / 0.9), 0 10px 30px -10px hsl(145 100% 50% / 0.3);
-    --shadow-card-hover: 0 40px 80px -20px hsl(145 100% 50% / 0.5), 0 20px 40px -10px hsl(180 100% 50% / 0.4);
+    --shadow-glow: 0 0 80px hsl(190 100% 50% / 0.6), 0 0 120px hsl(270 100% 65% / 0.3);
+    --shadow-glow-accent: 0 0 80px hsl(210 100% 55% / 0.6), 0 0 120px hsl(270 100% 65% / 0.3);
+    --shadow-card: 0 30px 60px -20px hsl(0 0% 0% / 0.9), 0 10px 30px -10px hsl(190 100% 50% / 0.3);
+    --shadow-card-hover: 0 40px 80px -20px hsl(190 100% 50% / 0.5), 0 20px 40px -10px hsl(270 100% 65% / 0.4);
     --shadow-elevation-1: 0 2px 8px hsl(0 0% 0% / 0.5);
-    --shadow-elevation-2: 0 8px 24px hsl(0 0% 0% / 0.6), 0 0 30px hsl(145 100% 50% / 0.2);
-    --shadow-elevation-3: 0 16px 48px hsl(0 0% 0% / 0.7), 0 0 50px hsl(145 100% 50% / 0.3);
+    --shadow-elevation-2: 0 8px 24px hsl(0 0% 0% / 0.6), 0 0 30px hsl(190 100% 50% / 0.2);
+    --shadow-elevation-3: 0 16px 48px hsl(0 0% 0% / 0.7), 0 0 50px hsl(190 100% 50% / 0.3);
     --shadow-neon: 0 0 25px hsl(var(--primary) / 0.8), 0 0 50px hsl(var(--primary) / 0.4), inset 0 0 25px hsl(var(--primary) / 0.15);
     
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -79,9 +79,9 @@ All colors MUST be HSL.
     
     /* Cyberpunk neon liquid glass gradient */
     --gradient-vercel: linear-gradient(135deg, 
-      hsl(145, 100%, 50%) 0%,
-      hsl(280, 100%, 65%) 50%,
-      hsl(180, 100%, 50%) 100%);
+      hsl(190, 100%, 50%) 0%,
+      hsl(270, 100%, 65%) 50%,
+      hsl(210, 100%, 55%) 100%);
   }
 }
 
@@ -164,17 +164,17 @@ All colors MUST be HSL.
   
   .liquid-glass {
     background: linear-gradient(135deg, 
-      hsl(145 100% 50% / 0.2) 0%,
-      hsl(280 100% 65% / 0.2) 50%,
-      hsl(180 100% 50% / 0.2) 100%);
+      hsl(190 100% 50% / 0.2) 0%,
+      hsl(270 100% 65% / 0.2) 50%,
+      hsl(210 100% 55% / 0.2) 100%);
     background-size: 200% 200%;
     animation: liquid-flow 8s ease infinite;
     backdrop-filter: blur(24px) saturate(200%);
     border: 1px solid hsl(var(--primary) / 0.4);
     box-shadow: 
-      0 8px 32px hsl(145 100% 50% / 0.3),
-      inset 0 1px 0 hsl(180 100% 50% / 0.3),
-      0 0 60px hsl(145 100% 50% / 0.25);
+      0 8px 32px hsl(190 100% 50% / 0.3),
+      inset 0 1px 0 hsl(210 100% 55% / 0.3),
+      0 0 60px hsl(190 100% 50% / 0.25);
     position: relative;
     overflow: hidden;
   }
@@ -185,7 +185,7 @@ All colors MUST be HSL.
     inset: -100%;
     background: linear-gradient(135deg, 
       transparent 0%,
-      hsl(180 100% 50% / 0.15) 50%,
+      hsl(270 100% 65% / 0.15) 50%,
       transparent 100%);
     animation: liquid-flow 10s ease infinite reverse;
   }
@@ -193,9 +193,9 @@ All colors MUST be HSL.
   .liquid-glass:hover {
     border-color: hsl(var(--primary) / 0.7);
     box-shadow: 
-      0 12px 48px hsl(145 100% 50% / 0.4),
-      inset 0 1px 0 hsl(180 100% 50% / 0.4),
-      0 0 80px hsl(145 100% 50% / 0.35);
+      0 12px 48px hsl(190 100% 50% / 0.4),
+      inset 0 1px 0 hsl(270 100% 65% / 0.4),
+      0 0 80px hsl(190 100% 50% / 0.35);
   }
   
   .tilt-card {
@@ -250,31 +250,31 @@ All colors MUST be HSL.
   
   .text-3d {
     text-shadow: 
-      1px 1px 0 hsl(var(--neon-lime)),
-      2px 2px 0 hsl(var(--neon-lime)),
+      1px 1px 0 hsl(var(--neon-blue)),
+      2px 2px 0 hsl(var(--neon-blue)),
       3px 3px 0 hsl(var(--neon-purple)),
       4px 4px 0 hsl(var(--neon-purple)),
       5px 5px 10px rgba(0, 0, 0, 0.5),
       6px 6px 15px rgba(0, 0, 0, 0.4),
-      0 0 20px hsl(var(--neon-green) / 0.7),
-      0 0 30px hsl(var(--cyber-green) / 0.5),
-      0 0 40px hsl(var(--neon-cyan) / 0.3);
+      0 0 20px hsl(var(--neon-cyan) / 0.7),
+      0 0 30px hsl(var(--cyber-cyan) / 0.5),
+      0 0 40px hsl(var(--neon-purple) / 0.3);
   }
   
   .text-3d-light {
     text-shadow: 
       1px 1px 0 hsl(var(--cyber-cyan)),
-      2px 2px 0 hsl(var(--neon-lime)),
+      2px 2px 0 hsl(var(--neon-violet)),
       3px 3px 5px rgba(0, 0, 0, 0.4),
-      0 0 15px hsl(var(--neon-green) / 0.6),
-      0 0 25px hsl(var(--cyber-cyan) / 0.4);
+      0 0 15px hsl(var(--neon-cyan) / 0.6),
+      0 0 25px hsl(var(--cyber-blue) / 0.4);
   }
   
   .text-3d-subtle {
     text-shadow: 
-      1px 1px 0 hsl(var(--neon-lime)),
+      1px 1px 0 hsl(var(--neon-blue)),
       2px 2px 3px rgba(0, 0, 0, 0.3),
-      0 0 10px hsl(var(--neon-green) / 0.4);
+      0 0 10px hsl(var(--neon-cyan) / 0.4);
   }
   
   .text-flat, .no-3d {
@@ -301,11 +301,11 @@ All colors MUST be HSL.
     height: 100%;
     pointer-events: none;
     z-index: 1;
-    background: radial-gradient(circle at 20% 30%, hsl(var(--cyber-green) / 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 80% 60%, hsl(var(--cyber-cyan) / 0.35) 0%, transparent 45%),
-                radial-gradient(circle at 50% 80%, hsl(var(--neon-lime) / 0.3) 0%, transparent 55%),
-                radial-gradient(circle at 10% 70%, hsl(var(--neon-purple) / 0.25) 0%, transparent 40%),
-                radial-gradient(circle at 90% 20%, hsl(var(--cyber-green) / 0.3) 0%, transparent 48%);
+    background: radial-gradient(circle at 20% 30%, hsl(var(--cyber-cyan) / 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 60%, hsl(var(--cyber-blue) / 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 50% 80%, hsl(var(--neon-purple) / 0.3) 0%, transparent 55%),
+                radial-gradient(circle at 10% 70%, hsl(var(--neon-violet) / 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 90% 20%, hsl(var(--cyber-cyan) / 0.3) 0%, transparent 48%);
     animation: neon-float 8s ease-in-out infinite;
     background-size: 200% 200%;
   }
@@ -338,9 +338,9 @@ All colors MUST be HSL.
     pointer-events: none;
     z-index: 2;
     background: 
-      radial-gradient(ellipse at 30% 20%, hsl(145 100% 50% / 0.3) 0%, transparent 50%),
-      radial-gradient(ellipse at 70% 60%, hsl(180 100% 50% / 0.25) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 90%, hsl(280 100% 65% / 0.22) 0%, transparent 50%);
+      radial-gradient(ellipse at 30% 20%, hsl(190 100% 50% / 0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, hsl(210 100% 55% / 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 90%, hsl(270 100% 65% / 0.22) 0%, transparent 50%);
     backdrop-filter: blur(0.5px) saturate(150%);
     animation: liquid-flow 25s ease-in-out infinite;
     background-size: 300% 300%;
