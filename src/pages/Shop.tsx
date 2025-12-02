@@ -305,16 +305,16 @@ const Shop = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
-              { name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "38.00" },
-              { name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "25.00" },
-              { name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "25.00" },
-              { name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "25.00" },
-              { name: "N Skrrt", description: "Luxury Auto Fragrance - 100ML", image: nSkrrtImg, price: "25.00" },
-              { name: "GTR G.O.D", description: "Luxury Auto Fragrance - 100ML", image: gtrGodImg, price: "25.00" },
-              { name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "25.00" }
+              { id: "fragrance-amg-bloom-250", name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "38.00" },
+              { id: "fragrance-amg-bloom-100", name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "25.00" },
+              { id: "fragrance-haus-noir", name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "25.00" },
+              { id: "fragrance-m3-loing", name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "25.00" },
+              { id: "fragrance-n-skrrt", name: "N Skrrt", description: "Luxury Auto Fragrance - 100ML", image: nSkrrtImg, price: "25.00" },
+              { id: "fragrance-gtr-god", name: "GTR G.O.D", description: "Luxury Auto Fragrance - 100ML", image: gtrGodImg, price: "25.00" },
+              { id: "fragrance-911-brokie", name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "25.00" }
             ].map((fragrance, index) => (
               <div 
-                key={fragrance.name}
+                key={fragrance.id}
                 className="group relative bg-card border-2 border-border hover:border-secondary transition-all duration-500 overflow-hidden animate-pop-in"
                 style={{ 
                   animationDelay: `${index * 100}ms`,
@@ -339,11 +339,17 @@ const Shop = () => {
                     <span className="text-xs text-muted-foreground">AUD</span>
                   </div>
                   <Button 
-                    disabled
-                    className="w-full font-display tracking-wider uppercase opacity-50"
+                    onClick={() => {
+                      toast.success('Added to cart!', {
+                        description: `${fragrance.name} - ${fragrance.description}`,
+                        position: 'top-center',
+                      });
+                    }}
+                    className="w-full font-display tracking-wider uppercase bg-secondary hover:bg-secondary/90 transition-all hover:scale-105"
                     size="lg"
                   >
-                    Coming Soon
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Add to Cart
                   </Button>
                 </div>
                 
