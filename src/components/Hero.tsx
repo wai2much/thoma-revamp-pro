@@ -121,9 +121,10 @@ export const Hero = () => {
                 { src: nSkrrt100, name: "N Skrrt" },
                 { src: gtrGod100, name: "GTR God" },
               ].map((product, i) => (
-                <div 
+                <a 
                   key={product.name} 
-                  className="group relative flex flex-col items-center"
+                  href="/shop"
+                  className="group relative flex flex-col items-center cursor-pointer"
                   style={{ animationDelay: `${0.7 + i * 0.1}s` }}
                 >
                   <div className="relative">
@@ -136,7 +137,7 @@ export const Hero = () => {
                     />
                   </div>
                   <p className="text-xs text-muted-foreground mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">{product.name}</p>
-                </div>
+                </a>
               ))}
             </div>
           </div>
