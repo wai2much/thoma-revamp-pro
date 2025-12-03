@@ -16,7 +16,7 @@ const loyaltyCardSchema = z.object({
 
 // Generate a secure random member ID (alphanumeric, 12 chars)
 function generateSecureMemberId(): string {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // No confusing chars like 0/O, 1/I/L
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const array = new Uint8Array(12);
   crypto.getRandomValues(array);
   return Array.from(array, (byte) => chars[byte % chars.length]).join('');
@@ -25,6 +25,32 @@ function generateSecureMemberId(): string {
 // Rate limiting: max 3 cards per IP per day
 const RATE_LIMIT_MAX = 3;
 const RATE_LIMIT_WINDOW_HOURS = 24;
+
+// Loyalty card template ID
+const LOYALTY_PRODUCT_ID = "loyalty_card";
+
+// Car banner images for random selection
+const CAR_BANNERS = [
+  "banner-speed-branded.png",
+  "banner-city-sunset-branded.png",
+  "banner-racing-sunset-branded.png"
+];
+
+// Fetch template ID from database
+async function getTemplateId(supabaseClient: any): Promise<string | null> {
+  const { data, error } = await supabaseClient
+    .from('passentry_config')
+    .select('template_id')
+    .eq('product_id', LOYALTY_PRODUCT_ID)
+    .single();
+
+  if (error) {
+    console.error('[LOYALTY-CARD] Error fetching template:', error);
+    return null;
+  }
+
+  return data?.template_id || null;
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -89,7 +115,7 @@ serve(async (req) => {
     // Check if email already has a card (prevent duplicates)
     const { data: existingByEmail } = await supabaseClient
       .from("loyalty_members")
-      .select("member_id")
+      .select("*")
       .eq("email", email)
       .maybeSingle();
 
@@ -103,6 +129,12 @@ serve(async (req) => {
           cardUrl: `${origin}/loyalty-card/${existingByEmail.member_id}`,
           memberData: {
             memberId: existingByEmail.member_id,
+            memberName: existingByEmail.name,
+            points: existingByEmail.points_balance,
+          },
+          passUrls: {
+            appleUrl: existingByEmail.apple_url,
+            googleUrl: existingByEmail.google_url,
           },
           isExisting: true
         }),
@@ -128,14 +160,73 @@ serve(async (req) => {
       throw new Error("Failed to generate unique member ID");
     }
 
-    console.log("[LOYALTY-CARD] Generated secure member ID");
+    console.log("[LOYALTY-CARD] Generated secure member ID:", memberId);
     
     // Member since as month name
     const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
                        "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
     const memberSince = monthNames[new Date().getMonth()];
 
-    // Store member data in loyalty_members table (proper PII storage)
+    // Generate PassEntry wallet pass
+    let appleUrl = null;
+    let googleUrl = null;
+    let passId = null;
+
+    const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
+    if (passEntryKey) {
+      try {
+        const templateId = await getTemplateId(supabaseClient);
+        if (templateId) {
+          // Randomly select a car banner
+          const randomBanner = CAR_BANNERS[Math.floor(Math.random() * CAR_BANNERS.length)];
+          const origin = req.headers.get("origin") || "https://tyreplus.lovable.app";
+          const bannerUrl = `${origin}/assets/${randomBanner}`;
+          
+          console.log("[LOYALTY-CARD] Creating PassEntry wallet pass with template:", templateId);
+
+          const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${templateId}&includePassSource=apple,google`, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${passEntryKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              externalId: memberId,
+              pass: {
+                stripImage: bannerUrl,
+                backgroundColor: "#635BFF", // Stripe purple for loyalty
+                member_name: name.toUpperCase(),
+                member_id: memberId,
+                Custom: memberSince,
+                tier_name: "LOYALTY MEMBER",
+                points: "20"
+              },
+            }),
+          });
+
+          if (passEntryResponse.ok) {
+            const passData = await passEntryResponse.json();
+            console.log("[LOYALTY-CARD] PassEntry pass created:", passData.data?.id);
+            
+            passId = passData.data?.id;
+            const passSource = passData.data?.attributes?.passSource;
+            appleUrl = passSource?.apple || passData.data?.attributes?.downloadUrl;
+            googleUrl = passSource?.google;
+          } else {
+            const errorText = await passEntryResponse.text();
+            console.error("[LOYALTY-CARD] PassEntry API error:", errorText);
+          }
+        } else {
+          console.log("[LOYALTY-CARD] No template configured for loyalty cards");
+        }
+      } catch (passError) {
+        console.error("[LOYALTY-CARD] PassEntry error (non-fatal):", passError);
+      }
+    } else {
+      console.log("[LOYALTY-CARD] PASSENTRY_API_KEY not configured");
+    }
+
+    // Store member data in loyalty_members table
     const { error: insertError } = await supabaseClient
       .from('loyalty_members')
       .insert({
@@ -143,8 +234,11 @@ serve(async (req) => {
         name: name,
         email: email,
         phone: phone || null,
-        points_balance: 20, // $20 welcome credit
+        points_balance: 20,
         ip_address: clientIp,
+        apple_url: appleUrl,
+        google_url: googleUrl,
+        pass_id: passId,
       });
 
     if (insertError) {
@@ -211,6 +305,10 @@ serve(async (req) => {
         memberSince,
         credit: "$20.00",
         points: 20
+      },
+      passUrls: {
+        appleUrl,
+        googleUrl,
       }
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
