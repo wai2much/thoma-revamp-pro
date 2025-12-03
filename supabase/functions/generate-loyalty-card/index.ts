@@ -11,7 +11,7 @@ const corsHeaders = {
 const loyaltyCardSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name is too long"),
   email: z.string().trim().email("Invalid email address").max(255, "Email is too long"),
-  phone: z.string().regex(/^\+?[1-9]\d{6,14}$/, "Invalid phone number format").optional().or(z.literal("")),
+  phone: z.string().max(20).optional().or(z.literal("")),
 });
 
 // Generate a secure random member ID (alphanumeric, 12 chars)
