@@ -184,6 +184,7 @@ serve(async (req) => {
           
           console.log("[LOYALTY-CARD] Creating PassEntry wallet pass with template:", templateId);
 
+          // Use the actual template field names from the loyalty_card template
           const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${templateId}&includePassSource=apple,google`, {
             method: "POST",
             headers: {
@@ -193,13 +194,10 @@ serve(async (req) => {
             body: JSON.stringify({
               externalId: memberId,
               pass: {
-                stripImage: bannerUrl,
-                backgroundColor: "#635BFF", // Stripe purple for loyalty
-                member_name: name.toUpperCase(),
-                member_id: memberId,
+                First_Last: name.toUpperCase(),
+                ID: memberId,
                 Custom: memberSince,
-                tier_name: "LOYALTY MEMBER",
-                points: "20"
+                Monthly_Yearly: "LOYALTY"
               },
             }),
           });
