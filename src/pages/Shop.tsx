@@ -305,13 +305,20 @@ const Shop = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
+              // 100ML variants - $25
               { id: "fragrance-amg-bloom-100", name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "25.00" },
-              { id: "fragrance-haus-noir", name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "25.00" },
-              { id: "fragrance-m3-loing", name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "25.00" },
-              { id: "fragrance-n-skrrt", name: "N Skrrt", description: "Luxury Auto Fragrance - 100ML", image: nSkrrtImg, price: "25.00" },
-              { id: "fragrance-gtr-god", name: "GTR G.O.D", description: "Luxury Auto Fragrance - 100ML", image: gtrGodImg, price: "25.00" },
-              { id: "fragrance-911-brokie", name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "25.00" },
-              { id: "fragrance-amg-bloom-250", name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "38.00" }
+              { id: "fragrance-haus-noir-100", name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "25.00" },
+              { id: "fragrance-m3-loing-100", name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "25.00" },
+              { id: "fragrance-n-skrrt-100", name: "N Skrrt", description: "Luxury Auto Fragrance - 100ML", image: nSkrrtImg, price: "25.00" },
+              { id: "fragrance-gtr-god-100", name: "GTR G.O.D", description: "Luxury Auto Fragrance - 100ML", image: gtrGodImg, price: "25.00" },
+              { id: "fragrance-911-brokie-100", name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "25.00" },
+              // 250ML variants - $38
+              { id: "fragrance-amg-bloom-250", name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "38.00" },
+              { id: "fragrance-haus-noir-250", name: "Haus Noir", description: "100X More Fancy - 250ML", image: hausNoirImg, price: "38.00" },
+              { id: "fragrance-m3-loing-250", name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 250ML", image: m3LoingImg, price: "38.00" },
+              { id: "fragrance-n-skrrt-250", name: "N Skrrt", description: "Luxury Auto Fragrance - 250ML", image: nSkrrtImg, price: "38.00" },
+              { id: "fragrance-gtr-god-250", name: "GTR G.O.D", description: "Luxury Auto Fragrance - 250ML", image: gtrGodImg, price: "38.00" },
+              { id: "fragrance-911-brokie-250", name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 250ML", image: brokieImg, price: "38.00" }
             ].map((fragrance, index) => (
               <div 
                 key={fragrance.id}
