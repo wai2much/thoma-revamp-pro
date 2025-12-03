@@ -29,12 +29,8 @@ const RATE_LIMIT_WINDOW_HOURS = 24;
 // Loyalty card template ID
 const LOYALTY_PRODUCT_ID = "loyalty_card";
 
-// Car banner images for random selection
-const CAR_BANNERS = [
-  "banner-speed-branded.png",
-  "banner-city-sunset-branded.png",
-  "banner-racing-sunset-branded.png"
-];
+// Loyalty card banner image
+const LOYALTY_BANNER = "tyreplus-loyalty-banner.png";
 
 // Fetch template ID from database
 async function getTemplateId(supabaseClient: any): Promise<string | null> {
@@ -177,10 +173,8 @@ serve(async (req) => {
       try {
         const templateId = await getTemplateId(supabaseClient);
         if (templateId) {
-          // Randomly select a car banner
-          const randomBanner = CAR_BANNERS[Math.floor(Math.random() * CAR_BANNERS.length)];
           const origin = req.headers.get("origin") || "https://tyreplus.lovable.app";
-          const bannerUrl = `${origin}/assets/${randomBanner}`;
+          const bannerUrl = `${origin}/assets/${LOYALTY_BANNER}`;
           
           console.log("[LOYALTY-CARD] Creating PassEntry wallet pass with template:", templateId);
 
