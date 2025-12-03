@@ -16,35 +16,44 @@ export type Database = {
     Tables: {
       loyalty_members: {
         Row: {
+          apple_url: string | null
           created_at: string | null
           email: string | null
+          google_url: string | null
           id: string
           ip_address: string | null
           last_card_generated_at: string | null
           member_id: string
           name: string
+          pass_id: string | null
           phone: string | null
           points_balance: number | null
         }
         Insert: {
+          apple_url?: string | null
           created_at?: string | null
           email?: string | null
+          google_url?: string | null
           id?: string
           ip_address?: string | null
           last_card_generated_at?: string | null
           member_id: string
           name: string
+          pass_id?: string | null
           phone?: string | null
           points_balance?: number | null
         }
         Update: {
+          apple_url?: string | null
           created_at?: string | null
           email?: string | null
+          google_url?: string | null
           id?: string
           ip_address?: string | null
           last_card_generated_at?: string | null
           member_id?: string
           name?: string
+          pass_id?: string | null
           phone?: string | null
           points_balance?: number | null
         }
