@@ -25,25 +25,32 @@ export default function LoyaltyCard() {
     const fetchMemberData = async () => {
       if (!memberId) return;
 
+      // Validate member ID format (alphanumeric, 12 chars)
+      if (!/^[A-Z0-9]{12}$/i.test(memberId)) {
+        console.error("Invalid member ID format");
+        setLoading(false);
+        return;
+      }
+
       try {
-        // Fetch member data from loyalty_points
+        // Fetch member data from loyalty_members table
         const { data, error } = await supabase
-          .from("loyalty_points")
+          .from("loyalty_members")
           .select("*")
-          .eq("order_id", `MEMBER-${memberId}`)
-          .single();
+          .eq("member_id", memberId)
+          .maybeSingle();
 
         if (error) throw error;
 
         if (data) {
           const parsedData: MemberData = {
-            memberName: data.description.split(" - ")[0] || "Member",
-            memberEmail: data.description.split(" - ")[1] || "",
-            memberPhone: data.description.split(" - ")[2] || "",
-            memberId: memberId,
+            memberName: data.name || "Member",
+            memberEmail: data.email || "",
+            memberPhone: data.phone || "",
+            memberId: data.member_id,
             memberSince: new Date(data.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
-            credit: `$${(data.points / 1).toFixed(2)}`,
-            points: data.points
+            credit: `$${(data.points_balance || 0).toFixed(2)}`,
+            points: data.points_balance || 0
           };
 
           setMemberData(parsedData);
