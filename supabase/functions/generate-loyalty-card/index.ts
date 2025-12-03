@@ -14,31 +14,17 @@ const loyaltyCardSchema = z.object({
   phone: z.string().regex(/^\+?[1-9]\d{6,14}$/, "Invalid phone number format").optional().or(z.literal("")),
 });
 
-const LOYALTY_PREFIX = "635BF"; // Stripe purple #635BFF
-const LOYALTY_PRODUCT_ID = "loyalty_card"; // Special identifier for loyalty card template
-
-// Car banner images for random selection (1125px x 432px) - branded with Business Velocity Pack
-const CAR_BANNERS = [
-  "banner-speed-branded.png",
-  "banner-city-sunset-branded.png",
-  "banner-racing-sunset-branded.png"
-];
-
-// Fetch template ID from database
-async function getTemplateId(supabaseClient: any): Promise<string | null> {
-  const { data, error } = await supabaseClient
-    .from('passentry_config')
-    .select('template_id')
-    .eq('product_id', LOYALTY_PRODUCT_ID)
-    .single();
-
-  if (error) {
-    console.error('[LOYALTY-CARD] Error fetching template:', error);
-    return null;
-  }
-
-  return data?.template_id || null;
+// Generate a secure random member ID (alphanumeric, 12 chars)
+function generateSecureMemberId(): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // No confusing chars like 0/O, 1/I/L
+  const array = new Uint8Array(12);
+  crypto.getRandomValues(array);
+  return Array.from(array, (byte) => chars[byte % chars.length]).join('');
 }
+
+// Rate limiting: max 3 cards per IP per day
+const RATE_LIMIT_MAX = 3;
+const RATE_LIMIT_WINDOW_HOURS = 24;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -53,6 +39,35 @@ serve(async (req) => {
 
   try {
     console.log("[LOYALTY-CARD] Function started");
+
+    // Get client IP for rate limiting
+    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
+                     req.headers.get("x-real-ip") || 
+                     "unknown";
+    console.log("[LOYALTY-CARD] Client IP:", clientIp);
+
+    // Check rate limit
+    const windowStart = new Date();
+    windowStart.setHours(windowStart.getHours() - RATE_LIMIT_WINDOW_HOURS);
+    
+    const { count: recentCount } = await supabaseClient
+      .from("loyalty_members")
+      .select("*", { count: "exact", head: true })
+      .eq("ip_address", clientIp)
+      .gte("created_at", windowStart.toISOString());
+
+    if (recentCount !== null && recentCount >= RATE_LIMIT_MAX) {
+      console.log("[LOYALTY-CARD] Rate limit exceeded for IP:", clientIp);
+      return new Response(
+        JSON.stringify({ 
+          error: "Rate limit exceeded. Maximum 3 loyalty cards per day. Please try again tomorrow." 
+        }),
+        { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" }, 
+          status: 429 
+        }
+      );
+    }
 
     const rawBody = await req.json();
     
@@ -69,36 +84,67 @@ serve(async (req) => {
     
     const { name, email, phone } = parseResult.data;
 
-    console.log("[LOYALTY-CARD] Generating card for lead", { email, name });
+    console.log("[LOYALTY-CARD] Generating card for lead");
 
-    // Generate sequential member ID starting at 1000
-    // Count existing members to get next ID
-    const { count, error: countError } = await supabaseClient
-      .from('loyalty_points')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', '00000000-0000-0000-0000-000000000000');
-    
-    if (countError) {
-      console.error("[LOYALTY-CARD] Error counting members:", countError);
+    // Check if email already has a card (prevent duplicates)
+    const { data: existingByEmail } = await supabaseClient
+      .from("loyalty_members")
+      .select("member_id")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (existingByEmail) {
+      console.log("[LOYALTY-CARD] Email already has a card");
+      const origin = req.headers.get("origin") || "https://tyreplus.lovable.app";
+      return new Response(
+        JSON.stringify({ 
+          success: true,
+          message: "You already have a loyalty card!",
+          cardUrl: `${origin}/loyalty-card/${existingByEmail.member_id}`,
+          memberData: {
+            memberId: existingByEmail.member_id,
+          },
+          isExisting: true
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+      );
     }
-    
-    const memberId = (1000 + (count || 0)).toString();
-    console.log("[LOYALTY-CARD] Generated member ID:", memberId);
+
+    // Generate secure random member ID
+    let memberId: string;
+    let attempts = 0;
+    do {
+      memberId = generateSecureMemberId();
+      const { data: existing } = await supabaseClient
+        .from("loyalty_members")
+        .select("id")
+        .eq("member_id", memberId)
+        .maybeSingle();
+      if (!existing) break;
+      attempts++;
+    } while (attempts < 10);
+
+    if (attempts >= 10) {
+      throw new Error("Failed to generate unique member ID");
+    }
+
+    console.log("[LOYALTY-CARD] Generated secure member ID");
     
     // Member since as month name
     const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
                        "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
     const memberSince = monthNames[new Date().getMonth()];
 
-    // Store member data in loyalty_points table
-      const { error: insertError } = await supabaseClient
-      .from('loyalty_points')
+    // Store member data in loyalty_members table (proper PII storage)
+    const { error: insertError } = await supabaseClient
+      .from('loyalty_members')
       .insert({
-        user_id: '00000000-0000-0000-0000-000000000000', // Anonymous user for leads
-        points: 20, // $20 welcome credit = 20 points (1 point = $1)
-        description: `${name} - ${email} - ${phone || 'No phone'}`,
-        transaction_type: 'bonus',
-        order_id: `MEMBER-${memberId}` // Store member ID in order_id for easy lookup
+        member_id: memberId,
+        name: name,
+        email: email,
+        phone: phone || null,
+        points_balance: 20, // $20 welcome credit
+        ip_address: clientIp,
       });
 
     if (insertError) {
@@ -109,12 +155,12 @@ serve(async (req) => {
     console.log("[LOYALTY-CARD] Member data stored successfully");
 
     // Generate card URL
-    const origin = req.headers.get("origin") || "https://64a7bebe-dd72-4b4c-ba13-a98f02a39d2a.lovableproject.com";
+    const origin = req.headers.get("origin") || "https://tyreplus.lovable.app";
     const cardUrl = `${origin}/loyalty-card/${memberId}`;
 
     // Send SMS if phone number provided
     if (phone) {
-      console.log("[LOYALTY-CARD] Sending SMS to:", phone);
+      console.log("[LOYALTY-CARD] Sending SMS");
       
       const twilioAccountSid = Deno.env.get("TWILIO_ACCOUNT_SID");
       const twilioAuthToken = Deno.env.get("TWILIO_AUTH_TOKEN");
@@ -148,7 +194,6 @@ serve(async (req) => {
           }
         } catch (smsError) {
           console.error("[LOYALTY-CARD] SMS error:", smsError);
-          // Don't fail the whole request if SMS fails
         }
       } else {
         console.log("[LOYALTY-CARD] Twilio not configured, skipping SMS");

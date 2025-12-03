@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      loyalty_members: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string
+          ip_address: string | null
+          last_card_generated_at: string | null
+          member_id: string
+          name: string
+          phone: string | null
+          points_balance: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          ip_address?: string | null
+          last_card_generated_at?: string | null
+          member_id: string
+          name: string
+          phone?: string | null
+          points_balance?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          ip_address?: string | null
+          last_card_generated_at?: string | null
+          member_id?: string
+          name?: string
+          phone?: string | null
+          points_balance?: number | null
+        }
+        Relationships: []
+      }
       loyalty_points: {
         Row: {
           created_at: string | null
