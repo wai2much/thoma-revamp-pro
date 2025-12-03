@@ -1,5 +1,5 @@
 import { Smartphone, Apple, Wallet } from "lucide-react";
-import bannerImage from "@/assets/banner-racing-sunset.png";
+const bannerImage = "/assets/tyreplus-loyalty-banner.png";
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
 
