@@ -45,9 +45,9 @@ export const LoyaltyCardCapture = () => {
 
       console.log("✅ [FRONTEND] Loyalty card generated:", data);
       setPassUrls({
-        appleWalletUrl: data.appleWalletUrl,
-        googlePayUrl: data.googlePayUrl,
-        passUrl: data.passUrl,
+        appleWalletUrl: data.passUrls?.appleUrl,
+        googlePayUrl: data.passUrls?.googleUrl,
+        passUrl: data.cardUrl,
       });
       setShowSuccess(true);
       toast.success("Your $20 loyalty card is ready!");
@@ -60,7 +60,7 @@ export const LoyaltyCardCapture = () => {
     }
   };
 
-  if (showSuccess && (passUrls.appleWalletUrl || passUrls.googlePayUrl)) {
+  if (showSuccess) {
     return (
       <Card className="glass-card p-8 max-w-lg mx-auto animate-fade-in">
         <div className="text-center space-y-6">
