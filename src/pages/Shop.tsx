@@ -30,6 +30,7 @@ import hausNoirImg from "@/assets/products/haus-noir-100ml.png";
 import hausonsuitImg from "@/assets/figurines/hauson-suit.png";
 import hausoncasualImg from "@/assets/figurines/hauson-casual.png";
 import hausonwizardImg from "@/assets/figurines/hauson-wizard.png";
+import hausontuxImg from "@/assets/figurines/hauson-tux.png";
 
 // Import artwork images for hero
 import artworkHauson from "@/assets/artwork/hauson-3-3.png";
@@ -392,7 +393,8 @@ const Shop = () => {
             {[
               { name: "Hauson Suit Edition", image: hausonsuitImg, price: "89.99" },
               { name: "Hauson Casual Edition", image: hausoncasualImg, price: "79.99" },
-              { name: "Hauson Wizard Edition", image: hausonwizardImg, price: "94.99" }
+              { name: "Hauson Wizard Edition", image: hausonwizardImg, price: "94.99" },
+              { name: "Hauson Tux Edition", image: hausontuxImg, price: "99.99" }
             ].map((figurine, index) => (
               <div 
                 key={figurine.name}
