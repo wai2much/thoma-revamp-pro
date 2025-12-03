@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,45 +11,45 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 30% 8%;
-    --foreground: 180 100% 98%;
+    --background: 240 4% 95%;
+    --foreground: 240 5% 10%;
 
-    --card: 220 25% 12%;
-    --card-foreground: 180 100% 98%;
+    --card: 0 0% 98%;
+    --card-foreground: 240 5% 10%;
 
-    --popover: 220 25% 12%;
-    --popover-foreground: 180 100% 98%;
+    --popover: 240 5% 90%;
+    --popover-foreground: 240 5% 10%;
 
-    --primary: 338 65% 60%;
-    --primary-foreground: 180 100% 98%;
+    --primary: 333 71% 50%;
+    --primary-foreground: 327 73% 97%;
     --primary-glow: 338 70% 68%;
 
-    --secondary: 180 100% 50%;
-    --secondary-foreground: 220 30% 8%;
+    --secondary: 240 5% 33%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 220 20% 20%;
-    --muted-foreground: 180 30% 65%;
+    --muted: 240 4% 83%;
+    --muted-foreground: 240 5% 10%;
 
-    --accent: 280 100% 65%;
-    --accent-foreground: 180 100% 98%;
+    --accent: 355 100% 97%;
+    --accent-foreground: 349 89% 60%;
     --accent-glow: 280 100% 75%;
-    
+
     --neon-pink: 338 65% 60%;
     --neon-cyan: 180 100% 50%;
     --neon-magenta: 310 75% 62%;
     --neon-purple: 280 100% 65%;
-    
+
     --cyber-pink: 338 65% 60%;
     --cyber-cyan: 180 100% 50%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 85% 97%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 217 91% 60%;
+    --border: 240 4% 83%;
+    --input: 240 4% 83%;
+    --ring: 333 71% 50%;
 
-    --radius: 0.75rem;
+    --radius: 1.5rem;
 
     /* Soft neon gradients */
     --gradient-primary: linear-gradient(135deg, hsl(338 65% 60%), hsl(180 100% 50%));
@@ -62,7 +65,7 @@ All colors MUST be HSL.
                      radial-gradient(at 100% 0%, hsl(180 100% 50% / 0.25) 0px, transparent 50%),
                      radial-gradient(at 100% 100%, hsl(280 100% 65% / 0.25) 0px, transparent 50%),
                      radial-gradient(at 0% 100%, hsl(310 75% 62% / 0.25) 0px, transparent 50%);
-    
+
     /* Soft glow shadows */
     --shadow-glow: 0 0 80px hsl(338 65% 60% / 0.5), 0 0 120px hsl(338 65% 60% / 0.25);
     --shadow-glow-accent: 0 0 80px hsl(180 100% 50% / 0.6), 0 0 120px hsl(180 100% 50% / 0.3);
@@ -72,16 +75,84 @@ All colors MUST be HSL.
     --shadow-elevation-2: 0 8px 24px hsl(0 0% 0% / 0.6), 0 0 30px hsl(338 65% 60% / 0.18);
     --shadow-elevation-3: 0 16px 48px hsl(0 0% 0% / 0.7), 0 0 50px hsl(338 65% 60% / 0.25);
     --shadow-neon: 0 0 25px hsl(var(--primary) / 0.8), 0 0 50px hsl(var(--primary) / 0.4), inset 0 0 25px hsl(var(--primary) / 0.15);
-    
+
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     --transition-spring: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    
+
     /* Soft neon liquid glass gradient */
     --gradient-vercel: linear-gradient(135deg, 
       hsl(338, 65%, 60%) 0%,
       hsl(280, 100%, 65%) 50%,
       hsl(180, 100%, 50%) 100%);
+    --chart-1: 328 85% 70%;
+    --chart-2: 351 94% 71%;
+    --chart-3: 327 87% 81%;
+    --chart-4: 352 95% 81%;
+    --chart-5: 240 3% 46%;
+    --sidebar: 0 0% 98%;
+    --sidebar-foreground: 240 5% 10%;
+    --sidebar-primary: 333 71% 50%;
+    --sidebar-primary-foreground: 327 73% 97%;
+    --sidebar-accent: 240 5% 33%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 4% 83%;
+    --sidebar-ring: 333 71% 50%;
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+    --font-serif: 'Merriweather', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+  }
+  .dark {
+    --background: 240 5% 10%;
+    --foreground: 0 0% 98%;
+    --card: 240 3% 15%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 5% 26%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 328 85% 70%;
+    --primary-foreground: 336 83% 17%;
+    --secondary: 240 3% 46%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3% 46%;
+    --muted-foreground: 0 0% 98%;
+    --accent: 343 87% 15%;
+    --accent-foreground: 351 94% 71%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 85% 97%;
+    --border: 240 5% 33%;
+    --input: 240 5% 33%;
+    --ring: 328 85% 70%;
+    --chart-1: 327 87% 81%;
+    --chart-2: 352 95% 81%;
+    --chart-3: 328 85% 70%;
+    --chart-4: 351 94% 71%;
+    --chart-5: 240 5% 33%;
+    --sidebar: 240 3% 15%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 328 85% 70%;
+    --sidebar-primary-foreground: 336 83% 17%;
+    --sidebar-accent: 351 94% 71%;
+    --sidebar-accent-foreground: 343 87% 15%;
+    --sidebar-border: 240 5% 33%;
+    --sidebar-ring: 328 85% 70%;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
   }
 }
 
@@ -94,20 +165,20 @@ All colors MUST be HSL.
     animation: gradient-shift 8s ease infinite;
     background-size: 200% 200%;
   }
-  
+
   .glass-card {
     background: hsl(var(--card) / 0.4);
     backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid hsl(var(--border) / 0.3);
     transition: var(--transition-smooth);
   }
-  
+
   .glass-card:hover {
     background: hsl(var(--card) / 0.6);
     border-color: hsl(var(--primary) / 0.5);
     box-shadow: var(--shadow-card-hover);
   }
-  
+
   .glass-card-premium {
     background: linear-gradient(135deg, hsl(var(--card) / 0.6), hsl(var(--card) / 0.4));
     backdrop-filter: blur(32px) saturate(220%);
@@ -116,7 +187,7 @@ All colors MUST be HSL.
     position: relative;
     box-shadow: var(--shadow-elevation-2);
   }
-  
+
   .glass-card-premium::before {
     content: "";
     position: absolute;
@@ -128,40 +199,40 @@ All colors MUST be HSL.
     -webkit-mask-composite: xor;
     mask-composite: exclude;
   }
-  
+
   .glass-card-premium:hover {
     box-shadow: var(--shadow-elevation-3), 0 0 50px hsl(var(--primary) / 0.25);
   }
-  
+
   .glow-border {
     box-shadow: 0 0 30px hsl(var(--primary) / 0.3);
     transition: var(--transition-smooth);
   }
-  
+
   .glow-border:hover {
     box-shadow: var(--shadow-glow);
   }
-  
+
   .animated-gradient-bg {
     background: var(--gradient-mesh);
     animation: gradient-shift 15s ease infinite;
     background-size: 200% 200%;
   }
-  
+
   .float-animation {
     animation: float 6s ease-in-out infinite;
   }
-  
+
   .pulse-glow {
     animation: pulse-glow 3s ease-in-out infinite;
   }
-  
+
   .shimmer {
     background: linear-gradient(90deg, transparent 0%, hsl(var(--primary) / 0.1) 50%, transparent 100%);
     background-size: 200% 100%;
     animation: shimmer 3s linear infinite;
   }
-  
+
   .liquid-glass {
     background: linear-gradient(135deg, 
       hsl(338 65% 60% / 0.2) 0%,
@@ -178,7 +249,7 @@ All colors MUST be HSL.
     position: relative;
     overflow: hidden;
   }
-  
+
   .liquid-glass::before {
     content: "";
     position: absolute;
@@ -189,7 +260,7 @@ All colors MUST be HSL.
       transparent 100%);
     animation: liquid-flow 10s ease infinite reverse;
   }
-  
+
   .liquid-glass:hover {
     border-color: hsl(var(--primary) / 0.7);
     box-shadow: 
@@ -197,57 +268,57 @@ All colors MUST be HSL.
       inset 0 1px 0 hsl(180 100% 50% / 0.4),
       0 0 80px hsl(338 65% 60% / 0.3);
   }
-  
+
   .tilt-card {
     transform-style: preserve-3d;
     transition: var(--transition-spring);
   }
-  
+
   .tilt-card:hover {
   }
-  
+
   .depth-layer-1 {
     box-shadow: var(--shadow-elevation-1);
   }
-  
+
   .depth-layer-2 {
     box-shadow: var(--shadow-elevation-2);
   }
-  
+
   .depth-layer-3 {
     box-shadow: var(--shadow-elevation-3);
   }
-  
+
   .neon-glow {
     box-shadow: var(--shadow-neon);
   }
-  
+
   @keyframes gradient-shift {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
   }
-  
+
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-20px); }
   }
-  
+
   @keyframes pulse-glow {
     0%, 100% { box-shadow: 0 0 30px hsl(var(--primary) / 0.3); }
     50% { box-shadow: 0 0 60px hsl(var(--primary) / 0.6), 0 0 90px hsl(var(--primary) / 0.3); }
   }
-  
+
   @keyframes shimmer {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
   }
-  
+
   @keyframes liquid-flow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-  
+
   .text-3d {
     text-shadow: 
       1px 1px 0 hsl(var(--neon-magenta)),
@@ -260,7 +331,7 @@ All colors MUST be HSL.
       0 0 30px hsl(var(--cyber-pink) / 0.5),
       0 0 40px hsl(var(--neon-cyan) / 0.3);
   }
-  
+
   .text-3d-light {
     text-shadow: 
       1px 1px 0 hsl(var(--cyber-cyan)),
@@ -269,30 +340,30 @@ All colors MUST be HSL.
       0 0 15px hsl(var(--neon-pink) / 0.6),
       0 0 25px hsl(var(--cyber-cyan) / 0.4);
   }
-  
+
   .text-3d-subtle {
     text-shadow: 
       1px 1px 0 hsl(var(--neon-magenta)),
       2px 2px 3px rgba(0, 0, 0, 0.3),
       0 0 10px hsl(var(--neon-pink) / 0.4);
   }
-  
+
   .text-flat, .no-3d {
     text-shadow: none !important;
   }
-  
+
   [class*="price"] * {
     text-shadow: none !important;
   }
-  
+
   .perspective-1000 {
     perspective: 1000px;
   }
-  
+
   .transform-3d {
     transform-style: preserve-3d;
   }
-  
+
   .neon-dust-overlay {
     position: fixed;
     top: 0;
@@ -310,7 +381,7 @@ All colors MUST be HSL.
     animation: neon-float 12s ease-in-out infinite;
     background-size: 200% 200%;
   }
-  
+
   @keyframes neon-float {
     0%, 100% { 
       background-position: 0% 0%;
@@ -325,7 +396,7 @@ All colors MUST be HSL.
       background-position: 100% 0%;
     }
   }
-  
+
   .cyber-liquid-glass {
     position: fixed;
     top: 0;
@@ -344,7 +415,7 @@ All colors MUST be HSL.
     background-size: 300% 300%;
     mix-blend-mode: soft-light;
   }
-  
+
   @keyframes liquid-flow {
     0%, 100% { 
       background-position: 0% 50%;
@@ -369,15 +440,15 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply text-3d;
   }
-  
+
   p, span, div {
     @apply text-3d-subtle;
   }
-  
+
   button {
     @apply text-3d-light;
   }
