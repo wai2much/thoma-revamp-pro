@@ -92,19 +92,91 @@ export const Hero = () => {
             </Button>
           </div>
 
-          {/* AMG Bloom Hero Product */}
+          {/* Laptop Mockup with Content */}
           <div className="flex justify-center mb-12 opacity-0 animate-scale-in" style={{ animationDelay: '0.6s' }}>
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent blur-3xl scale-150 opacity-50 group-hover:opacity-70 transition-opacity duration-500" />
-              <img 
-                src={amgBloomHero} 
-                alt="AMG Bloom Luxury Auto Fragrance" 
-                className="h-[280px] md:h-[350px] lg:h-[420px] w-auto object-contain relative z-10 drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
-                style={{ filter: 'drop-shadow(0 25px 50px rgba(0,0,0,0.3))' }}
-              />
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-center">
-                <p className="text-sm font-medium text-primary uppercase tracking-widest">AMG Bloom</p>
-                <p className="text-xs text-muted-foreground">Luxury Auto Fragrance</p>
+            <div className="relative group" style={{ perspective: '1000px' }}>
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-primary/10 to-transparent blur-3xl scale-125 opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+              
+              {/* Laptop Frame */}
+              <div 
+                className="relative transition-transform duration-700 group-hover:scale-[1.02]"
+                style={{ 
+                  transform: 'rotateX(5deg)',
+                  transformStyle: 'preserve-3d'
+                }}
+              >
+                {/* Screen */}
+                <div className="relative bg-gradient-to-br from-card/95 to-card border-[8px] border-zinc-800 rounded-t-xl overflow-hidden shadow-2xl" style={{ width: 'min(800px, 85vw)', aspectRatio: '16/10' }}>
+                  {/* Screen content - Your website preview */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary/20 to-background">
+                    {/* Browser chrome */}
+                    <div className="h-8 bg-zinc-900/90 flex items-center px-3 gap-2 border-b border-zinc-700/50">
+                      <div className="flex gap-1.5">
+                        <div className="w-3 h-3 rounded-full bg-red-500" />
+                        <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                        <div className="w-3 h-3 rounded-full bg-green-500" />
+                      </div>
+                      <div className="flex-1 mx-4">
+                        <div className="bg-zinc-800 rounded-md px-3 py-1 text-xs text-zinc-400 text-center max-w-xs mx-auto">
+                          hausoftechnik.com.au
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Website content preview */}
+                    <div className="p-4 md:p-8 h-full overflow-hidden">
+                      <div className="flex flex-col md:flex-row items-center gap-6 h-full">
+                        {/* Left side - Text content */}
+                        <div className="flex-1 space-y-3 md:space-y-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                            <span className="text-[10px] md:text-xs text-muted-foreground">TyrePlus Thomastown</span>
+                          </div>
+                          <h2 className="text-lg md:text-2xl lg:text-3xl font-display font-bold gradient-text leading-tight">
+                            Premium Car Care
+                            <br />
+                            <span className="text-foreground">Membership</span>
+                          </h2>
+                          <p className="text-[10px] md:text-sm text-muted-foreground max-w-xs">
+                            All-inclusive plans from $55/month. Tyres, servicing & more.
+                          </p>
+                          <div className="flex gap-2">
+                            <div className="px-3 py-1.5 bg-primary text-primary-foreground text-[10px] md:text-xs rounded-md font-medium">
+                              Join Now
+                            </div>
+                            <div className="px-3 py-1.5 border border-primary/30 text-[10px] md:text-xs rounded-md">
+                              Learn More
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Right side - Product showcase */}
+                        <div className="flex-1 relative flex justify-center items-center">
+                          <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-full opacity-40" />
+                          <img 
+                            src={amgBloomHero} 
+                            alt="AMG Bloom Luxury Auto Fragrance"
+                            className="h-32 md:h-48 lg:h-56 w-auto object-contain relative z-10 drop-shadow-xl"
+                            style={{ filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.3))' }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Screen glare effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+                </div>
+                
+                {/* Laptop Base/Keyboard */}
+                <div className="relative h-4 bg-gradient-to-b from-zinc-700 to-zinc-800 rounded-b-lg" style={{ width: 'min(800px, 85vw)' }}>
+                  {/* Notch */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-zinc-600 rounded-b-lg" />
+                </div>
+                
+                {/* Laptop Stand/Shadow */}
+                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-2 bg-zinc-900/50 blur-sm rounded-full" />
               </div>
             </div>
           </div>
