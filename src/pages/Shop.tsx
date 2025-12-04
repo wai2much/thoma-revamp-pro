@@ -347,7 +347,7 @@ const Shop = () => {
                   animationFillMode: 'backwards'
                 }}
               >
-                <div className="aspect-[3/4] p-10 bg-gradient-to-br from-background to-secondary/5 flex items-center justify-center">
+                <div className="aspect-[3/4] p-10 bg-black flex items-center justify-center">
                   <img 
                     src={fragrance.image}
                     alt={fragrance.name}
@@ -422,7 +422,7 @@ const Shop = () => {
                   animationFillMode: 'backwards'
                 }}
               >
-                <div className="aspect-[3/4] p-10 bg-gradient-to-br from-background to-accent/5 flex items-center justify-center">
+                <div className="aspect-[3/4] p-10 bg-black flex items-center justify-center">
                   <img 
                     src={figurine.image}
                     alt={figurine.name}
@@ -483,7 +483,7 @@ const Shop = () => {
               >
                 {/* Product Image */}
                 <div 
-                  className="relative aspect-[3/4] overflow-hidden cursor-pointer bg-muted"
+                  className="relative aspect-[3/4] overflow-hidden cursor-pointer bg-black"
                   onClick={() => handleProductClick(product.handle)}
                 >
                   {image ? (
