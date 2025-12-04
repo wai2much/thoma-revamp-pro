@@ -15,7 +15,7 @@ export default {
   	extend: {
   		fontFamily: {
   			sans: [
-  				'Poppins',
+  				'Inter',
   				'ui-sans-serif',
   				'system-ui',
   				'-apple-system',
@@ -38,7 +38,7 @@ export default {
   				'sans-serif'
   			],
   			serif: [
-  				'Merriweather',
+  				'Lora',
   				'ui-serif',
   				'Georgia',
   				'Cambria',
@@ -47,7 +47,7 @@ export default {
   				'serif'
   			],
   			mono: [
-  				'JetBrains Mono',
+  				'Space Mono',
   				'ui-monospace',
   				'SFMono-Regular',
   				'Menlo',
@@ -204,7 +204,7 @@ export default {
   					transform: 'scale(1)'
   				}
   			},
-  			'glitch': {
+  			glitch: {
   				'0%, 100%': {
   					transform: 'translate(0)'
   				},
@@ -239,7 +239,7 @@ export default {
   					transformOrigin: 'left'
   				}
   			},
-  			'float': {
+  			float: {
   				'0%, 100%': {
   					transform: 'translateY(0px)'
   				},
@@ -247,7 +247,7 @@ export default {
   					transform: 'translateY(-10px)'
   				}
   			},
-  			'shimmer': {
+  			shimmer: {
   				'0%': {
   					backgroundPosition: '200% center'
   				},
@@ -266,11 +266,11 @@ export default {
   			'slide-in-right': 'slide-in-right 0.6s ease-out forwards',
   			'pop-in': 'pop-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards',
   			'bounce-in': 'bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards',
-  			'glitch': 'glitch 0.3s ease-in-out infinite',
+  			glitch: 'glitch 0.3s ease-in-out infinite',
   			'pulse-border': 'pulse-border 2s ease-in-out infinite',
   			'slide-line': 'slide-line 0.6s ease-out forwards',
-  			'float': 'float 3s ease-in-out infinite',
-  			'shimmer': 'shimmer 3s linear infinite'
+  			float: 'float 3s ease-in-out infinite',
+  			shimmer: 'shimmer 3s linear infinite'
   		},
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))'
