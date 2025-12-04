@@ -143,9 +143,27 @@ const Shop = () => {
         </Button>
       </div>
 
-      {/* Hero Section - Streetwear Magazine Style with Figurines */}
-      <div className="relative overflow-hidden border-b-4 border-primary bg-gradient-to-br from-background via-card to-background">
-        <div className="container mx-auto px-4 py-20">
+      {/* Hero Section with Video Background */}
+      <div className="relative overflow-hidden border-b-4 border-primary min-h-[600px] lg:min-h-[700px]">
+        {/* Video Background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute w-full h-full object-cover scale-105"
+            poster="https://images.pexels.com/photos/3729464/pexels-photo-3729464.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          >
+            <source src="https://videos.pexels.com/video-files/3130284/3130284-uhd_2560_1440_30fps.mp4" type="video/mp4" />
+          </video>
+          {/* Dark Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/50" />
+          {/* Additional grain texture overlay */}
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDAiLz48L3N2Zz4=')] opacity-30" />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4 py-20">
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left: Text Content */}
@@ -158,12 +176,12 @@ const Shop = () => {
                 </div>
                 
                 {/* Main Headline - Pop in with bounce */}
-                <h1 className="font-display text-[clamp(4rem,15vw,14rem)] leading-[1] uppercase tracking-tighter text-flat animate-pop-in">
+                <h1 className="font-display text-[clamp(4rem,15vw,14rem)] leading-[0.85] uppercase tracking-tighter text-white animate-pop-in drop-shadow-2xl">
                   SHOP <span className="text-primary inline-block animate-bounce-in" style={{ animationDelay: '0.2s' }}>NOW</span>
                 </h1>
                 
                 {/* Subheadline - Fade in with delay */}
-                <p className="text-muted-foreground text-lg md:text-xl max-w-xl font-medium text-flat animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                <p className="text-white/80 text-lg md:text-xl max-w-xl font-medium animate-fade-in" style={{ animationDelay: '0.4s' }}>
                   Premium automotive culture. Street-certified performance. 
                   <span className="text-primary font-bold"> No compromises.</span>
                 </p>
@@ -172,15 +190,15 @@ const Shop = () => {
                 <div className="flex flex-wrap gap-6 text-sm font-bold">
                   <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.5s' }}>
                     <div className="w-2 h-2 bg-primary animate-pulse"></div>
-                    <span className="text-flat">{products.length} PRODUCTS</span>
+                    <span className="text-white">{products.length} PRODUCTS</span>
                   </div>
                   <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.6s' }}>
                     <div className="w-2 h-2 bg-secondary animate-pulse"></div>
-                    <span className="text-flat">FAST SHIPPING</span>
+                    <span className="text-white">FAST SHIPPING</span>
                   </div>
                   <div className="flex items-center gap-2 animate-pop-in" style={{ animationDelay: '0.7s' }}>
                     <div className="w-2 h-2 bg-accent animate-pulse"></div>
-                    <span className="text-flat">MEMBERS SAVE 25-33%</span>
+                    <span className="text-white">MEMBERS SAVE 25-33%</span>
                   </div>
                 </div>
               </div>
@@ -188,7 +206,7 @@ const Shop = () => {
               {/* Right: Artwork Gallery Display */}
               <div className="relative h-[500px] hidden lg:grid grid-cols-2 gap-4">
                 {/* Artwork 1 */}
-                <div className="relative overflow-hidden rounded-lg border-2 border-primary/30 hover:border-primary transition-all duration-500 group">
+                <div className="relative overflow-hidden rounded-lg border-2 border-primary/50 hover:border-primary transition-all duration-500 group backdrop-blur-sm bg-black/20">
                   <img 
                     src={artworkHauson} 
                     alt="Hauson Artwork" 
@@ -198,7 +216,7 @@ const Shop = () => {
                 </div>
                 
                 {/* Artwork 2 */}
-                <div className="relative overflow-hidden rounded-lg border-2 border-accent/30 hover:border-accent transition-all duration-500 group">
+                <div className="relative overflow-hidden rounded-lg border-2 border-accent/50 hover:border-accent transition-all duration-500 group backdrop-blur-sm bg-black/20">
                   <img 
                     src={artworkFriendvibe} 
                     alt="Day 0 Friend Vibe" 
@@ -208,7 +226,7 @@ const Shop = () => {
                 </div>
                 
                 {/* Artwork 3 */}
-                <div className="relative overflow-hidden rounded-lg border-2 border-secondary/30 hover:border-secondary transition-all duration-500 group">
+                <div className="relative overflow-hidden rounded-lg border-2 border-secondary/50 hover:border-secondary transition-all duration-500 group backdrop-blur-sm bg-black/20">
                   <img 
                     src={artworkOne} 
                     alt="Artwork Collection" 
@@ -218,7 +236,7 @@ const Shop = () => {
                 </div>
                 
                 {/* Artwork 4 */}
-                <div className="relative overflow-hidden rounded-lg border-2 border-primary/30 hover:border-primary transition-all duration-500 group">
+                <div className="relative overflow-hidden rounded-lg border-2 border-primary/50 hover:border-primary transition-all duration-500 group backdrop-blur-sm bg-black/20">
                   <img 
                     src={artworkBill} 
                     alt="Bill Artwork" 
@@ -232,7 +250,7 @@ const Shop = () => {
         </div>
         
         {/* Decorative Elements - Animated */}
-        <div className="absolute top-0 right-0 w-1/2 h-full opacity-5 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none overflow-hidden z-0">
           <div className="absolute top-1/4 right-10 font-display text-[20vw] text-primary leading-none opacity-30 rotate-12 animate-float">
             SHOP
           </div>
