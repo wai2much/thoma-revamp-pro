@@ -341,7 +341,7 @@ const Shop = () => {
             ].map((fragrance, index) => (
               <div 
                 key={fragrance.id}
-                className="group relative bg-card border-2 border-border hover:border-secondary transition-all duration-500 overflow-hidden animate-pop-in rounded-lg"
+                className="group relative bg-card border-2 border-border hover:border-secondary transition-all duration-500 overflow-hidden animate-pop-in rounded-lg hover:shadow-[0_0_30px_rgba(255,200,87,0.3)]"
                 style={{ 
                   animationDelay: `${index * 100}ms`,
                   animationFillMode: 'backwards'
@@ -416,7 +416,7 @@ const Shop = () => {
             ].map((figurine, index) => (
               <div 
                 key={figurine.name}
-                className="group relative bg-card border-2 border-border hover:border-accent transition-all duration-500 overflow-hidden animate-pop-in rounded-lg"
+                className="group relative bg-card border-2 border-border hover:border-accent transition-all duration-500 overflow-hidden animate-pop-in rounded-lg hover:shadow-[0_0_30px_rgba(239,68,68,0.3)]"
                 style={{ 
                   animationDelay: `${index * 100}ms`,
                   animationFillMode: 'backwards'
@@ -475,7 +475,7 @@ const Shop = () => {
             return (
               <div 
                 key={product.id} 
-                className="group relative bg-card border-2 border-border hover:border-primary transition-all duration-500 overflow-hidden animate-pop-in rounded-lg"
+                className="group relative bg-card border-2 border-border hover:border-primary transition-all duration-500 overflow-hidden animate-pop-in rounded-lg hover:shadow-[0_0_30px_rgba(255,200,87,0.3)]"
                 style={{ 
                   animationDelay: `${index * 100}ms`,
                   animationFillMode: 'backwards'
