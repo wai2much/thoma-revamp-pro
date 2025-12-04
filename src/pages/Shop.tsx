@@ -322,7 +322,7 @@ const Shop = () => {
             <Badge className="bg-secondary text-secondary-foreground">NEW</Badge>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
             {[
               // 100ML variants - $25
               { id: "fragrance-amg-bloom-100", name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "25.00" },
@@ -347,7 +347,7 @@ const Shop = () => {
                   animationFillMode: 'backwards'
                 }}
               >
-                <div className="aspect-[4/5] p-8 bg-gradient-to-br from-background to-secondary/5 flex items-center justify-center">
+                <div className="aspect-[3/4] p-10 bg-gradient-to-br from-background to-secondary/5 flex items-center justify-center">
                   <img 
                     src={fragrance.image}
                     alt={fragrance.name}
@@ -407,7 +407,7 @@ const Shop = () => {
             <Badge className="bg-accent text-accent-foreground animate-pulse">COMING SOON</Badge>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
             {[
               { name: "Hauson Suit Edition", image: hausonsuitImg, price: "89.99" },
               { name: "Hauson Casual Edition", image: hausoncasualImg, price: "79.99" },
@@ -422,7 +422,7 @@ const Shop = () => {
                   animationFillMode: 'backwards'
                 }}
               >
-                <div className="aspect-[4/5] p-6 bg-gradient-to-br from-background to-accent/5 flex items-center justify-center">
+                <div className="aspect-[3/4] p-10 bg-gradient-to-br from-background to-accent/5 flex items-center justify-center">
                   <img 
                     src={figurine.image}
                     alt={figurine.name}
@@ -462,7 +462,7 @@ const Shop = () => {
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           {filteredProducts.map((product, index) => {
             const image = product.images.edges[0]?.node;
             const variant = product.variants.edges[0]?.node;
@@ -483,14 +483,14 @@ const Shop = () => {
               >
                 {/* Product Image */}
                 <div 
-                  className="relative aspect-[4/5] overflow-hidden cursor-pointer bg-muted"
+                  className="relative aspect-[3/4] overflow-hidden cursor-pointer bg-muted"
                   onClick={() => handleProductClick(product.handle)}
                 >
                   {image ? (
                     <img 
                       src={image.url} 
                       alt={image.altText || product.title}
-                      className="w-full h-full object-contain p-6 transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-contain p-10 transition-transform duration-700 group-hover:scale-110"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
