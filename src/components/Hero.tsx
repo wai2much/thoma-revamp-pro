@@ -11,6 +11,7 @@ import hausNoirGtr100 from "@/assets/products/haus-noir-gtr-100ml.png";
 import m3Loing100 from "@/assets/products/m3-loing-100ml.png";
 import nSkrrt100 from "@/assets/products/n-skrrt-100ml.png";
 import gtrGod100 from "@/assets/products/gtr-god-100ml.png";
+import heroScreenshot from "@/assets/hero-screenshot.png";
 
 export const Hero = () => {
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -107,63 +108,27 @@ export const Hero = () => {
                 }}
               >
                 {/* Screen */}
-                <div className="relative bg-gradient-to-br from-card/95 to-card border-[8px] border-zinc-800 rounded-t-xl overflow-hidden shadow-2xl" style={{ width: 'min(800px, 85vw)', aspectRatio: '16/10' }}>
-                  {/* Screen content - Your website preview */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary/20 to-background">
-                    {/* Browser chrome */}
-                    <div className="h-8 bg-zinc-900/90 flex items-center px-3 gap-2 border-b border-zinc-700/50">
-                      <div className="flex gap-1.5">
-                        <div className="w-3 h-3 rounded-full bg-red-500" />
-                        <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                        <div className="w-3 h-3 rounded-full bg-green-500" />
-                      </div>
-                      <div className="flex-1 mx-4">
-                        <div className="bg-zinc-800 rounded-md px-3 py-1 text-xs text-zinc-400 text-center max-w-xs mx-auto">
-                          hausoftechnik.com.au
-                        </div>
-                      </div>
+                <div className="relative bg-zinc-900 border-[8px] border-zinc-800 rounded-t-xl overflow-hidden shadow-2xl" style={{ width: 'min(800px, 85vw)', aspectRatio: '16/10' }}>
+                  {/* Browser chrome */}
+                  <div className="h-6 md:h-8 bg-zinc-900 flex items-center px-3 gap-2 border-b border-zinc-700/50">
+                    <div className="flex gap-1.5">
+                      <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-red-500" />
+                      <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-yellow-500" />
+                      <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-green-500" />
                     </div>
-                    
-                    {/* Website content preview */}
-                    <div className="p-4 md:p-8 h-full overflow-hidden">
-                      <div className="flex flex-col md:flex-row items-center gap-6 h-full">
-                        {/* Left side - Text content */}
-                        <div className="flex-1 space-y-3 md:space-y-4">
-                          <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                            <span className="text-[10px] md:text-xs text-muted-foreground">TyrePlus Thomastown</span>
-                          </div>
-                          <h2 className="text-lg md:text-2xl lg:text-3xl font-display font-bold gradient-text leading-tight">
-                            Premium Car Care
-                            <br />
-                            <span className="text-foreground">Membership</span>
-                          </h2>
-                          <p className="text-[10px] md:text-sm text-muted-foreground max-w-xs">
-                            All-inclusive plans from $55/month. Tyres, servicing & more.
-                          </p>
-                          <div className="flex gap-2">
-                            <div className="px-3 py-1.5 bg-primary text-primary-foreground text-[10px] md:text-xs rounded-md font-medium">
-                              Join Now
-                            </div>
-                            <div className="px-3 py-1.5 border border-primary/30 text-[10px] md:text-xs rounded-md">
-                              Learn More
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Right side - Product showcase */}
-                        <div className="flex-1 relative flex justify-center items-center">
-                          <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-full opacity-40" />
-                          <img 
-                            src={amgBloomHero} 
-                            alt="AMG Bloom Luxury Auto Fragrance"
-                            className="h-32 md:h-48 lg:h-56 w-auto object-contain relative z-10 drop-shadow-xl"
-                            style={{ filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.3))' }}
-                          />
-                        </div>
+                    <div className="flex-1 mx-4">
+                      <div className="bg-zinc-800 rounded-md px-3 py-1 text-[10px] md:text-xs text-zinc-400 text-center max-w-xs mx-auto">
+                        hausoftechnik.com.au
                       </div>
                     </div>
                   </div>
+                  
+                  {/* Screenshot content */}
+                  <img 
+                    src={heroScreenshot} 
+                    alt="Haus of Technik - Car Care Made Simple and Affordable"
+                    className="w-full h-auto object-cover object-top"
+                  />
                   
                   {/* Screen glare effect */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
