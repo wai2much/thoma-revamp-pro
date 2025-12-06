@@ -351,7 +351,7 @@ const Shop = () => {
                   <img 
                     src={fragrance.image}
                     alt={fragrance.name}
-                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-contain transition-all duration-700 group-hover:animate-hover-float"
                   />
                 </div>
                 
@@ -426,7 +426,7 @@ const Shop = () => {
                   <img 
                     src={figurine.image}
                     alt={figurine.name}
-                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3"
+                    className="w-full h-full object-contain transition-all duration-700 group-hover:animate-hover-float group-hover:rotate-3"
                   />
                 </div>
                 
@@ -490,7 +490,7 @@ const Shop = () => {
                     <img 
                       src={image.url} 
                       alt={image.altText || product.title}
-                      className="w-full h-full object-contain p-10 transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-contain p-10 transition-all duration-700 group-hover:animate-hover-float"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">

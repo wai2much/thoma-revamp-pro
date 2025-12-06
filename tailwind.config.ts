@@ -239,14 +239,22 @@ export default {
   					transformOrigin: 'left'
   				}
   			},
-  			float: {
-  				'0%, 100%': {
-  					transform: 'translateY(0px)'
-  				},
-  				'50%': {
-  					transform: 'translateY(-10px)'
-  				}
-  			},
+			float: {
+				'0%, 100%': {
+					transform: 'translateY(0px)'
+				},
+				'50%': {
+					transform: 'translateY(-10px)'
+				}
+			},
+			'hover-float': {
+				'0%, 100%': {
+					transform: 'translateY(0px) scale(1.05)'
+				},
+				'50%': {
+					transform: 'translateY(-8px) scale(1.05)'
+				}
+			},
   			shimmer: {
   				'0%': {
   					backgroundPosition: '200% center'
@@ -268,9 +276,10 @@ export default {
   			'bounce-in': 'bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards',
   			glitch: 'glitch 0.3s ease-in-out infinite',
   			'pulse-border': 'pulse-border 2s ease-in-out infinite',
-  			'slide-line': 'slide-line 0.6s ease-out forwards',
-  			float: 'float 3s ease-in-out infinite',
-  			shimmer: 'shimmer 3s linear infinite'
+			'slide-line': 'slide-line 0.6s ease-out forwards',
+			float: 'float 3s ease-in-out infinite',
+			'hover-float': 'hover-float 1.5s ease-in-out infinite',
+			shimmer: 'shimmer 3s linear infinite'
   		},
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))'
