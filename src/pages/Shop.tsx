@@ -325,19 +325,19 @@ const Shop = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
             {[
               // 100ML variants - $25
-              { id: "fragrance-amg-bloom-100", name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "25.00", badge: "BESTSELLER" },
-              { id: "fragrance-haus-noir-100", name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "25.00", badge: "FEATURED" },
-              { id: "fragrance-m3-loing-100", name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "25.00", badge: null },
-              { id: "fragrance-n-skrrt-100", name: "N Skrrt", description: "Luxury Auto Fragrance - 100ML", image: nSkrrtImg, price: "25.00", badge: null },
-              { id: "fragrance-gtr-god-100", name: "GTR G.O.D", description: "Luxury Auto Fragrance - 100ML", image: gtrGodImg, price: "25.00", badge: "BESTSELLER" },
-              { id: "fragrance-911-brokie-100", name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "25.00", badge: null },
+              { id: "fragrance-amg-bloom-100", name: "AMG Bloom", description: "Luxury Auto Fragrance - 100ML", image: amgBloom100Img, price: "25.00", badge: "BESTSELLER", urgencyBadge: "HOT" },
+              { id: "fragrance-haus-noir-100", name: "Haus Noir", description: "100X More Fancy - 100ML", image: hausNoirImg, price: "25.00", badge: "FEATURED", urgencyBadge: "LIMITED" },
+              { id: "fragrance-m3-loing-100", name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 100ML", image: m3LoingImg, price: "25.00", badge: null, urgencyBadge: null },
+              { id: "fragrance-n-skrrt-100", name: "N Skrrt", description: "Luxury Auto Fragrance - 100ML", image: nSkrrtImg, price: "25.00", badge: null, urgencyBadge: null },
+              { id: "fragrance-gtr-god-100", name: "GTR G.O.D", description: "Luxury Auto Fragrance - 100ML", image: gtrGodImg, price: "25.00", badge: "BESTSELLER", urgencyBadge: "HOT" },
+              { id: "fragrance-911-brokie-100", name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 100ML", image: brokieImg, price: "25.00", badge: null, urgencyBadge: null },
               // 250ML variants - $38
-              { id: "fragrance-amg-bloom-250", name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "38.00", badge: "BESTSELLER" },
-              { id: "fragrance-haus-noir-250", name: "Haus Noir", description: "100X More Fancy - 250ML", image: hausNoirImg, price: "38.00", badge: "FEATURED" },
-              { id: "fragrance-m3-loing-250", name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 250ML", image: m3LoingImg, price: "38.00", badge: null },
-              { id: "fragrance-n-skrrt-250", name: "N Skrrt", description: "Luxury Auto Fragrance - 250ML", image: nSkrrtImg, price: "38.00", badge: null },
-              { id: "fragrance-gtr-god-250", name: "GTR G.O.D", description: "Luxury Auto Fragrance - 250ML", image: gtrGodImg, price: "38.00", badge: "BESTSELLER" },
-              { id: "fragrance-911-brokie-250", name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 250ML", image: brokieImg, price: "38.00", badge: null }
+              { id: "fragrance-amg-bloom-250", name: "AMG Bloom", description: "Luxury Auto Fragrance - 250ML", image: amgBloomImg, price: "38.00", badge: "BESTSELLER", urgencyBadge: null },
+              { id: "fragrance-haus-noir-250", name: "Haus Noir", description: "100X More Fancy - 250ML", image: hausNoirImg, price: "38.00", badge: "FEATURED", urgencyBadge: "LIMITED" },
+              { id: "fragrance-m3-loing-250", name: "M3 Lo-ing", description: "Luxury Auto Fragrance - 250ML", image: m3LoingImg, price: "38.00", badge: null, urgencyBadge: null },
+              { id: "fragrance-n-skrrt-250", name: "N Skrrt", description: "Luxury Auto Fragrance - 250ML", image: nSkrrtImg, price: "38.00", badge: null, urgencyBadge: null },
+              { id: "fragrance-gtr-god-250", name: "GTR G.O.D", description: "Luxury Auto Fragrance - 250ML", image: gtrGodImg, price: "38.00", badge: "BESTSELLER", urgencyBadge: null },
+              { id: "fragrance-911-brokie-250", name: "911 Brokie No-Nobu", description: "Luxury Auto Fragrance - 250ML", image: brokieImg, price: "38.00", badge: null, urgencyBadge: null }
             ].map((fragrance, index) => (
               <div 
                 key={fragrance.id}
@@ -401,6 +401,11 @@ const Shop = () => {
                     NEW
                   </Badge>
                 )}
+                {fragrance.urgencyBadge && (
+                  <Badge className={`absolute top-4 left-4 animate-pulse shadow-lg ${fragrance.urgencyBadge === 'HOT' ? 'bg-destructive text-destructive-foreground' : 'bg-orange-500 text-white'}`}>
+                    {fragrance.urgencyBadge === 'HOT' ? '🔥 HOT' : '⚡ LIMITED'}
+                  </Badge>
+                )}
               </div>
             ))}
           </div>
@@ -415,10 +420,10 @@ const Shop = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
             {[
-              { name: "Hauson Suit Edition", image: hausonsuitImg, price: "89.99", badge: "FEATURED" },
-              { name: "Hauson Casual Edition", image: hausoncasualImg, price: "79.99", badge: null },
-              { name: "Hauson Wizard Edition", image: hausonwizardImg, price: "94.99", badge: "BESTSELLER" },
-              { name: "Hauson Tux Edition", image: hausontuxImg, price: "99.99", badge: "FEATURED" }
+              { name: "Hauson Suit Edition", image: hausonsuitImg, price: "89.99", badge: "FEATURED", urgencyBadge: null },
+              { name: "Hauson Casual Edition", image: hausoncasualImg, price: "79.99", badge: null, urgencyBadge: null },
+              { name: "Hauson Wizard Edition", image: hausonwizardImg, price: "94.99", badge: "BESTSELLER", urgencyBadge: "HOT" },
+              { name: "Hauson Tux Edition", image: hausontuxImg, price: "99.99", badge: "FEATURED", urgencyBadge: "LIMITED" }
             ].map((figurine, index) => (
               <div 
                 key={figurine.name}
@@ -460,6 +465,11 @@ const Shop = () => {
                 ) : (
                   <Badge className="absolute top-4 right-4 bg-accent text-accent-foreground animate-bounce-in">
                     NEW
+                  </Badge>
+                )}
+                {figurine.urgencyBadge && (
+                  <Badge className={`absolute top-4 left-4 animate-pulse shadow-lg ${figurine.urgencyBadge === 'HOT' ? 'bg-destructive text-destructive-foreground' : 'bg-orange-500 text-white'}`}>
+                    {figurine.urgencyBadge === 'HOT' ? '🔥 HOT' : '⚡ LIMITED'}
                   </Badge>
                 )}
               </div>
