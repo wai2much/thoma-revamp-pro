@@ -71,6 +71,8 @@ export async function createStorefrontCheckout(lineItems: Array<{ variantId: str
     }
   };
 
+  console.log('Creating Shopify checkout with items:', lineItems);
+
   const response = await fetch(
     `https://${shopifyConfig.domain}/api/${shopifyConfig.apiVersion}/graphql.json`,
     {
@@ -83,13 +85,33 @@ export async function createStorefrontCheckout(lineItems: Array<{ variantId: str
     }
   );
 
+  console.log('Shopify checkout response status:', response.status);
+
+  if (response.status === 402) {
+    throw new Error('Shopify store requires a paid plan to enable checkout. Please upgrade your Shopify subscription.');
+  }
+
+  if (!response.ok) {
+    throw new Error(`Shopify API error: ${response.status} ${response.statusText}`);
+  }
+
   const result = await response.json();
+  console.log('Shopify checkout result:', result);
+  
+  if (result.errors?.length > 0) {
+    throw new Error(`Shopify error: ${result.errors.map((e: any) => e.message).join(', ')}`);
+  }
   
   if (result.data?.cartCreate?.userErrors?.length > 0) {
     throw new Error(result.data.cartCreate.userErrors[0].message);
   }
 
-  return result.data?.cartCreate?.cart;
+  const cart = result.data?.cartCreate?.cart;
+  if (!cart?.checkoutUrl) {
+    throw new Error('No checkout URL returned from Shopify');
+  }
+
+  return cart;
 }
 
 export async function fetchProducts(limit = 20): Promise<ShopifyProduct[]> {
