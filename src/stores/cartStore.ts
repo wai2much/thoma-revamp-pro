@@ -118,14 +118,19 @@ export const useCartStore = create<CartStore>()(
           const cart = await createStorefrontCheckout(lineItems);
           
           if (cart?.checkoutUrl) {
+            // Add channel parameter for proper checkout flow
+            const checkoutUrlWithChannel = new URL(cart.checkoutUrl);
+            checkoutUrlWithChannel.searchParams.set('channel', 'online_store');
+            const finalUrl = checkoutUrlWithChannel.toString();
+            
             set({ 
               cartId: cart.id, 
-              checkoutUrl: cart.checkoutUrl,
+              checkoutUrl: finalUrl,
               isLoading: false 
             });
             
             // Open checkout in new tab
-            window.open(cart.checkoutUrl, '_blank');
+            window.open(finalUrl, '_blank');
           }
         } catch (error) {
           console.error('Checkout error:', error);
