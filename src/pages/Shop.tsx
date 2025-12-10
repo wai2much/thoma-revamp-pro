@@ -92,13 +92,15 @@ const Shop = () => {
     );
   }
 
-  // Separate merch (T-shirts) from fragrances
+  // Separate merch (T-shirts/apparel) from fragrances
   const merchProducts = products.filter(p => 
+    p.title.toLowerCase().includes('limited edition') || 
     p.title.toLowerCase().includes('tee') || 
     p.title.toLowerCase().includes('t-shirt')
   );
   
   const fragranceProducts = products.filter(p => 
+    !p.title.toLowerCase().includes('limited edition') &&
     !p.title.toLowerCase().includes('tee') && 
     !p.title.toLowerCase().includes('t-shirt')
   );
