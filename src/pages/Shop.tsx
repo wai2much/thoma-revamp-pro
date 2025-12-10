@@ -93,9 +93,19 @@ const Shop = () => {
   }
 
   const uniqueVendors = Array.from(new Set(products.map(p => p.vendor).filter(Boolean)));
+  
+  // Sort products: 100ML first, then 250ML
+  const sortedProducts = [...products].sort((a, b) => {
+    const aIs100 = a.title.includes('100ML');
+    const bIs100 = b.title.includes('100ML');
+    if (aIs100 && !bIs100) return -1;
+    if (!aIs100 && bIs100) return 1;
+    return 0;
+  });
+  
   const filteredProducts = vendorFilter === 'all' 
-    ? products 
-    : products.filter(p => p.vendor === vendorFilter);
+    ? sortedProducts 
+    : sortedProducts.filter(p => p.vendor === vendorFilter);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
