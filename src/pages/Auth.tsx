@@ -135,9 +135,6 @@ const Auth = () => {
             type="submit"
             className="w-full relative z-50"
             disabled={loading}
-            onClick={(e) => {
-              console.log("🎯 BUTTON CLICKED!");
-            }}
           >
             {loading ? (
               <>
