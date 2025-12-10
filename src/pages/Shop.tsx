@@ -32,11 +32,10 @@ import hausoncasualImg from "@/assets/figurines/hauson-casual.png";
 import hausonwizardImg from "@/assets/figurines/hauson-wizard.png";
 import hausontuxImg from "@/assets/figurines/hauson-tux.png";
 
-// Import artwork images for hero
-import artworkHauson from "@/assets/artwork/hauson-3-3.png";
-import artworkFriendvibe from "@/assets/artwork/day0friendvibe.png";
-import artworkOne from "@/assets/artwork/artwork-1.png";
-import artworkBill from "@/assets/artwork/bill.png";
+// Import figurine images for hero
+import hausonGrungeImg from "@/assets/figurines/hauson-grunge.png";
+import hausonSuperImg from "@/assets/figurines/hauson-super.png";
+import hausonTechnikImg from "@/assets/figurines/hauson-technik.png";
 
 const Shop = () => {
   const navigate = useNavigate();
@@ -203,46 +202,33 @@ const Shop = () => {
                 </div>
               </div>
 
-              {/* Right: Artwork Gallery Display */}
-              <div className="relative h-[500px] hidden lg:grid grid-cols-2 gap-4">
-                {/* Artwork 1 */}
-                <div className="relative overflow-hidden rounded-lg border-2 border-primary/50 hover:border-primary transition-all duration-500 group backdrop-blur-sm bg-black/20">
+              {/* Right: Figurine Display - 3 in a row */}
+              <div className="relative hidden lg:flex gap-4 items-end justify-end">
+                {/* Figurine 1 */}
+                <div className="relative w-48 h-64 overflow-hidden rounded-lg transition-all duration-500 group">
                   <img 
-                    src={artworkHauson} 
-                    alt="Hauson Artwork" 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    src={hausonsuitImg} 
+                    alt="Hauson Suit Figurine" 
+                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
                 
-                {/* Artwork 2 */}
-                <div className="relative overflow-hidden rounded-lg border-2 border-accent/50 hover:border-accent transition-all duration-500 group backdrop-blur-sm bg-black/20">
+                {/* Figurine 2 */}
+                <div className="relative w-48 h-64 overflow-hidden rounded-lg transition-all duration-500 group">
                   <img 
-                    src={artworkFriendvibe} 
-                    alt="Day 0 Friend Vibe" 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    src={hausoncasualImg} 
+                    alt="Hauson Casual Figurine" 
+                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
                 
-                {/* Artwork 3 */}
-                <div className="relative overflow-hidden rounded-lg border-2 border-secondary/50 hover:border-secondary transition-all duration-500 group backdrop-blur-sm bg-black/20">
+                {/* Figurine 3 */}
+                <div className="relative w-48 h-64 overflow-hidden rounded-lg transition-all duration-500 group">
                   <img 
-                    src={artworkOne} 
-                    alt="Artwork Collection" 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    src={hausonwizardImg} 
+                    alt="Hauson Wizard Figurine" 
+                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-                
-                {/* Artwork 4 */}
-                <div className="relative overflow-hidden rounded-lg border-2 border-primary/50 hover:border-primary transition-all duration-500 group backdrop-blur-sm bg-black/20">
-                  <img 
-                    src={artworkBill} 
-                    alt="Bill Artwork" 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </div>
             </div>
