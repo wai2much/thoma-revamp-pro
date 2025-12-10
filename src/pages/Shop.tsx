@@ -92,10 +92,21 @@ const Shop = () => {
     );
   }
 
-  const uniqueVendors = Array.from(new Set(products.map(p => p.vendor).filter(Boolean)));
+  // Separate merch (T-shirts) from fragrances
+  const merchProducts = products.filter(p => 
+    p.title.toLowerCase().includes('tee') || 
+    p.title.toLowerCase().includes('t-shirt')
+  );
+  
+  const fragranceProducts = products.filter(p => 
+    !p.title.toLowerCase().includes('tee') && 
+    !p.title.toLowerCase().includes('t-shirt')
+  );
+
+  const uniqueVendors = Array.from(new Set(fragranceProducts.map(p => p.vendor).filter(Boolean)));
   
   // Sort products: 100ML first, then 250ML
-  const sortedProducts = [...products].sort((a, b) => {
+  const sortedProducts = [...fragranceProducts].sort((a, b) => {
     const aIs100 = a.title.includes('100ML');
     const bIs100 = b.title.includes('100ML');
     if (aIs100 && !bIs100) return -1;
@@ -265,6 +276,116 @@ const Shop = () => {
             );
           })}
         </div>
+
+        {/* Merch Section */}
+        {merchProducts.length > 0 && (
+          <div className="mt-20">
+            <div className="mb-8">
+              <div className="flex items-center gap-4 mb-8 border-l-4 border-accent pl-6">
+                <h2 className="font-display text-4xl uppercase tracking-tight text-flat">Merch</h2>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+              {merchProducts.map((product, index) => {
+                const image = product.images.edges[0]?.node;
+                const variant = product.variants.edges[0]?.node;
+                const price = variant?.price || product.priceRange.minVariantPrice;
+                const regularPrice = parseFloat(price.amount);
+
+                return (
+                  <div 
+                    key={product.id} 
+                    className="group relative bg-card border-2 border-border hover:border-accent transition-all duration-500 overflow-hidden animate-pop-in rounded-lg hover:shadow-[0_0_30px_rgba(255,100,150,0.3)]"
+                    style={{ 
+                      animationDelay: `${index * 100}ms`,
+                      animationFillMode: 'backwards'
+                    }}
+                  >
+                    {/* Product Image */}
+                    <div 
+                      className="relative aspect-[3/4] overflow-hidden cursor-pointer bg-black"
+                      onClick={() => handleProductClick(product.handle)}
+                    >
+                      {image ? (
+                        <img 
+                          src={image.url} 
+                          alt={image.altText || product.title}
+                          className="w-full h-full object-contain p-10 transition-all duration-700 group-hover:animate-hover-float"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <ShoppingCart className="h-16 w-16 text-muted-foreground/50 animate-float" />
+                        </div>
+                      )}
+                      
+                      {/* Quick View Overlay */}
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center translate-y-full group-hover:translate-y-0">
+                        <span className="font-display text-2xl text-white uppercase tracking-wider text-flat transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                          View Details
+                        </span>
+                      </div>
+                      
+                      {/* Animated corner accent */}
+                      <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-r-[40px] border-t-accent border-r-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 transform rotate-0 group-hover:rotate-180"></div>
+                    </div>
+                    
+                    {/* Product Info */}
+                    <div className="p-4 space-y-3">
+                      {/* Title */}
+                      <h3 
+                        className="font-headline text-xl uppercase leading-tight cursor-pointer hover:text-accent transition-all duration-300 text-flat transform hover:translate-x-2"
+                        onClick={() => handleProductClick(product.handle)}
+                      >
+                        {product.title}
+                      </h3>
+                      
+                      {/* Description */}
+                      <p className="text-sm text-muted-foreground line-clamp-2 text-flat">
+                        {product.description || 'Premium quality apparel'}
+                      </p>
+                      
+                      {/* Price */}
+                      <div className="pt-2">
+                        <PriceDisplay
+                          regularPrice={regularPrice}
+                          isSubscribed={false}
+                          currencyCode="AUD"
+                          size="lg"
+                        />
+                      </div>
+                      
+                      {/* CTA */}
+                      <Button 
+                        onClick={() => handleAddToCart(product)}
+                        className="w-full font-display text-lg tracking-wider uppercase bg-foreground text-background hover:bg-accent hover:text-accent-foreground transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-accent/50 active:scale-95"
+                        disabled={!variant?.availableForSale}
+                        size="lg"
+                      >
+                        {variant?.availableForSale ? (
+                          <span className="flex items-center justify-center gap-2">
+                            <ShoppingCart className="w-5 h-5" />
+                            Add to Cart
+                          </span>
+                        ) : (
+                          'Sold Out'
+                        )}
+                      </Button>
+                    </div>
+                    
+                    {/* Accent Line */}
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-accent via-primary to-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"></div>
+                    
+                    {/* Glow effect on hover */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-primary/10 animate-pulse"></div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
