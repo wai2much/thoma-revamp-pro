@@ -279,16 +279,35 @@ const Shop = () => {
           })}
         </div>
 
+        {/* Divider */}
+        {merchProducts.length > 0 && (
+          <div className="my-20 flex items-center gap-6">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+              <div className="w-3 h-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-2 h-2 bg-accent rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+            </div>
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
+          </div>
+        )}
+
         {/* Merch Section */}
         {merchProducts.length > 0 && (
-          <div className="mt-20">
-            <div className="mb-8">
+          <div className="relative -mx-4 px-4 py-12 bg-gradient-to-b from-accent/5 via-accent/10 to-accent/5 rounded-3xl border border-accent/20">
+            {/* Background decoration */}
+            <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-accent/10 rounded-full blur-3xl"></div>
+              <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl"></div>
+            </div>
+            
+            <div className="relative mb-8">
               <div className="flex items-center gap-4 mb-8 border-l-4 border-accent pl-6">
                 <h2 className="font-display text-4xl uppercase tracking-tight text-flat">Merch</h2>
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
               {merchProducts.map((product, index) => {
                 const image = product.images.edges[0]?.node;
                 const variant = product.variants.edges[0]?.node;
