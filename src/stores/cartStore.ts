@@ -115,13 +115,17 @@ export const useCartStore = create<CartStore>()(
             quantity: item.quantity
           }));
 
+          console.log('Creating checkout with items:', lineItems);
           const cart = await createStorefrontCheckout(lineItems);
+          console.log('Checkout created:', cart);
           
           if (cart?.checkoutUrl) {
             // Add channel parameter for proper checkout flow
             const checkoutUrlWithChannel = new URL(cart.checkoutUrl);
             checkoutUrlWithChannel.searchParams.set('channel', 'online_store');
             const finalUrl = checkoutUrlWithChannel.toString();
+            
+            console.log('Opening checkout URL:', finalUrl);
             
             set({ 
               cartId: cart.id, 
@@ -130,11 +134,24 @@ export const useCartStore = create<CartStore>()(
             });
             
             // Open checkout in new tab
-            window.open(finalUrl, '_blank');
+            const newWindow = window.open(finalUrl, '_blank');
+            
+            if (!newWindow || newWindow.closed) {
+              // Popup was blocked, show message to user
+              toast.info('Popup blocked! Click the link to checkout:', {
+                action: {
+                  label: 'Open Checkout',
+                  onClick: () => window.open(finalUrl, '_blank')
+                },
+                duration: 10000
+              });
+            }
+          } else {
+            throw new Error('No checkout URL received');
           }
-        } catch (error) {
+        } catch (error: any) {
           console.error('Checkout error:', error);
-          toast.error('Failed to create checkout. Please try again.');
+          toast.error(error.message || 'Failed to create checkout. Please try again.');
           set({ isLoading: false });
         }
       },
