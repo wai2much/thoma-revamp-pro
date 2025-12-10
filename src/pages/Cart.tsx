@@ -1,16 +1,29 @@
+import { useState } from 'react';
 import { useCartStore } from '@/stores/cartStore';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { PriceDisplay } from '@/components/PriceDisplay';
-import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
+import { Minus, Plus, Trash2, ShoppingBag, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, createCheckout, isLoading, getTotal, getItemCount, getTotalSavings } = useCartStore();
+  const { items, updateQuantity, removeItem, createCheckout, isLoading, getTotal, getItemCount, getTotalSavings, checkoutUrl } = useCartStore();
   const { subscription } = useAuth();
   const isMember = subscription.subscribed;
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  const handleCheckout = async () => {
+    setCheckoutError(null);
+    try {
+      await createCheckout();
+    } catch (error: any) {
+      setCheckoutError(error.message || 'Checkout failed');
+      toast.error('Checkout failed: ' + (error.message || 'Unknown error'));
+    }
+  };
 
   if (items.length === 0) {
     return (
@@ -152,10 +165,26 @@ const Cart = () => {
                 </div>
               </CardContent>
               <CardFooter className="flex flex-col gap-2">
+                {checkoutError && (
+                  <div className="w-full p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-sm text-destructive mb-2">
+                    {checkoutError}
+                  </div>
+                )}
+                {checkoutUrl && (
+                  <Button 
+                    className="w-full mb-2" 
+                    size="lg"
+                    variant="outline"
+                    onClick={() => window.open(checkoutUrl, '_blank')}
+                  >
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Re-open Checkout
+                  </Button>
+                )}
                 <Button 
                   className="w-full" 
                   size="lg"
-                  onClick={createCheckout}
+                  onClick={handleCheckout}
                   disabled={isLoading}
                 >
                   {isLoading ? 'Processing...' : 'Proceed to Checkout'}
