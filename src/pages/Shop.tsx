@@ -11,6 +11,7 @@ import { PriceDisplay } from '@/components/PriceDisplay';
 import { getMemberPrice, isVapeHeadProduct } from '@/lib/memberPricing';
 import { ShoppingCart } from 'lucide-react';
 import { toast } from 'sonner';
+import shopBanner from '@/assets/shop-banner.png';
 
 const Shop = () => {
   const navigate = useNavigate();
@@ -160,6 +161,15 @@ const Shop = () => {
             ))}
           </div>
         )}
+
+        {/* Shop Banner */}
+        <div className="mb-12 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-2xl shadow-primary/20">
+          <img 
+            src={shopBanner} 
+            alt="Haus of Technik vs Designer Fragrances" 
+            className="w-full h-auto object-cover"
+          />
+        </div>
 
         {/* Page Title */}
         <div className="mb-8">
