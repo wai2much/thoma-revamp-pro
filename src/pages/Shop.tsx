@@ -123,8 +123,52 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
+      {/* Hero Section */}
+      <div className="relative w-full h-[60vh] min-h-[400px] overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-red-600 via-pink-500 to-red-700"></div>
+        
+        {/* Decorative circles */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border-[40px] border-pink-400/30 animate-pulse"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border-[30px] border-pink-300/40"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full bg-pink-400/20"></div>
+        </div>
+        
+        {/* Floating @ symbols */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <span className="absolute top-[10%] left-[10%] text-8xl font-bold text-white/10 animate-float">@</span>
+          <span className="absolute top-[20%] right-[15%] text-6xl font-bold text-pink-300/20 animate-float" style={{ animationDelay: '1s' }}>@</span>
+          <span className="absolute bottom-[20%] left-[20%] text-7xl font-bold text-white/15 animate-float" style={{ animationDelay: '0.5s' }}>@</span>
+          <span className="absolute bottom-[15%] right-[10%] text-9xl font-bold text-pink-200/10 animate-float" style={{ animationDelay: '1.5s' }}>@</span>
+        </div>
+        
+        {/* Content */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+          <h1 className="font-display text-6xl md:text-8xl lg:text-9xl uppercase tracking-tighter text-white drop-shadow-2xl animate-pop-in">
+            Shop The
+          </h1>
+          <h1 className="font-display text-6xl md:text-8xl lg:text-9xl uppercase tracking-tighter text-white drop-shadow-2xl animate-pop-in" style={{ animationDelay: '0.2s' }}>
+            Collection
+          </h1>
+          <p className="mt-6 text-xl md:text-2xl text-white/80 font-medium tracking-wide animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            Luxury Auto Fragrances by Haus of Technik
+          </p>
+          <Button 
+            onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+            className="mt-8 bg-white text-red-600 hover:bg-pink-100 font-display text-xl uppercase tracking-wider px-10 py-6 animate-fade-in hover:scale-105 transition-transform"
+            style={{ animationDelay: '0.6s' }}
+          >
+            Explore Now
+          </Button>
+        </div>
+        
+        {/* Bottom gradient fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent"></div>
+      </div>
+
       {/* Back to Home Button */}
-      <div className="container mx-auto px-4 pt-24 pb-4">
+      <div className="container mx-auto px-4 pt-8 pb-4">
         <Button
           onClick={() => navigate('/')}
           variant="outline"
@@ -137,7 +181,7 @@ const Shop = () => {
         </Button>
       </div>
 
-      <div className="container mx-auto px-4 py-12">
+      <div id="products" className="container mx-auto px-4 py-12">
         {/* Vendor Filter */}
         {uniqueVendors.length > 1 && (
           <div className="flex flex-wrap gap-3 mb-12 border-l-4 border-primary pl-6 animate-slide-in-left">
