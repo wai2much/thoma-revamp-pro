@@ -101,11 +101,12 @@ serve(async (req) => {
       
       if (!isValid) {
         console.warn('Twilio signature validation failed - URL:', fullUrl);
-        // Temporarily allow requests through for debugging
-        // TODO: Re-enable after fixing signature validation
-      } else {
-        console.log('Twilio signature validated successfully');
+        return new Response('Forbidden', { 
+          status: 403, 
+          headers: corsHeaders 
+        });
       }
+      console.log('Twilio signature validated successfully');
     } else {
       console.warn('TWILIO_AUTH_TOKEN not configured - skipping signature validation');
     }
