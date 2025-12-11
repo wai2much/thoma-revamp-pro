@@ -7,6 +7,28 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Simple in-memory rate limiter (resets on function cold start)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
+const MAX_REQUESTS_PER_IP = 5;
+
+const checkRateLimit = (ip: string): boolean => {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+  
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return true;
+  }
+  
+  if (record.count >= MAX_REQUESTS_PER_IP) {
+    return false;
+  }
+  
+  record.count++;
+  return true;
+};
+
 interface InquiryEmailRequest {
   name: string;
   email: string;
@@ -44,6 +66,24 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Get client IP for rate limiting
+    const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
+                     req.headers.get("x-real-ip") || 
+                     "unknown";
+    
+    console.log("Request from IP:", clientIP);
+    
+    if (!checkRateLimit(clientIP)) {
+      console.log("Rate limit exceeded for IP:", clientIP);
+      return new Response(
+        JSON.stringify({ error: "Rate limit exceeded", rateLimited: true }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
     const { name, email, phone, message, orderSummary }: InquiryEmailRequest = await req.json();
 
     console.log("Received inquiry from:", name, email);
