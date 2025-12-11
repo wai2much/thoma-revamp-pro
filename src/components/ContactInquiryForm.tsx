@@ -1,12 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { MessageSquare, Send, CheckCircle } from 'lucide-react';
+import { MessageSquare, Send, CheckCircle, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+
+const RATE_LIMIT_KEY = 'inquiry_submissions';
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
+const MAX_SUBMISSIONS = 3;
+
+const checkRateLimit = (): { allowed: boolean; remainingTime: number } => {
+  try {
+    const stored = localStorage.getItem(RATE_LIMIT_KEY);
+    const submissions: number[] = stored ? JSON.parse(stored) : [];
+    const now = Date.now();
+    const recentSubmissions = submissions.filter(time => now - time < RATE_LIMIT_WINDOW);
+    
+    if (recentSubmissions.length >= MAX_SUBMISSIONS) {
+      const oldestSubmission = Math.min(...recentSubmissions);
+      const remainingTime = RATE_LIMIT_WINDOW - (now - oldestSubmission);
+      return { allowed: false, remainingTime };
+    }
+    return { allowed: true, remainingTime: 0 };
+  } catch {
+    return { allowed: true, remainingTime: 0 };
+  }
+};
+
+const recordSubmission = () => {
+  try {
+    const stored = localStorage.getItem(RATE_LIMIT_KEY);
+    const submissions: number[] = stored ? JSON.parse(stored) : [];
+    const now = Date.now();
+    const recentSubmissions = submissions.filter(time => now - time < RATE_LIMIT_WINDOW);
+    recentSubmissions.push(now);
+    localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(recentSubmissions));
+  } catch {
+    // Ignore storage errors
+  }
+};
 
 interface CartItem {
   product: any;
@@ -24,12 +59,21 @@ interface ContactInquiryFormProps {
 export const ContactInquiryForm = ({ cartItems, onSuccess }: ContactInquiryFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [rateLimitInfo, setRateLimitInfo] = useState<{ allowed: boolean; remainingTime: number }>({ allowed: true, remainingTime: 0 });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     message: ''
   });
+
+  useEffect(() => {
+    setRateLimitInfo(checkRateLimit());
+    const interval = setInterval(() => {
+      setRateLimitInfo(checkRateLimit());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const generateOrderSummary = () => {
     if (!cartItems || cartItems.length === 0) return '';
@@ -47,10 +91,17 @@ export const ContactInquiryForm = ({ cartItems, onSuccess }: ContactInquiryFormP
       return;
     }
 
+    const rateCheck = checkRateLimit();
+    if (!rateCheck.allowed) {
+      const minutes = Math.ceil(rateCheck.remainingTime / 60000);
+      toast.error(`Too many submissions. Please try again in ${minutes} minute${minutes > 1 ? 's' : ''}.`);
+      return;
+    }
+
     setIsSubmitting(true);
     
     try {
-      const { error } = await supabase.functions.invoke('send-inquiry-email', {
+      const { data, error } = await supabase.functions.invoke('send-inquiry-email', {
         body: {
           name: formData.name.trim(),
           email: formData.email.trim(),
@@ -61,16 +112,31 @@ export const ContactInquiryForm = ({ cartItems, onSuccess }: ContactInquiryFormP
       });
 
       if (error) throw error;
+      
+      if (data?.rateLimited) {
+        toast.error('Too many requests. Please try again later.');
+        return;
+      }
 
+      recordSubmission();
       setIsSubmitted(true);
       toast.success('Inquiry sent! We\'ll contact you shortly.');
       onSuccess?.();
     } catch (error: any) {
       console.error('Error sending inquiry:', error);
-      toast.error('Failed to send inquiry. Please try again.');
+      if (error.message?.includes('rate limit')) {
+        toast.error('Too many requests. Please try again later.');
+      } else {
+        toast.error('Failed to send inquiry. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const formatRemainingTime = (ms: number) => {
+    const minutes = Math.ceil(ms / 60000);
+    return `${minutes} minute${minutes > 1 ? 's' : ''}`;
   };
 
   if (isSubmitted) {
@@ -151,16 +217,25 @@ export const ContactInquiryForm = ({ cartItems, onSuccess }: ContactInquiryFormP
             />
           </div>
           
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? (
-              'Sending...'
-            ) : (
-              <>
-                <Send className="mr-2 h-4 w-4" />
-                Send Inquiry
-              </>
-            )}
-          </Button>
+          {!rateLimitInfo.allowed ? (
+            <div className="text-center p-3 rounded-md bg-muted">
+              <Clock className="h-5 w-5 mx-auto mb-2 text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">
+                Too many submissions. Try again in {formatRemainingTime(rateLimitInfo.remainingTime)}.
+              </p>
+            </div>
+          ) : (
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? (
+                'Sending...'
+              ) : (
+                <>
+                  <Send className="mr-2 h-4 w-4" />
+                  Send Inquiry
+                </>
+              )}
+            </Button>
+          )}
         </form>
       </CardContent>
     </Card>
