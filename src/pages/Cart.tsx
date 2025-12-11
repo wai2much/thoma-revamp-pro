@@ -4,10 +4,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { PriceDisplay } from '@/components/PriceDisplay';
 import { Minus, Plus, Trash2, ShoppingBag, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { ContactInquiryForm } from '@/components/ContactInquiryForm';
 
 const Cart = () => {
   const { items, updateQuantity, removeItem, createCheckout, isLoading, getTotal, getItemCount, getTotalSavings, checkoutUrl } = useCartStore();
@@ -132,7 +132,7 @@ const Cart = () => {
             })}
           </div>
           
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-6">
             <Card className="glass-card sticky top-24">
               <CardHeader>
                 <CardTitle>Order Summary</CardTitle>
@@ -198,6 +198,14 @@ const Cart = () => {
                 </Button>
               </CardFooter>
             </Card>
+            
+            {/* Contact Form Alternative */}
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground text-center">
+                Having trouble with checkout?
+              </p>
+              <ContactInquiryForm cartItems={items} />
+            </div>
           </div>
         </div>
       </div>
