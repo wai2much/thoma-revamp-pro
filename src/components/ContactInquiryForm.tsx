@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { MessageSquare, Send, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 interface CartItem {
   product: any;
@@ -48,18 +49,28 @@ export const ContactInquiryForm = ({ cartItems, onSuccess }: ContactInquiryFormP
 
     setIsSubmitting(true);
     
-    // Simulate form submission - in production, this would send to an API
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    console.log('Inquiry submitted:', {
-      ...formData,
-      orderSummary: generateOrderSummary()
-    });
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast.success('Inquiry sent! We\'ll contact you shortly.');
-    onSuccess?.();
+    try {
+      const { error } = await supabase.functions.invoke('send-inquiry-email', {
+        body: {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim() || undefined,
+          message: formData.message.trim() || undefined,
+          orderSummary: generateOrderSummary() || undefined,
+        },
+      });
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      toast.success('Inquiry sent! We\'ll contact you shortly.');
+      onSuccess?.();
+    } catch (error: any) {
+      console.error('Error sending inquiry:', error);
+      toast.error('Failed to send inquiry. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
