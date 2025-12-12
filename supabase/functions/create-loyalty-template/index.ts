@@ -20,6 +20,45 @@ serve(async (req) => {
   try {
     console.log("[CREATE-LOYALTY-TEMPLATE] Starting template creation");
 
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      console.error("[CREATE-LOYALTY-TEMPLATE] No authorization header");
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 401,
+      });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser(token);
+    
+    if (authError || !user) {
+      console.error("[CREATE-LOYALTY-TEMPLATE] Invalid token:", authError?.message);
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 401,
+      });
+    }
+
+    // Check admin role
+    const { data: roleData } = await supabaseClient
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user.id)
+      .eq('role', 'admin')
+      .maybeSingle();
+
+    if (!roleData) {
+      console.error("[CREATE-LOYALTY-TEMPLATE] User is not admin:", user.id);
+      return new Response(JSON.stringify({ error: "Admin access required" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 403,
+      });
+    }
+
+    console.log("[CREATE-LOYALTY-TEMPLATE] Admin user verified:", user.id);
+
     const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
     if (!passEntryKey) throw new Error("PassEntry API key not configured");
 
