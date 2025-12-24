@@ -24,16 +24,15 @@ export default function LoyaltyCard() {
       }
 
       try {
-        const { data, error: dbError } = await supabase
-          .from("loyalty_members")
-          .select("apple_url, google_url")
-          .eq("member_id", memberId)
-          .maybeSingle();
+        // Use edge function for secure access to loyalty_members
+        const { data, error: fnError } = await supabase.functions.invoke('get-loyalty-pass', {
+          body: { memberId }
+        });
 
-        if (dbError) throw dbError;
+        if (fnError) throw fnError;
 
-        if (!data) {
-          setError("Card not found");
+        if (data?.error) {
+          setError(data.error === "Card not found" ? "Card not found" : "Failed to load card");
           return;
         }
 
