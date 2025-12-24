@@ -29,6 +29,7 @@ import { Navigation } from "@/components/Navigation";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import fleetDriverHero from "@/assets/fleet-driver-hero.jpg";
 
 const FleetPlan = () => {
   const [fleetSize, setFleetSize] = useState(6);
@@ -150,13 +151,15 @@ const FleetPlan = () => {
               </Button>
             </div>
 
-            {/* Right: Image placeholder */}
+            {/* Right: Hero Image */}
             <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center border border-border/50">
-                <div className="text-center p-8">
-                  <Truck className="h-24 w-24 mx-auto text-primary/50 mb-4" />
-                  <p className="text-muted-foreground">Fleet Driver Image</p>
-                </div>
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-border/50 shadow-2xl">
+                <img 
+                  src={fleetDriverHero} 
+                  alt="Professional fleet driver smiling confidently next to commercial delivery van - trusted roadside care for your fleet"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
               </div>
               
               {/* Floating stats */}
