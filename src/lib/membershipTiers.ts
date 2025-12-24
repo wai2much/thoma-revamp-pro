@@ -15,9 +15,12 @@ export const MEMBERSHIP_TIERS = {
     name: "Business Starter Pack",
   },
   enterprise: {
-    price_id: "price_1SLk7PAjq2ZDgz7IgoiA3E6W",
-    product_id: "prod_TIKmurHwJ5bDWJ",
+    price_id: "price_1ShzOgAjq2ZDgz7Iy5lH1g0v",
+    product_id: "prod_TfK2T83kznkiQe",
     name: "Business Velocity Pack",
+    per_ticket: true,
+    min_quantity: 6,
+    price_per_ticket: 200,
   },
 } as const;
 

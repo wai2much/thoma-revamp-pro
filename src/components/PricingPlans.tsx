@@ -80,29 +80,31 @@ const plans = [
   {
     id: "enterprise",
     name: "Business Velocity Pack",
-    subtitle: "(6+ Vehicles — $33/car)",
+    subtitle: "(6+ Vehicles — $200/ticket)",
     badge: "Premium Fleet",
-    monthlyPrice: 200,
-    yearlyPrice: 2000,
-    perVehicle: false,
-    value: 1950,
-    savings: 825,
+    monthlyPrice: 1200,
+    yearlyPrice: 12000,
+    perVehicle: true,
+    pricePerTicket: 200,
+    minTickets: 6,
+    value: 11700,
+    savings: 4950,
     features: [
-      "2x Logbook Services",
-      "2x Rotate & Balance",
-      "2x Wheel Alignment",
-      "2x Engine Diagnostics",
-      "2x Fault Full System Scans",
-      "2x Coolant Flush",
-      "2x Power Steering Flush",
-      "2x Brake Fluid Flush",
+      "2x Logbook Services per ticket",
+      "2x Rotate & Balance per ticket",
+      "2x Wheel Alignment per ticket",
+      "2x Engine Diagnostics per ticket",
+      "2x Fault Full System Scans per ticket",
+      "2x Coolant Flush per ticket",
+      "2x Power Steering Flush per ticket",
+      "2x Brake Fluid Flush per ticket",
       "Unlimited Puncture Repairs",
       "1 Free Tow every 90 days",
       "Priority Booking",
       "Wallet Pass + Loyalty Ring",
       "Fleet-wide SMS + Loyalty Triggers"
     ],
-    note: "$200/month includes up to 6 vehicles (about $33/car). Free tow unlocks after 60 days."
+    note: "$200/month per ticket. Minimum 6 tickets ($1,200/month). Each ticket covers 1 vehicle."
   }
 ];
 
@@ -146,7 +148,9 @@ export const PricingPlans = () => {
     }
 
     const priceId = MEMBERSHIP_TIERS[tier].price_id;
-    console.log("✅ Using price ID:", priceId, "for tier:", tier);
+    const tierConfig = MEMBERSHIP_TIERS[tier];
+    const quantity = 'min_quantity' in tierConfig ? tierConfig.min_quantity : 1;
+    console.log("✅ Using price ID:", priceId, "for tier:", tier, "quantity:", quantity);
 
     setCheckoutLoading(planId);
     
@@ -154,7 +158,7 @@ export const PricingPlans = () => {
       console.log("🚀 Invoking create-checkout edge function...");
       
       const { data, error } = await supabase.functions.invoke("create-checkout", {
-        body: { priceId },
+        body: { priceId, quantity },
       });
 
       console.log("📦 Edge function response:", { data, error });
