@@ -295,34 +295,65 @@ const FleetPlan = () => {
                 </Button>
               </div>
 
-              {/* Right: Calculator */}
+              {/* Right: Calculator with Slider */}
               <div className="bg-muted/50 rounded-xl p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <Calculator className="h-5 w-5 text-primary" />
                   <h3 className="font-semibold">Fleet Cost Calculator</h3>
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-6">
+                  {/* Visual Slider */}
                   <div>
-                    <Label htmlFor="fleet-size">Number of Vehicles</Label>
-                    <Input
-                      id="fleet-size"
-                      type="number"
+                    <div className="flex justify-between mb-2">
+                      <Label>Fleet Size: <span className="font-bold text-primary">{fleetSize} vehicles</span></Label>
+                    </div>
+                    <input
+                      type="range"
                       min={6}
+                      max={50}
                       value={fleetSize}
-                      onChange={(e) => setFleetSize(Math.max(6, parseInt(e.target.value) || 6))}
-                      className="mt-1"
+                      onChange={(e) => setFleetSize(parseInt(e.target.value))}
+                      className="w-full h-3 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
                     />
-                    <p className="text-xs text-muted-foreground mt-1">Minimum 6 vehicles required</p>
+                    <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                      <span>6 cars</span>
+                      <span>25 cars</span>
+                      <span>50 cars</span>
+                    </div>
+                  </div>
+
+                  {/* Tier Markers */}
+                  <div className="grid grid-cols-4 gap-2">
+                    {[
+                      { size: 6, label: "Starter" },
+                      { size: 12, label: "Growing" },
+                      { size: 25, label: "Medium" },
+                      { size: 50, label: "Large" },
+                    ].map((tier) => (
+                      <button
+                        key={tier.size}
+                        onClick={() => setFleetSize(tier.size)}
+                        className={`p-2 rounded-lg text-center transition-all ${
+                          fleetSize === tier.size 
+                            ? "bg-primary text-primary-foreground shadow-lg" 
+                            : "bg-background hover:bg-secondary"
+                        }`}
+                      >
+                        <div className="text-lg font-bold">{tier.size}</div>
+                        <div className="text-xs opacity-80">{tier.label}</div>
+                      </button>
+                    ))}
                   </div>
                   
+                  {/* Pricing Breakdown */}
                   <div className="p-4 bg-background rounded-lg space-y-3">
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Per Vehicle</span>
                       <span className="font-bold text-primary">${perVehicleCost.toFixed(2)}/mo</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Base Plan</span>
+                      <span className="text-muted-foreground">Base Plan ({fleetSize} cars)</span>
                       <span className="font-semibold">${baseMonthly.toFixed(0)}</span>
                     </div>
                     {addonsTotal > 0 && (
@@ -337,16 +368,38 @@ const FleetPlan = () => {
                     </div>
                   </div>
 
-                  {/* Savings comparison */}
-                  <div className="p-4 bg-accent/10 rounded-lg border border-accent/30">
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm text-muted-foreground">Competitor would charge:</span>
-                      <span className="line-through text-muted-foreground">${competitorTotal}</span>
+                  {/* Visual Cost Comparison Bar */}
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium">Cost Comparison</p>
+                    <div className="space-y-2">
+                      <div>
+                        <div className="flex justify-between text-xs mb-1">
+                          <span>Competitors</span>
+                          <span className="text-muted-foreground">${competitorTotal}/mo</span>
+                        </div>
+                        <div className="h-4 bg-destructive/20 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-destructive/60 rounded-full"
+                            style={{ width: "100%" }}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className="font-semibold text-primary">Your Fleet Plan</span>
+                          <span className="font-semibold text-primary">${baseMonthly}/mo</span>
+                        </div>
+                        <div className="h-4 bg-primary/20 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-primary rounded-full transition-all duration-300"
+                            style={{ width: `${(baseMonthly / competitorTotal) * 100}%` }}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="font-semibold text-accent">Your monthly savings:</span>
-                      <span className="font-bold text-accent">${savings}/mo</span>
-                    </div>
+                    <p className="text-center text-sm font-bold text-accent mt-2">
+                      You save ${savings}/month ({Math.round((savings / competitorTotal) * 100)}% less!)
+                    </p>
                   </div>
                 </div>
               </div>
