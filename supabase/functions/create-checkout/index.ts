@@ -45,13 +45,13 @@ serve(async (req) => {
     console.log("✅ CREATE-CHECKOUT: User authenticated:", user.email);
 
     const body = await req.json();
-    const { priceId } = body;
+    const { priceId, quantity = 1 } = body;
     console.log("📦 CREATE-CHECKOUT: Received body:", body);
     
     if (!priceId) {
       throw new Error("Price ID is required");
     }
-    console.log("✅ CREATE-CHECKOUT: Using price ID:", priceId);
+    console.log("✅ CREATE-CHECKOUT: Using price ID:", priceId, "quantity:", quantity);
 
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) {
@@ -82,7 +82,7 @@ serve(async (req) => {
       line_items: [
         {
           price: priceId,
-          quantity: 1,
+          quantity: quantity,
         },
       ],
       mode: "subscription",
