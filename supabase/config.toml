@@ -38,3 +38,6 @@ verify_jwt = true
 
 [functions.send-inquiry-email]
 verify_jwt = false
+
+[functions.get-loyalty-pass]
+verify_jwt = false
