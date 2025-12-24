@@ -40,14 +40,16 @@ const FleetPlan = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const basePrice = 200;
+  const perCarRate = 33; // $33 per car
   const minVehicles = 6;
+  const minPrice = 200; // Minimum $200 for 6 cars
   const competitorPrice = 50; // Average competitor cost per car
   const fuelDropsPrice = 20;
   const unlimitedTowsPrice = 100;
   
-  const perVehicleCost = fleetSize >= minVehicles ? (basePrice * (fleetSize / minVehicles)) / fleetSize : 33.33;
-  const baseMonthly = fleetSize >= minVehicles ? basePrice * (fleetSize / minVehicles) : basePrice;
+  // Calculate pricing: $33/car, minimum $200 for 6 cars
+  const baseMonthly = Math.max(minPrice, fleetSize * perCarRate);
+  const perVehicleCost = baseMonthly / fleetSize;
   const addonsTotal = (addFuelDrops ? fuelDropsPrice : 0) + (addUnlimitedTows ? unlimitedTowsPrice : 0);
   const totalMonthly = baseMonthly + addonsTotal;
   const competitorTotal = fleetSize * competitorPrice;
