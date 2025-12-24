@@ -17,6 +17,7 @@ const plans = [
     badge: "Essential Care",
     monthlyPrice: 55,
     yearlyPrice: 550,
+    perVehicle: false,
     value: 450,
     savings: 0,
     features: [
@@ -37,6 +38,7 @@ const plans = [
     popular: true,
     monthlyPrice: 110,
     yearlyPrice: 1100,
+    perVehicle: false,
     value: 2070,
     savings: 750,
     features: [
@@ -59,6 +61,7 @@ const plans = [
     badge: "Fleet Ready",
     monthlyPrice: 249,
     yearlyPrice: 2490,
+    perVehicle: false,
     value: 4716,
     savings: 1728,
     features: [
@@ -77,11 +80,11 @@ const plans = [
   {
     id: "enterprise",
     name: "Business Velocity Pack",
-    subtitle: "(6+ Vehicles)",
+    subtitle: "(6+ Vehicles — $33/car)",
     badge: "Premium Fleet",
-    monthlyPrice: 100,
-    yearlyPrice: 1000,
-    perVehicle: true,
+    monthlyPrice: 200,
+    yearlyPrice: 2000,
+    perVehicle: false,
     value: 1950,
     savings: 825,
     features: [
@@ -94,13 +97,12 @@ const plans = [
       "2x Power Steering Flush",
       "2x Brake Fluid Flush",
       "Unlimited Puncture Repairs",
-      "1 Free Tow per membership/year",
-      "50% off additional tows",
+      "1 Free Tow every 90 days",
       "Priority Booking",
       "Wallet Pass + Loyalty Ring",
       "Fleet-wide SMS + Loyalty Triggers"
     ],
-    note: "All services include 5L oil. Excess oil: $15 per liter."
+    note: "$200/month includes up to 6 vehicles (about $33/car). Free tow unlocks after 60 days."
   }
 ];
 
