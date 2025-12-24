@@ -57,25 +57,27 @@ const plans = [
   {
     id: "business",
     name: "Business Starter Pack",
-    subtitle: "(3 Vehicles)",
+    subtitle: "(3+ Vehicles — $249/ticket)",
     badge: "Fleet Ready",
-    monthlyPrice: 249,
-    yearlyPrice: 2490,
-    perVehicle: false,
+    monthlyPrice: 747,
+    yearlyPrice: 7470,
+    perVehicle: true,
+    pricePerTicket: 249,
+    minTickets: 3,
     value: 4716,
     savings: 1728,
     features: [
-      "3x Express Services",
-      "3x Rotate & Balance",
-      "3x Wheel Alignment",
-      "3x Diagnostics",
-      "3x Fault Scans",
-      "1x Coolant Flush",
+      "3x Express Services per ticket",
+      "3x Rotate & Balance per ticket",
+      "3x Wheel Alignment per ticket",
+      "3x Diagnostics per ticket",
+      "3x Fault Scans per ticket",
+      "1x Coolant Flush per ticket",
       "Unlimited Puncture Repairs",
       "Priority Booking",
       "Wallet Pass + Loyalty Ring"
     ],
-    note: "All services include 5L oil. Excess oil: $15 per liter. No tow included."
+    note: "$249/month per ticket. Minimum 3 tickets ($747/month). Each ticket covers 1 vehicle."
   },
   {
     id: "enterprise",
