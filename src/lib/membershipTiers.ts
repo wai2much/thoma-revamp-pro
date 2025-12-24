@@ -13,6 +13,9 @@ export const MEMBERSHIP_TIERS = {
     price_id: "price_1SLk70Ajq2ZDgz7IsCwvvwhq",
     product_id: "prod_TIKmxYafsqTXwO",
     name: "Business Starter Pack",
+    per_ticket: true,
+    min_quantity: 3,
+    price_per_ticket: 249,
   },
   enterprise: {
     price_id: "price_1ShzOgAjq2ZDgz7Iy5lH1g0v",
