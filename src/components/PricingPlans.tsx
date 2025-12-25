@@ -303,34 +303,12 @@ export const PricingPlans = () => {
                       ${plan.value}+ Value for
                     </div>
                   )}
-                  <div className="text-4xl font-bold text-flat relative" style={{ 
-                    background: 'var(--gradient-vercel)',
-                    backgroundSize: '200% 200%',
-                    animation: 'liquid-flow 8s ease infinite',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    filter: 'drop-shadow(0 2px 8px rgba(99, 102, 241, 0.3))'
-                  }}>
-                    <div className="absolute inset-0 blur-xl opacity-40" style={{
-                      background: 'var(--gradient-vercel)',
-                      backgroundSize: '200% 200%',
-                      animation: 'liquid-flow 8s ease infinite',
-                      zIndex: -1
-                    }} />
+                  <div className={`text-4xl font-bold ${textColor}`}>
                     ${billingPeriod === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
-                    <span className={`text-lg ${mutedColor}`} style={{ 
-                      WebkitTextFillColor: 'inherit',
-                      background: 'none',
-                      filter: 'none'
-                    }}>
+                    <span className={`text-lg ${mutedColor}`}>
                       /{billingPeriod === "monthly" ? "mo" : "yr"}
                     </span>
-                    {plan.perVehicle && <span className={`text-sm ${mutedColor}`} style={{ 
-                      WebkitTextFillColor: 'inherit',
-                      background: 'none',
-                      filter: 'none'
-                    }}>/vehicle</span>}
+                    {plan.perVehicle && <span className={`text-sm ${mutedColor}`}>/vehicle</span>}
                   </div>
                   {plan.savings > 0 && (
                     <div className={`text-sm mt-2 ${plan.id === 'family' ? 'text-purple-600 font-semibold' : mutedColor}`}>
