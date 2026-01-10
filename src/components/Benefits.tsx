@@ -45,13 +45,16 @@ export const Benefits = () => {
   return (
     <>
       {/* Feature strip */}
-      <section className="py-24 px-4 relative overflow-hidden liquid-glass" aria-label="Key features">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground">
+      <section className="py-12 px-4 relative overflow-hidden border-y border-primary/20" aria-label="Key features">
+        <div className="absolute inset-0 bg-background" />
+        <div className="absolute inset-0 cyber-grid opacity-10" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground font-mono uppercase tracking-wider">
             {features.map((feature, idx) => (
-              <div key={idx} className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-primary" />
-                <span>{feature}</span>
+              <div key={idx} className="flex items-center gap-2 group">
+                <CheckCircle className="h-4 w-4 text-primary group-hover:text-glow-cyan transition-all" />
+                <span className="group-hover:text-primary transition-colors">{feature}</span>
               </div>
             ))}
           </div>
@@ -59,17 +62,20 @@ export const Benefits = () => {
       </section>
 
       {/* Benefits grid */}
-      <section className="py-24 px-4 relative overflow-hidden liquid-glass" aria-labelledby="benefits-heading">
-        {/* Subtle Stripe gradient overlay */}
-        <div className="absolute inset-0 opacity-15" 
+      <section className="py-24 px-4 relative overflow-hidden" aria-labelledby="benefits-heading">
+        {/* Cyberpunk background */}
+        <div className="absolute inset-0 bg-background" />
+        <div className="absolute inset-0 cyber-grid opacity-15" />
+        <div className="absolute inset-0 opacity-20" 
              style={{ background: 'var(--gradient-stripe)' }} 
         />
-        <div className="container max-w-6xl mx-auto">
+        
+        <div className="container max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-12">
-            <h2 id="benefits-heading" className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 id="benefits-heading" className="text-4xl md:text-5xl font-display font-bold mb-4 uppercase tracking-wider text-glow-cyan">
               Why choose our <span className="gradient-text">membership?</span>
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-muted-foreground font-sans">
               Everything you need to keep your car running smoothly
             </p>
           </div>
@@ -80,13 +86,13 @@ export const Benefits = () => {
               return (
                 <Card 
                   key={idx}
-                  className="glass-card p-6 hover:glow-border transition-all group"
+                  className="glass-card p-6 hover:glow-border transition-all group border-primary/20"
                 >
-                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <div className="h-12 w-12 rounded bg-primary/10 flex items-center justify-center mb-4 border border-primary/30 group-hover:neon-glow transition-all">
                     <Icon className="h-6 w-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">{benefit.title}</h3>
-                  <p className="text-muted-foreground">{benefit.description}</p>
+                  <h3 className="text-xl font-display font-bold mb-2 uppercase tracking-wide">{benefit.title}</h3>
+                  <p className="text-muted-foreground font-sans">{benefit.description}</p>
                 </Card>
               );
             })}

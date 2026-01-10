@@ -14,12 +14,19 @@ import { AIAssistant } from "@/components/AIAssistant";
 const Index = () => {
   return (
     <div className="min-h-screen relative text-foreground">
-      {/* Stripe-inspired gradient background across entire page */}
+      {/* Dark cyberpunk base background */}
       <div className="fixed inset-0 bg-background -z-10" />
+      
+      {/* Cyber grid overlay */}
+      <div className="fixed inset-0 cyber-grid opacity-30 -z-10" />
+      
+      {/* Animated neon gradient */}
       <div className="fixed inset-0 opacity-40 -z-10" 
            style={{ background: 'var(--gradient-stripe)' }} 
       />
-      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-background/30 to-background/60 -z-10" />
+      
+      {/* Subtle vignette */}
+      <div className="fixed inset-0 bg-gradient-radial from-transparent via-transparent to-background/60 -z-10" />
       
       <Navigation />
       
@@ -35,17 +42,16 @@ const Index = () => {
         <CTA />
       </main>
         
-        {/* Footer */}
-        <footer className="relative border-t border-border/50 py-12 px-4 liquid-glass">
-          <div className="absolute inset-0 bg-secondary/20" />
-          <div className="absolute inset-0 opacity-30" 
-               style={{ background: 'var(--gradient-stripe)' }} 
-          />
+        {/* Footer - Cyberpunk style */}
+        <footer className="relative border-t border-primary/20 py-12 px-4 liquid-glass">
+          <div className="absolute inset-0 bg-background/95" />
+          <div className="absolute inset-0 cyber-grid opacity-20" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
           <div className="container max-w-6xl mx-auto relative z-10">
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div>
-                <h3 className="font-semibold mb-3 text-foreground">Contact Us</h3>
-                <div className="space-y-2 text-sm text-muted-foreground">
+                <h3 className="font-display font-semibold mb-3 text-primary uppercase tracking-wider text-glow-cyan">Contact Us</h3>
+                <div className="space-y-2 text-sm text-muted-foreground font-mono">
                   <p>
                     <a href="tel:+61468003380" className="hover:text-primary transition-colors">
                       📞 +61 468 003 380
@@ -70,8 +76,8 @@ const Index = () => {
               </div>
               
               <div>
-                <h3 className="font-semibold mb-3 text-foreground">Fair Play Commitment</h3>
-                <p className="text-sm text-muted-foreground">
+                <h3 className="font-display font-semibold mb-3 text-primary uppercase tracking-wider text-glow-cyan">Fair Play Commitment</h3>
+                <p className="text-sm text-muted-foreground font-sans leading-relaxed">
                   Our membership service is designed with transparency and fairness in mind. 
                   We comply with all Australian Consumer Law requirements and industry standards, 
                   ensuring you receive honest pricing, quality service, and clear terms without hidden fees.
@@ -79,8 +85,8 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="text-center text-sm text-muted-foreground pt-6 border-t border-border/50">
-              <p>© 2025 Haus of Technik. All rights reserved.</p>
+            <div className="text-center text-sm text-muted-foreground pt-6 border-t border-primary/20 font-mono">
+              <p className="uppercase tracking-widest">© 2025 Haus of Technik // All Systems Operational</p>
             </div>
           </div>
         </footer>
