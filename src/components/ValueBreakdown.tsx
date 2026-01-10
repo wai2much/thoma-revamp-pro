@@ -2,40 +2,40 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const cPackServices = [
-  { name: "1x Express Service", value: 150 },
-  { name: "1x Rotate & Balance", value: 130 },
-  { name: "1x Diagnostics", value: 150 },
+  { name: "1x Express Service", value: 220 },
+  { name: "1x Rotate & Balance", value: 150 },
+  { name: "1x Diagnostics", value: 240 },
   { name: "Unlimited Puncture Repairs (Est.)", value: 100 },
   { name: "Priority Booking", value: 50 },
 ];
 
 const familyPackServices = [
-  { name: "2x Express Services", value: 600 },
-  { name: "2x Rotate & Balance", value: 520 },
-  { name: "2x Wheel Alignment", value: 360 },
-  { name: "2x Diagnostics", value: 600 },
+  { name: "2x Express Services", value: 440 },
+  { name: "2x Rotate & Balance", value: 300 },
+  { name: "2x Wheel Alignment", value: 200 },
+  { name: "2x Diagnostics", value: 480 },
   { name: "2x Fault Scans", value: 480 },
-  { name: "2x Coolant Flush", value: 360 },
+  { name: "2x Coolant Flush", value: 160 },
   { name: "Unlimited Puncture Repairs (Est.)", value: 150 },
 ];
 
 const businessStarterServices = [
-  { name: "3x Express Services", value: 1350 },
-  { name: "3x Rotate & Balance", value: 1170 },
-  { name: "3x Wheel Alignment", value: 810 },
-  { name: "3x Diagnostics", value: 1350 },
-  { name: "3x Fault Scans", value: 1080 },
-  { name: "1x Coolant Flush", value: 270 },
+  { name: "3x Express Services", value: 660 },
+  { name: "3x Rotate & Balance", value: 450 },
+  { name: "3x Wheel Alignment", value: 300 },
+  { name: "3x Diagnostics", value: 720 },
+  { name: "3x Fault Scans", value: 720 },
+  { name: "1x Coolant Flush", value: 80 },
   { name: "Unlimited Puncture Repairs (Est.)", value: 200 },
 ];
 
 const businessVelocityServices = [
-  { name: "2x Logbook Services", value: 600 },
-  { name: "2x Rotate & Balance", value: 260 },
-  { name: "2x Wheel Alignment", value: 180 },
-  { name: "2x Engine Diagnostics", value: 300 },
-  { name: "2x Fault Full System Scans", value: 240 },
-  { name: "2x Coolant Flush", value: 180 },
+  { name: "2x Logbook Services", value: 440 },
+  { name: "2x Rotate & Balance", value: 300 },
+  { name: "2x Wheel Alignment", value: 200 },
+  { name: "2x Engine Diagnostics", value: 480 },
+  { name: "2x Fault Full System Scans", value: 480 },
+  { name: "2x Coolant Flush", value: 160 },
   { name: "2x Power Steering Flush", value: 180 },
   { name: "2x Brake Fluid Flush", value: 100 },
   { name: "Unlimited Puncture Repairs (Est.)", value: 100 },
