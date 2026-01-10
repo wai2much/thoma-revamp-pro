@@ -31,23 +31,30 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 pt-20 liquid-glass" aria-label="Hero section">
-      {/* Stripe-inspired gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary/30 to-background" />
-      <div className="absolute inset-0 opacity-80 animate-[gradient-shift_20s_ease_infinite]" 
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 pt-20 cyber-grid" aria-label="Hero section">
+      {/* Dark cyberpunk background */}
+      <div className="absolute inset-0 bg-background" />
+      
+      {/* Neon gradient overlay */}
+      <div className="absolute inset-0 opacity-60 animate-[gradient-shift_25s_ease_infinite]" 
            style={{ 
              background: 'var(--gradient-stripe)',
              backgroundSize: '200% 200%'
            }} 
       />
       
-      {/* Subtle overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/5 to-background/30" />
+      {/* Scan lines effect */}
+      <div className="absolute inset-0 scan-lines opacity-30" />
       
-      {/* Animated dots */}
+      {/* Subtle vignette */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/80" />
+      
+      {/* Animated neon dots */}
       <div className="absolute top-20 left-10 w-2 h-2 bg-primary rounded-full pulse-glow" />
       <div className="absolute top-40 right-20 w-3 h-3 bg-accent rounded-full pulse-glow" style={{ animationDelay: '1s' }} />
       <div className="absolute bottom-40 left-20 w-2 h-2 bg-primary rounded-full pulse-glow" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-60 left-1/4 w-1 h-1 bg-primary rounded-full pulse-glow" style={{ animationDelay: '0.5s' }} />
+      <div className="absolute bottom-60 right-1/4 w-2 h-2 bg-accent rounded-full pulse-glow" style={{ animationDelay: '1.5s' }} />
       
       <div className="container max-w-6xl mx-auto relative z-10" style={{ perspective: '1500px' }}>
         <div className="animate-fade-in" style={{ 
@@ -57,18 +64,18 @@ export const Hero = () => {
           {/* Trust badge */}
           <div className="flex items-center justify-center gap-2 mb-8 opacity-0 animate-fade-in">
             <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <p className="text-sm text-muted-foreground font-medium drop-shadow-lg">Haus of Technik - Growing membership base</p>
+            <p className="text-sm text-muted-foreground font-medium uppercase tracking-widest font-mono">Haus of Technik // System Online</p>
           </div>
 
           {/* Main headline */}
           <div className="text-center space-y-6 mb-12">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight opacity-0 animate-slide-up drop-shadow-2xl" style={{ animationDelay: '0.1s', textShadow: '0 4px 12px rgba(0,0,0,0.3)' }}>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-wider uppercase opacity-0 animate-slide-up text-glow-cyan" style={{ animationDelay: '0.1s' }}>
               Car care made
               <br />
               <span className="gradient-text">simple and affordable</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto opacity-0 animate-fade-in drop-shadow-lg" style={{ animationDelay: '0.3s', textShadow: '0 2px 8px rgba(0,0,0,0.2)' }}>
-              Membership-based car maintenance that saves you time and money. All-inclusive plans starting at <span className="text-primary font-semibold">$55/month</span>.
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto opacity-0 animate-fade-in font-sans" style={{ animationDelay: '0.3s' }}>
+              Membership-based car maintenance that saves you time and money. All-inclusive plans starting at <span className="text-primary font-semibold text-glow-cyan">$55/month</span>.
             </p>
           </div>
 
@@ -77,16 +84,16 @@ export const Hero = () => {
             <Button 
               size="lg" 
               onClick={scrollToPlans}
-              className="group bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-glow-accent"
+              className="group bg-primary hover:bg-primary/90 text-primary-foreground neon-glow uppercase tracking-wider font-semibold"
             >
               View Membership Plans
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
             <Button 
               size="lg" 
               variant="outline"
               onClick={scrollToLocations}
-              className="border-primary/30 hover:bg-primary/10 hover:border-primary/50"
+              className="border-primary/50 hover:bg-primary/10 hover:border-primary uppercase tracking-wider glow-border"
             >
               Find a Location
             </Button>

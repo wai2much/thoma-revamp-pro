@@ -12,52 +12,40 @@ export default {
   			'2xl': '1400px'
   		}
   	},
-  	extend: {
-  		fontFamily: {
-  			sans: [
-  				'Inter',
-  				'ui-sans-serif',
-  				'system-ui',
-  				'-apple-system',
-  				'BlinkMacSystemFont',
-  				'Segoe UI',
-  				'Roboto',
-  				'Helvetica Neue',
-  				'Arial',
-  				'Noto Sans',
-  				'sans-serif'
-  			],
-  			display: [
-  				'Bebas Neue',
-  				'Impact',
-  				'sans-serif'
-  			],
-  			headline: [
-  				'Archivo Black',
-  				'system-ui',
-  				'sans-serif'
-  			],
-  			serif: [
-  				'Lora',
-  				'ui-serif',
-  				'Georgia',
-  				'Cambria',
-  				'Times New Roman',
-  				'Times',
-  				'serif'
-  			],
-  			mono: [
-  				'Space Mono',
-  				'ui-monospace',
-  				'SFMono-Regular',
-  				'Menlo',
-  				'Monaco',
-  				'Consolas',
-  				'Liberation Mono',
-  				'Courier New',
-  				'monospace'
-  			]
-  		},
+	extend: {
+		fontFamily: {
+			sans: [
+				'Rajdhani',
+				'Inter',
+				'ui-sans-serif',
+				'system-ui',
+				'-apple-system',
+				'BlinkMacSystemFont',
+				'Segoe UI',
+				'Roboto',
+				'sans-serif'
+			],
+			display: [
+				'Orbitron',
+				'Share Tech Mono',
+				'monospace'
+			],
+			headline: [
+				'Orbitron',
+				'system-ui',
+				'sans-serif'
+			],
+			mono: [
+				'Share Tech Mono',
+				'JetBrains Mono',
+				'ui-monospace',
+				'SFMono-Regular',
+				'Menlo',
+				'Monaco',
+				'Consolas',
+				'monospace'
+			]
+		},
   		colors: {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',

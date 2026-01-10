@@ -211,45 +211,47 @@ export const PricingPlans = () => {
   };
 
   return (
-    <section id="pricing" className="py-24 px-4 relative overflow-hidden liquid-glass">
-      {/* Subtle Stripe gradient overlay */}
-      <div className="absolute inset-0 opacity-20" 
+    <section id="pricing" className="py-24 px-4 relative overflow-hidden">
+      {/* Cyberpunk background */}
+      <div className="absolute inset-0 bg-background" />
+      <div className="absolute inset-0 cyber-grid opacity-20" />
+      <div className="absolute inset-0 opacity-30" 
            style={{ background: 'var(--gradient-stripe)' }} 
       />
       
       <div className="container max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 uppercase tracking-wider text-glow-cyan">
             Choose Your <span className="gradient-text">Plan</span>
           </h2>
-          <p className="text-xl text-muted-foreground mb-8">
+          <p className="text-xl text-muted-foreground mb-8 font-sans">
             All plans include unlimited puncture repairs and 100% labour coverage. Start saving from day one.
           </p>
 
-          {/* Billing toggle */}
-          <div className="inline-flex items-center gap-4 glass-card p-2 rounded-xl">
+          {/* Billing toggle - Cyberpunk style */}
+          <div className="inline-flex items-center gap-4 glass-card p-2 rounded border border-primary/30">
             <button
               onClick={() => setBillingPeriod("monthly")}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+              className={`px-6 py-3 rounded font-semibold transition-all duration-300 uppercase tracking-wider text-sm ${
                 billingPeriod === "monthly" 
-                  ? "bg-primary text-primary-foreground shadow-lg scale-105" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                  ? "bg-primary text-primary-foreground neon-glow scale-105" 
+                  : "text-muted-foreground hover:text-primary hover:bg-primary/10"
               }`}
             >
               Monthly
             </button>
             <button
               onClick={() => setBillingPeriod("yearly")}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+              className={`px-6 py-3 rounded font-semibold transition-all duration-300 uppercase tracking-wider text-sm ${
                 billingPeriod === "yearly" 
-                  ? "bg-primary text-primary-foreground shadow-lg scale-105" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                  ? "bg-primary text-primary-foreground neon-glow scale-105" 
+                  : "text-muted-foreground hover:text-primary hover:bg-primary/10"
               }`}
             >
               Yearly
             </button>
             {billingPeriod === "yearly" && (
-              <Badge variant="secondary" className="bg-accent/30 text-accent font-semibold pulse-glow">Save 17%</Badge>
+              <Badge className="bg-accent/30 text-accent font-semibold border border-accent/50 pulse-glow uppercase tracking-wider">Save 17%</Badge>
             )}
           </div>
         </div>
@@ -350,7 +352,7 @@ export const PricingPlans = () => {
                     </Button>
                   )}
                   <Button 
-                    className="w-full font-semibold border-0 bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 shadow-lg hover:shadow-glow"
+                    className="w-full font-semibold border-0 bg-gradient-to-r from-primary to-cyan-400 text-primary-foreground hover:from-cyan-400 hover:to-primary neon-glow uppercase tracking-wider"
                     onClick={() => handleSubscribe(plan.id)}
                     disabled={checkoutLoading === plan.id}
                   >
@@ -371,19 +373,19 @@ export const PricingPlans = () => {
           })}
         </div>
 
-        {/* Trust badges */}
-        <div className="flex flex-wrap items-center justify-center gap-8 mt-16 text-sm text-muted-foreground">
+        {/* Trust badges - Cyberpunk style */}
+        <div className="flex flex-wrap items-center justify-center gap-8 mt-16 text-sm text-muted-foreground font-mono uppercase tracking-wider">
           <div className="flex items-center gap-2">
             <Check className="h-4 w-4 text-primary" />
-            30-day notice required
+            <span>30-day notice required</span>
           </div>
           <div className="flex items-center gap-2">
             <Check className="h-4 w-4 text-primary" />
-            Cancel anytime
+            <span>Cancel anytime</span>
           </div>
           <div className="flex items-center gap-2">
             <Check className="h-4 w-4 text-primary" />
-            Money-back guarantee
+            <span>Money-back guarantee</span>
           </div>
         </div>
       </div>
