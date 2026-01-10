@@ -3,18 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Loader2, Shield, Calendar, CreditCard, LogOut, Wallet, Mail } from "lucide-react";
+import { Loader2, Shield, Calendar, CreditCard, LogOut, Wallet, Mail, Lock, Unlock, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { WalletPassButton } from "@/components/WalletPassButton";
 import { toast as sonnerToast } from "sonner";
-
-const PRODUCT_NAMES: Record<string, string> = {
-  "prod_TIKlo107LUfRkP": "Single Pack",
-  "prod_TIKmAWTileFjnm": "Family Pack",
-  "prod_TIKmxYafsqTXwO": "Business Starter Pack",
-  "prod_TIKmurHwJ5bDWJ": "Business Velocity Pack",
-};
+import { PRODUCT_NAMES } from "@/lib/membershipTiers";
 
 const Membership = () => {
   const { user, subscription, loading, signOut, refreshSubscription } = useAuth();
@@ -33,7 +27,6 @@ const Membership = () => {
     if (!loading && !user) {
       navigate("/auth");
     } else if (user && subscription.subscribed) {
-      // Fetch pass from database when component loads
       fetchPassFromDatabase();
     }
   }, [user, loading, navigate, subscription.subscribed]);
@@ -129,7 +122,6 @@ const Membership = () => {
 
     setTestEmailLoading(true);
     try {
-      // Get member ID from database
       const { data: passData } = await supabase
         .from("membership_passes")
         .select("member_id")
@@ -184,8 +176,8 @@ const Membership = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -195,29 +187,98 @@ const Membership = () => {
     : null;
 
   return (
-    <div className="min-h-screen py-24 px-4 bg-background">
-      <div className="container max-w-4xl mx-auto">
+    <div className="min-h-screen py-24 px-4 bg-background relative overflow-hidden">
+      {/* Cyberpunk background */}
+      <div className="fixed inset-0 cyber-grid opacity-30" />
+      <div 
+        className="fixed inset-0 opacity-20"
+        style={{ background: 'var(--gradient-stripe)' }}
+      />
+      
+      <div className="container max-w-4xl mx-auto relative z-10">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold">My Membership</h1>
-          <Button variant="outline" onClick={signOut}>
+          <h1 className="text-4xl font-display font-bold uppercase tracking-wider text-glow-cyan">
+            My Membership
+          </h1>
+          <Button 
+            variant="outline" 
+            onClick={signOut}
+            className="glow-border uppercase tracking-wider font-mono"
+          >
             <LogOut className="mr-2 h-4 w-4" />
             Sign Out
           </Button>
         </div>
 
+        {/* Lock-up Status Card - Show prominently if locked */}
+        {subscription.subscribed && subscription.is_locked && (
+          <Card className="glass-card p-6 mb-6 border-accent/50">
+            <div className="flex items-start gap-4">
+              <div className="p-3 rounded-lg bg-accent/20 border border-accent/30">
+                <Lock className="h-8 w-8 text-accent" />
+              </div>
+              <div className="flex-1">
+                <h2 className="text-xl font-display font-bold uppercase tracking-wider text-accent mb-2 flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5" />
+                  Service Lock-Up Period
+                </h2>
+                <p className="text-muted-foreground mb-3">
+                  Your membership services (free tow, roadside assistance) will unlock in{" "}
+                  <span className="text-accent font-bold">{subscription.days_until_unlock} days</span>.
+                </p>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground font-mono">
+                  <Calendar className="h-4 w-4" />
+                  Unlocks on: {subscription.lockup_ends_at && new Date(subscription.lockup_ends_at).toLocaleDateString()}
+                </div>
+                <p className="text-xs text-muted-foreground mt-3 italic">
+                  💡 Tip: Upgrade to an annual plan or Business Pack for immediate service access with no lock-up period.
+                </p>
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {/* Unlocked status - show if subscribed and not locked */}
+        {subscription.subscribed && !subscription.is_locked && (
+          <Card className="glass-card p-4 mb-6 border-primary/50">
+            <div className="flex items-center gap-3">
+              <Unlock className="h-6 w-6 text-primary" />
+              <div>
+                <p className="font-display font-semibold text-primary uppercase tracking-wider">
+                  Services Unlocked
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Full access to all membership benefits including free tow and roadside assistance.
+                </p>
+              </div>
+            </div>
+          </Card>
+        )}
+
         <Card className="glass-card p-6 mb-6">
           <div className="flex items-start gap-4">
-            <Shield className="h-12 w-12 text-primary shrink-0" />
+            <div className="p-3 rounded-lg bg-primary/20 border border-primary/30">
+              <Shield className="h-8 w-8 text-primary" />
+            </div>
             <div className="flex-1">
-              <h2 className="text-2xl font-bold mb-2">Membership Status</h2>
+              <h2 className="text-2xl font-display font-bold mb-2 uppercase tracking-wider">
+                Membership Status
+              </h2>
               {subscription.subscribed ? (
                 <>
-                  <p className="text-xl text-primary font-semibold mb-2">Active</p>
+                  <p className="text-xl text-primary font-semibold mb-2 text-glow-cyan">Active</p>
                   {planName && (
-                    <p className="text-muted-foreground mb-1">Plan: {planName}</p>
+                    <p className="text-muted-foreground mb-1 font-mono">
+                      Plan: <span className="text-foreground">{planName}</span>
+                    </p>
+                  )}
+                  {subscription.billing_interval && (
+                    <p className="text-sm text-muted-foreground mb-1 font-mono">
+                      Billing: <span className="text-foreground capitalize">{subscription.billing_interval}ly</span>
+                    </p>
                   )}
                   {subscription.subscription_end && (
-                    <p className="text-sm text-muted-foreground flex items-center gap-2">
+                    <p className="text-sm text-muted-foreground flex items-center gap-2 font-mono">
                       <Calendar className="h-4 w-4" />
                       Next billing: {new Date(subscription.subscription_end).toLocaleDateString()}
                     </p>
@@ -235,11 +296,11 @@ const Membership = () => {
 
         {subscription.subscribed && (
           <Card className="glass-card p-6 mb-6">
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-              <Wallet className="h-5 w-5" />
+            <h3 className="text-xl font-display font-bold mb-4 flex items-center gap-2 uppercase tracking-wider">
+              <Wallet className="h-5 w-5 text-primary" />
               Digital Wallet Pass
             </h3>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-muted-foreground mb-4 font-mono">
               Add your membership card to Apple Wallet or Google Pay for quick access
             </p>
             
@@ -250,13 +311,13 @@ const Membership = () => {
                 url={passUrls.url}
                 isGenerating={isGenerating}
                 variant="default"
-                className="w-full"
+                className="w-full neon-glow uppercase tracking-wider"
               />
             ) : (
               <Button
                 onClick={handleGeneratePass}
                 disabled={isGenerating}
-                className="w-full"
+                className="w-full neon-glow uppercase tracking-wider"
               >
                 {isGenerating ? (
                   <>
@@ -275,8 +336,8 @@ const Membership = () => {
         )}
 
         <Card className="glass-card p-6">
-          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <CreditCard className="h-5 w-5" />
+          <h3 className="text-xl font-display font-bold mb-4 flex items-center gap-2 uppercase tracking-wider">
+            <CreditCard className="h-5 w-5 text-primary" />
             Manage Subscription
           </h3>
           
@@ -284,7 +345,7 @@ const Membership = () => {
             <Button
               onClick={handleManageSubscription}
               disabled={portalLoading}
-              className="w-full"
+              className="w-full neon-glow uppercase tracking-wider"
             >
               {portalLoading ? (
                 <>
@@ -303,7 +364,7 @@ const Membership = () => {
                 <Button
                   variant="outline"
                   onClick={refreshSubscription}
-                  className="w-full"
+                  className="w-full glow-border uppercase tracking-wider font-mono"
                 >
                   Refresh Status
                 </Button>
@@ -312,7 +373,7 @@ const Membership = () => {
                   variant="secondary"
                   onClick={handleSendTestEmail}
                   disabled={testEmailLoading}
-                  className="w-full"
+                  className="w-full uppercase tracking-wider font-mono"
                 >
                   {testEmailLoading ? (
                     <>
@@ -331,7 +392,7 @@ const Membership = () => {
           </div>
 
           {subscription.subscribed && (
-            <p className="text-xs text-muted-foreground mt-4">
+            <p className="text-xs text-muted-foreground mt-4 font-mono">
               Use the billing portal to update payment methods, view invoices, or cancel your subscription.
             </p>
           )}
