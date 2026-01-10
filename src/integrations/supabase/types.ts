@@ -212,6 +212,57 @@ export type Database = {
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          category: string
+          created_at: string
+          currency: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_available: boolean
+          member_price: number | null
+          name: string
+          price: number
+          sort_order: number
+          stripe_price_id: string | null
+          updated_at: string
+          vendor: string | null
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_available?: boolean
+          member_price?: number | null
+          name: string
+          price: number
+          sort_order?: number
+          stripe_price_id?: string | null
+          updated_at?: string
+          vendor?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_available?: boolean
+          member_price?: number | null
+          name?: string
+          price?: number
+          sort_order?: number
+          stripe_price_id?: string | null
+          updated_at?: string
+          vendor?: string | null
+        }
+        Relationships: []
+      }
       slack_events: {
         Row: {
           channel: string

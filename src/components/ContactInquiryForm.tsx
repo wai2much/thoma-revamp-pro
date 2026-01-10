@@ -44,11 +44,9 @@ const recordSubmission = () => {
 };
 
 interface CartItem {
-  product: any;
-  variantId: string;
-  variantTitle: string;
-  price: { amount: string; currencyCode: string };
+  product: { name?: string; title?: string };
   quantity: number;
+  memberPrice?: number;
 }
 
 interface ContactInquiryFormProps {
@@ -79,7 +77,7 @@ export const ContactInquiryForm = ({ cartItems, onSuccess }: ContactInquiryFormP
     if (!cartItems || cartItems.length === 0) return '';
     
     return cartItems.map(item => 
-      `- ${item.product.node.title} (${item.variantTitle}) x${item.quantity} @ $${parseFloat(item.price.amount).toFixed(2)}`
+      `- ${item.product.name || item.product.title || 'Product'} x${item.quantity}`
     ).join('\n');
   };
 
