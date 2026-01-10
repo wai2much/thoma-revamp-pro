@@ -1,38 +1,25 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { createStorefrontCheckout } from '@/lib/shopify';
-import { ShopifyProduct } from '@/lib/shopify';
-import { getMemberPrice, isVapeHeadProduct } from '@/lib/memberPricing';
+import { Product } from '@/lib/products';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
 export interface CartItem {
-  product: ShopifyProduct;
-  variantId: string;
-  variantTitle: string;
-  price: {
-    amount: string;
-    currencyCode: string;
-  };
-  memberPrice?: number;
+  product: Product;
   quantity: number;
-  selectedOptions: Array<{
-    name: string;
-    value: string;
-  }>;
+  memberPrice?: number;
 }
 
 interface CartStore {
   items: CartItem[];
-  cartId: string | null;
   checkoutUrl: string | null;
   isLoading: boolean;
   
   // Actions
   addItem: (item: CartItem) => void;
-  updateQuantity: (variantId: string, quantity: number) => void;
-  removeItem: (variantId: string) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
+  removeItem: (productId: string) => void;
   clearCart: () => void;
-  setCartId: (cartId: string) => void;
   setCheckoutUrl: (url: string) => void;
   setLoading: (loading: boolean) => void;
   createCheckout: () => Promise<void>;
@@ -45,57 +32,55 @@ export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
-      cartId: null,
       checkoutUrl: null,
       isLoading: false,
 
       addItem: (item) => {
         const { items } = get();
-        const existingItem = items.find(i => i.variantId === item.variantId);
+        const existingItem = items.find(i => i.product.id === item.product.id);
         
         if (existingItem) {
           set({
             items: items.map(i =>
-              i.variantId === item.variantId
+              i.product.id === item.product.id
                 ? { ...i, quantity: i.quantity + item.quantity }
                 : i
             )
           });
-          toast.success(`Updated quantity for ${item.product.title}`);
+          toast.success(`Updated quantity for ${item.product.name}`);
         } else {
           set({ items: [...items, item] });
-          toast.success(`Added ${item.product.title} to cart`);
+          toast.success(`Added ${item.product.name} to cart`);
         }
       },
 
-      updateQuantity: (variantId, quantity) => {
+      updateQuantity: (productId, quantity) => {
         if (quantity <= 0) {
-          get().removeItem(variantId);
+          get().removeItem(productId);
           return;
         }
         
         set({
           items: get().items.map(item =>
-            item.variantId === variantId ? { ...item, quantity } : item
+            item.product.id === productId ? { ...item, quantity } : item
           )
         });
       },
 
-      removeItem: (variantId) => {
-        const item = get().items.find(i => i.variantId === variantId);
+      removeItem: (productId) => {
+        const item = get().items.find(i => i.product.id === productId);
         set({
-          items: get().items.filter(item => item.variantId !== variantId)
+          items: get().items.filter(item => item.product.id !== productId)
         });
         if (item) {
-          toast.success(`Removed ${item.product.title} from cart`);
+          toast.success(`Removed ${item.product.name} from cart`);
         }
       },
 
       clearCart: () => {
-        set({ items: [], cartId: null, checkoutUrl: null });
+        set({ items: [], checkoutUrl: null });
       },
 
-      setCartId: (cartId) => set({ cartId }),
       setCheckoutUrl: (checkoutUrl) => set({ checkoutUrl }),
       setLoading: (isLoading) => set({ isLoading }),
 
@@ -110,38 +95,30 @@ export const useCartStore = create<CartStore>()(
         set({ isLoading: true });
 
         try {
-          const lineItems = items.map(item => ({
-            variantId: item.variantId,
-            quantity: item.quantity
+          const cartItems = items.map(item => ({
+            productId: item.product.id,
+            name: item.product.name,
+            price: item.memberPrice ?? item.product.price,
+            quantity: item.quantity,
+            imageUrl: item.product.image_url || undefined,
           }));
 
-          console.log('Creating checkout with items:', lineItems);
-          const cart = await createStorefrontCheckout(lineItems);
-          console.log('Checkout created:', cart);
+          const { data, error } = await supabase.functions.invoke('create-shop-checkout', {
+            body: { items: cartItems },
+          });
+
+          if (error) throw error;
           
-          if (cart?.checkoutUrl) {
-            // Add channel parameter for proper checkout flow
-            const checkoutUrlWithChannel = new URL(cart.checkoutUrl);
-            checkoutUrlWithChannel.searchParams.set('channel', 'online_store');
-            const finalUrl = checkoutUrlWithChannel.toString();
+          if (data?.url) {
+            set({ checkoutUrl: data.url, isLoading: false });
             
-            console.log('Opening checkout URL:', finalUrl);
-            
-            set({ 
-              cartId: cart.id, 
-              checkoutUrl: finalUrl,
-              isLoading: false 
-            });
-            
-            // Open checkout in new tab
-            const newWindow = window.open(finalUrl, '_blank');
+            const newWindow = window.open(data.url, '_blank');
             
             if (!newWindow || newWindow.closed) {
-              // Popup was blocked, show message to user
-              toast.info('Popup blocked! Click the link to checkout:', {
+              toast.info('Popup blocked! Click to checkout:', {
                 action: {
                   label: 'Open Checkout',
-                  onClick: () => window.open(finalUrl, '_blank')
+                  onClick: () => window.open(data.url, '_blank')
                 },
                 duration: 10000
               });
@@ -164,7 +141,7 @@ export const useCartStore = create<CartStore>()(
         return get().items.reduce((total, item) => {
           const price = isMember && item.memberPrice 
             ? item.memberPrice 
-            : parseFloat(item.price.amount);
+            : item.product.price;
           return total + (price * item.quantity);
         }, 0);
       },
@@ -173,8 +150,7 @@ export const useCartStore = create<CartStore>()(
         if (!isMember) return 0;
         return get().items.reduce((total, item) => {
           if (item.memberPrice) {
-            const regularPrice = parseFloat(item.price.amount);
-            const savings = (regularPrice - item.memberPrice) * item.quantity;
+            const savings = (item.product.price - item.memberPrice) * item.quantity;
             return total + savings;
           }
           return total;
@@ -182,7 +158,7 @@ export const useCartStore = create<CartStore>()(
       },
     }),
     {
-      name: 'tyreplus-cart',
+      name: 'haus-technik-cart',
       storage: createJSONStorage(() => localStorage),
     }
   )
