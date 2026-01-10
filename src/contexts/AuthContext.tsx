@@ -7,6 +7,11 @@ interface SubscriptionStatus {
   subscribed: boolean;
   product_id?: string;
   subscription_end?: string;
+  subscription_start?: string;
+  is_locked?: boolean;
+  lockup_ends_at?: string;
+  days_until_unlock?: number;
+  billing_interval?: string;
 }
 
 interface AuthContextType {

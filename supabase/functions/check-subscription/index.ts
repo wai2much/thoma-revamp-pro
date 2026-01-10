@@ -12,6 +12,15 @@ const logStep = (step: string, details?: any) => {
   console.log(`[CHECK-SUBSCRIPTION] ${step}${detailsStr}`);
 };
 
+// Lock-up period in days for monthly subscriptions
+const LOCKUP_DAYS = 60;
+
+// Products that are paid upfront (no lock-up)
+const UPFRONT_PRODUCTS = [
+  "prod_TIKmxYafsqTXwO", // Business Starter Pack
+  "prod_TfK2T83kznkiQe", // Business Velocity Pack
+];
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -66,15 +75,49 @@ serve(async (req) => {
     const hasActiveSub = subscriptions.data.length > 0;
     let productId = null;
     let subscriptionEnd = null;
+    let subscriptionStart = null;
+    let isLocked = false;
+    let lockupEndsAt = null;
+    let daysUntilUnlock = 0;
+    let billingInterval = null;
 
     if (hasActiveSub) {
       const subscription = subscriptions.data[0];
       if (subscription.current_period_end) {
         subscriptionEnd = new Date(subscription.current_period_end * 1000).toISOString();
       }
-      logStep("Active subscription found", { subscriptionId: subscription.id, endDate: subscriptionEnd });
+      if (subscription.start_date) {
+        subscriptionStart = new Date(subscription.start_date * 1000).toISOString();
+      }
+      logStep("Active subscription found", { subscriptionId: subscription.id, endDate: subscriptionEnd, startDate: subscriptionStart });
+      
       productId = subscription.items.data[0]?.price?.product || null;
-      logStep("Determined subscription tier", { productId });
+      billingInterval = subscription.items.data[0]?.price?.recurring?.interval || null;
+      logStep("Determined subscription tier", { productId, billingInterval });
+
+      // Check if this is an upfront payment product (no lock-up)
+      const isUpfrontProduct = UPFRONT_PRODUCTS.includes(productId as string);
+      
+      // Check if billing is annual or longer (no lock-up for yearly payments)
+      const isAnnualOrLonger = billingInterval === "year";
+      
+      // Calculate lock-up status
+      if (!isUpfrontProduct && !isAnnualOrLonger && subscriptionStart) {
+        const startDate = new Date(subscriptionStart);
+        const lockupEndDate = new Date(startDate.getTime() + (LOCKUP_DAYS * 24 * 60 * 60 * 1000));
+        const now = new Date();
+        
+        if (now < lockupEndDate) {
+          isLocked = true;
+          lockupEndsAt = lockupEndDate.toISOString();
+          daysUntilUnlock = Math.ceil((lockupEndDate.getTime() - now.getTime()) / (24 * 60 * 60 * 1000));
+          logStep("Subscription is in lock-up period", { lockupEndsAt, daysUntilUnlock });
+        } else {
+          logStep("Lock-up period has ended");
+        }
+      } else {
+        logStep("No lock-up applies", { isUpfrontProduct, isAnnualOrLonger });
+      }
     } else {
       logStep("No active subscription found");
     }
@@ -82,7 +125,12 @@ serve(async (req) => {
     return new Response(JSON.stringify({
       subscribed: hasActiveSub,
       product_id: productId,
-      subscription_end: subscriptionEnd
+      subscription_end: subscriptionEnd,
+      subscription_start: subscriptionStart,
+      is_locked: isLocked,
+      lockup_ends_at: lockupEndsAt,
+      days_until_unlock: daysUntilUnlock,
+      billing_interval: billingInterval,
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
