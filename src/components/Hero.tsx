@@ -151,16 +151,16 @@ export const Hero = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto opacity-0 animate-fade-in" style={{ animationDelay: '0.7s' }}>
-            <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
-              <div className="text-5xl font-display font-bold mb-2 gradient-text">Growing</div>
+            <div className="glass-card rounded-xl p-6 text-center group cursor-pointer">
+              <div className="text-3xl md:text-4xl font-display font-bold mb-2 gradient-text leading-tight">Growing</div>
               <div className="text-sm text-muted-foreground uppercase tracking-wider">Customer Base</div>
             </div>
-            <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
-              <div className="text-5xl font-display font-bold mb-2 gradient-text">Premium</div>
+            <div className="glass-card rounded-xl p-6 text-center group cursor-pointer">
+              <div className="text-3xl md:text-4xl font-display font-bold mb-2 gradient-text leading-tight">Premium</div>
               <div className="text-sm text-muted-foreground uppercase tracking-wider">Service Quality</div>
             </div>
-            <div className="glass-card rounded-xl p-8 text-center group cursor-pointer">
-              <div className="text-5xl font-display font-bold mb-2 text-primary">4.9</div>
+            <div className="glass-card rounded-xl p-6 text-center group cursor-pointer">
+              <div className="text-3xl md:text-4xl font-display font-bold mb-2 text-primary leading-tight">4.9</div>
               <div className="flex justify-center gap-1 mb-2">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-primary text-primary" />
