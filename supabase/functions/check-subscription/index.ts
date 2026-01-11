@@ -13,13 +13,11 @@ const logStep = (step: string, details?: any) => {
 };
 
 // Lock-up period in days for monthly subscriptions
-const LOCKUP_DAYS = 60;
+const LOCKUP_DAYS = 60; // 2 months
 
-// Products that are paid upfront (no lock-up)
-const UPFRONT_PRODUCTS = [
-  "prod_TIKmxYafsqTXwO", // Business Starter Pack
-  "prod_TfK2T83kznkiQe", // Business Velocity Pack
-];
+// Lock-up policy:
+// - Annual payment (upfront for 1 year): NO lock-up period
+// - Monthly payment: 2-month lock-up period
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -95,14 +93,13 @@ serve(async (req) => {
       billingInterval = subscription.items.data[0]?.price?.recurring?.interval || null;
       logStep("Determined subscription tier", { productId, billingInterval });
 
-      // Check if this is an upfront payment product (no lock-up)
-      const isUpfrontProduct = UPFRONT_PRODUCTS.includes(productId as string);
+      // Lock-up policy:
+      // - Annual payment (year interval): NO lock-up - immediate full access
+      // - Monthly payment: 2-month lock-up period for premium services
+      const isAnnualBilling = billingInterval === "year";
       
-      // Check if billing is annual or longer (no lock-up for yearly payments)
-      const isAnnualOrLonger = billingInterval === "year";
-      
-      // Calculate lock-up status
-      if (!isUpfrontProduct && !isAnnualOrLonger && subscriptionStart) {
+      // Calculate lock-up status for monthly subscribers only
+      if (!isAnnualBilling && subscriptionStart) {
         const startDate = new Date(subscriptionStart);
         const lockupEndDate = new Date(startDate.getTime() + (LOCKUP_DAYS * 24 * 60 * 60 * 1000));
         const now = new Date();
@@ -111,12 +108,12 @@ serve(async (req) => {
           isLocked = true;
           lockupEndsAt = lockupEndDate.toISOString();
           daysUntilUnlock = Math.ceil((lockupEndDate.getTime() - now.getTime()) / (24 * 60 * 60 * 1000));
-          logStep("Subscription is in lock-up period", { lockupEndsAt, daysUntilUnlock });
+          logStep("Monthly subscription is in lock-up period", { lockupEndsAt, daysUntilUnlock });
         } else {
           logStep("Lock-up period has ended");
         }
-      } else {
-        logStep("No lock-up applies", { isUpfrontProduct, isAnnualOrLonger });
+      } else if (isAnnualBilling) {
+        logStep("Annual subscription - no lock-up period applies");
       }
     } else {
       logStep("No active subscription found");
