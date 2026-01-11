@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, AlertTriangle } from "lucide-react";
 import { z } from "zod";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const authSchema = z.object({
   email: z.string().trim().email("Please enter a valid email address").max(255, "Email is too long"),
@@ -19,13 +20,32 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checkingPassword, setCheckingPassword] = useState(false);
+  const [breachWarning, setBreachWarning] = useState<string | null>(null);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const checkPasswordBreach = async (pwd: string): Promise<{ breached: boolean; count: number }> => {
+    try {
+      const { data, error } = await supabase.functions.invoke("check-password-breach", {
+        body: { password: pwd },
+      });
+      if (error) {
+        console.error("Breach check error:", error);
+        return { breached: false, count: 0 };
+      }
+      return data || { breached: false, count: 0 };
+    } catch (err) {
+      console.error("Breach check failed:", err);
+      return { breached: false, count: 0 };
+    }
+  };
+
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
+    setBreachWarning(null);
     
     // Validate input
     const result = authSchema.safeParse({ email, password });
@@ -55,6 +75,19 @@ const Auth = () => {
         });
         navigate("/");
       } else {
+        // Check password against breached passwords before signup
+        setCheckingPassword(true);
+        const breachResult = await checkPasswordBreach(password);
+        setCheckingPassword(false);
+
+        if (breachResult.breached) {
+          setBreachWarning(
+            `This password has been found in ${breachResult.count.toLocaleString()} data breaches. Please choose a different, more secure password.`
+          );
+          setLoading(false);
+          return;
+        }
+
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -78,6 +111,7 @@ const Auth = () => {
       });
     } finally {
       setLoading(false);
+      setCheckingPassword(false);
     }
   };
 
@@ -129,6 +163,12 @@ const Auth = () => {
               className={errors.password ? "border-destructive" : ""}
             />
             {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
+            {breachWarning && !isLogin && (
+              <Alert variant="destructive" className="mt-2">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription>{breachWarning}</AlertDescription>
+              </Alert>
+            )}
           </div>
 
           <Button
