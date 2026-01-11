@@ -77,11 +77,15 @@ const Index = () => {
               
               <div>
                 <h3 className="font-display font-semibold mb-3 text-primary uppercase tracking-wider text-glow-cyan">Fair Play Commitment</h3>
-                <p className="text-sm text-muted-foreground font-sans leading-relaxed">
+                <p className="text-sm text-muted-foreground font-sans leading-relaxed mb-3">
                   Our membership service is designed with transparency and fairness in mind. 
                   We comply with all Australian Consumer Law requirements and industry standards, 
                   ensuring you receive honest pricing, quality service, and clear terms without hidden fees.
                 </p>
+                <ul className="text-xs text-muted-foreground font-mono space-y-1">
+                  <li>• <span className="text-primary">Annual payment:</span> No lock-up period — full access from day one</li>
+                  <li>• <span className="text-accent">Monthly payment:</span> 2-month lock-up period for premium services</li>
+                </ul>
               </div>
             </div>
             

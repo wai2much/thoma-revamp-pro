@@ -377,7 +377,11 @@ export const PricingPlans = () => {
         <div className="flex flex-wrap items-center justify-center gap-8 mt-16 text-sm text-muted-foreground font-mono uppercase tracking-wider">
           <div className="flex items-center gap-2">
             <Check className="h-4 w-4 text-primary" />
-            <span>30-day notice required</span>
+            <span>Annual = No lock-up</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Check className="h-4 w-4 text-accent" />
+            <span>Monthly = 2-month lock-up</span>
           </div>
           <div className="flex items-center gap-2">
             <Check className="h-4 w-4 text-primary" />

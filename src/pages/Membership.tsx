@@ -231,7 +231,7 @@ const Membership = () => {
                   Unlocks on: {subscription.lockup_ends_at && new Date(subscription.lockup_ends_at).toLocaleDateString()}
                 </div>
                 <p className="text-xs text-muted-foreground mt-3 italic">
-                  💡 Tip: Upgrade to an annual plan or Business Pack for immediate service access with no lock-up period.
+                  💡 Tip: Switch to annual billing for immediate service access with no lock-up period.
                 </p>
               </div>
             </div>
