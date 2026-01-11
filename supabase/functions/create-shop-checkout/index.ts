@@ -32,6 +32,9 @@ serve(async (req) => {
       throw new Error("No items in cart");
     }
 
+    // Get origin with fallback
+    const origin = req.headers.get("origin") || "https://lovable.dev";
+
     // Check for authenticated user
     const authHeader = req.headers.get("Authorization");
     let userEmail = customerEmail;
@@ -110,8 +113,8 @@ serve(async (req) => {
       customer_email: customerId ? undefined : userEmail,
       line_items: lineItems,
       mode: "payment",
-      success_url: `${req.headers.get("origin")}/shop?success=true`,
-      cancel_url: `${req.headers.get("origin")}/cart`,
+      success_url: `${origin}/shop?success=true`,
+      cancel_url: `${origin}/cart`,
       shipping_address_collection: {
         allowed_countries: ["AU"],
       },
