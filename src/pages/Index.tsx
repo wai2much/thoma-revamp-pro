@@ -9,6 +9,7 @@ import { RewardsProgram } from "@/components/RewardsProgram";
 import { WalletPassShowcase } from "@/components/WalletPassShowcase";
 import { CTA } from "@/components/CTA";
 import { Navigation } from "@/components/Navigation";
+import { Locations } from "@/components/Locations";
 import { AIAssistant } from "@/components/AIAssistant";
 
 const Index = () => {
@@ -38,6 +39,7 @@ const Index = () => {
         <PricingPlans />
         <ValueBreakdown />
         <RewardsProgram />
+        <Locations />
         <Benefits />
         <CTA />
       </main>
