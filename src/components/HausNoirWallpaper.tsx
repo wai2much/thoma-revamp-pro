@@ -17,6 +17,11 @@ import mercedesClaNight from "@/assets/wallpapers/desktop/mercedes-cla-night.png
 import mercedesAmgNature from "@/assets/wallpapers/desktop/mercedes-amg-nature.jpg";
 import mercedesDuoHighway from "@/assets/wallpapers/desktop/mercedes-duo-highway.jpg";
 import mercedesTrackDay from "@/assets/wallpapers/desktop/mercedes-track-day.jpg";
+import hyundaiI30nDark from "@/assets/wallpapers/desktop/hyundai-i30n-dark.jpg";
+import skylineR32White from "@/assets/wallpapers/desktop/skyline-r32-white.jpg";
+import porsche911ClassicTrack from "@/assets/wallpapers/desktop/porsche-911-classic-track.jpg";
+import skylineR33Front from "@/assets/wallpapers/desktop/skyline-r33-front.jpg";
+import porsche930TurboFront from "@/assets/wallpapers/desktop/porsche-930-turbo-front.jpg";
 
 interface WallpaperItem {
   id: string;
@@ -96,6 +101,41 @@ const desktopWallpapers: WallpaperItem[] = [
     category: "European",
     image: mercedesPixelAerial,
     style: "Pixel Art",
+  },
+  {
+    id: "hyundai-i30n-dark",
+    title: "i30 N Stealth",
+    category: "Korean",
+    image: hyundaiI30nDark,
+    style: "Noir",
+  },
+  {
+    id: "skyline-r32-white",
+    title: "R32 GT-R Pure",
+    category: "JDM",
+    image: skylineR32White,
+    style: "Pixel Art",
+  },
+  {
+    id: "porsche-911-classic-track",
+    title: "911 Track Legend",
+    category: "European",
+    image: porsche911ClassicTrack,
+    style: "Motorsport",
+  },
+  {
+    id: "skyline-r33-front",
+    title: "R33 GT-R Front",
+    category: "JDM",
+    image: skylineR33Front,
+    style: "Pixel Art",
+  },
+  {
+    id: "porsche-930-turbo-front",
+    title: "930 Turbo Retro",
+    category: "Classic",
+    image: porsche930TurboFront,
+    style: "Scenic",
   },
 ];
 
