@@ -57,7 +57,7 @@ export const Locations = () => {
                     <div>
                       <p className="text-sm text-muted-foreground uppercase tracking-wider mb-1">Address</p>
                       <p className="text-foreground font-medium">
-                        130 Settlement Road
+                        218 Mahoneys Road
                         <br />
                         Thomastown VIC 3074
                       </p>
@@ -108,7 +108,7 @@ export const Locations = () => {
                   asChild
                 >
                   <a 
-                    href="https://maps.google.com/?q=130+Settlement+Road+Thomastown+VIC+3074" 
+                    href="https://maps.google.com/?q=218+Mahoneys+Road+Thomastown+VIC+3074" 
                     target="_blank" 
                     rel="noopener noreferrer"
                   >
@@ -132,7 +132,7 @@ export const Locations = () => {
               {/* Google Maps Embed */}
               <div className="mt-8 rounded-xl overflow-hidden border border-primary/30 group/map">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3156.3897089687146!2d145.0166853!3d-37.6915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad64f4b2a7a6e8f%3A0x8a1b9f8d0f1a2b3c!2s130%20Settlement%20Rd%2C%20Thomastown%20VIC%203074!5e0!3m2!1sen!2sau!4v1700000000000!5m2!1sen!2sau"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3156.2!2d145.0127!3d-37.6958!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad64f5a1b2c3d4e%3A0x5f6a7b8c9d0e1f2a!2s218%20Mahoneys%20Rd%2C%20Thomastown%20VIC%203074!5e0!3m2!1sen!2sau!4v1700000000000!5m2!1sen!2sau"
                   width="100%"
                   height="300"
                   style={{ border: 0 }}
