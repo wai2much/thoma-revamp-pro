@@ -39,9 +39,9 @@ export const Navigation = () => {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full shadow-[0_0_10px_hsl(180_100%_50%)]" />
             </span>
           </Button>
-          <Button variant="ghost" size="sm" onClick={() => navigate("/gallery")} className="hidden sm:flex hover:bg-primary/10 hover:text-primary relative group uppercase tracking-wider font-mono text-sm">
+          <Button variant="ghost" size="sm" onClick={() => navigate("/wallpaper")} className="hidden sm:flex hover:bg-primary/10 hover:text-primary relative group uppercase tracking-wider font-mono text-sm">
             <span className="relative">
-              Gallery
+              Wallpaper
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full shadow-[0_0_10px_hsl(180_100%_50%)]" />
             </span>
           </Button>

@@ -82,7 +82,7 @@ const galleryItems: GalleryItem[] = [
   },
 ];
 
-export const HausNoirGallery = () => {
+export const HausNoirWallpaper = () => {
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
   const [filter, setFilter] = useState<"all" | "100ML" | "250ML">("all");
 
