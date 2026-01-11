@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { ShimmerBotStatus } from "@/components/ShimmerBotStatus";
 import { SlackChannelCard } from "@/components/SlackChannelCard";
 import { RoleIndicator } from "@/components/RoleIndicator";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { LogOut, Lock, Unlock, Calendar, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface UserRole {
@@ -15,20 +17,21 @@ interface UserRole {
 export default function Dashboard() {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user, subscription, loading: authLoading, signOut } = useAuth();
   const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [userName, setUserName] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [user]);
 
   const checkAuth = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
       if (!user) {
-        navigate("/auth");
+        if (!authLoading) {
+          navigate("/auth");
+        }
         return;
       }
 
@@ -59,9 +62,16 @@ export default function Dashboard() {
   };
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    await signOut();
     navigate("/");
   };
+
+  // Lock-up calculations for monthly subscribers
+  const LOCKUP_DAYS = 60;
+  const isMonthlySubscriber = subscription.subscribed && subscription.billing_interval === "month";
+  const isLocked = subscription.is_locked ?? false;
+  const daysUntilUnlock = subscription.days_until_unlock ?? 0;
+  const lockupProgress = isMonthlySubscriber ? Math.max(0, ((LOCKUP_DAYS - daysUntilUnlock) / LOCKUP_DAYS) * 100) : 100;
 
   if (loading) {
     return (
@@ -106,8 +116,85 @@ export default function Dashboard() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Shimmer Bot Status */}
+          {/* Left Column - Lock-up Status & Shimmer Bot */}
           <div className="lg:col-span-1 space-y-6">
+            {/* Lock-up Status Card - Prominent for monthly subscribers */}
+            {isMonthlySubscriber && (
+              <div className={`relative overflow-hidden rounded-xl border p-6 ${
+                isLocked 
+                  ? 'bg-gradient-to-br from-amber-500/10 via-background to-background border-amber-500/30' 
+                  : 'bg-gradient-to-br from-green-500/10 via-background to-background border-green-500/30'
+              }`}>
+                <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
+                  {isLocked ? (
+                    <Lock className="w-full h-full text-amber-500" />
+                  ) : (
+                    <Unlock className="w-full h-full text-green-500" />
+                  )}
+                </div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-3">
+                    {isLocked ? (
+                      <Lock className="w-5 h-5 text-amber-500" />
+                    ) : (
+                      <Zap className="w-5 h-5 text-green-500" />
+                    )}
+                    <h3 className="text-lg font-semibold">
+                      {isLocked ? 'Fair Play Lock-up' : 'Full Access Unlocked!'}
+                    </h3>
+                  </div>
+                  
+                  {isLocked ? (
+                    <>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Premium services unlock in <span className="text-amber-500 font-bold">{daysUntilUnlock} days</span>
+                      </p>
+                      
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-xs">
+                          <span className="text-muted-foreground">Progress</span>
+                          <span className="font-mono text-amber-500">{Math.round(lockupProgress)}%</span>
+                        </div>
+                        <Progress 
+                          value={lockupProgress} 
+                          className="h-3 bg-amber-500/20"
+                        />
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-2">
+                          <Calendar className="w-3 h-3" />
+                          <span>Unlocks: {subscription.lockup_ends_at ? new Date(subscription.lockup_ends_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Calculating...'}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4 p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
+                        <p className="text-xs text-muted-foreground">
+                          💡 <strong>Tip:</strong> Upgrade to annual billing for immediate full access with no lock-up period.
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex items-center gap-2 text-green-500">
+                      <Zap className="w-4 h-4" />
+                      <span className="text-sm font-medium">All premium services are now available!</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            
+            {/* Annual subscriber badge */}
+            {subscription.subscribed && subscription.billing_interval === "year" && (
+              <div className="relative overflow-hidden rounded-xl border p-4 bg-gradient-to-br from-primary/10 via-background to-background border-primary/30">
+                <div className="flex items-center gap-3">
+                  <Zap className="w-6 h-6 text-primary" />
+                  <div>
+                    <h3 className="font-semibold text-primary">Annual Member</h3>
+                    <p className="text-xs text-muted-foreground">Full access — no lock-up period</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             <ShimmerBotStatus />
             
             <div className="glass-card p-6">
