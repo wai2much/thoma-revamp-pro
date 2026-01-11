@@ -70,6 +70,41 @@ serve(async (req) => {
       quantity: item.quantity,
     }));
 
+    // Calculate order subtotal for shipping logic
+    const orderSubtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    // Shipping: $10 flat rate for Australia, FREE on orders over $100
+    const FREE_SHIPPING_THRESHOLD = 100;
+    const SHIPPING_RATE_AUD = 10;
+    
+    const shippingOptions: Stripe.Checkout.SessionCreateParams.ShippingOption[] = orderSubtotal >= FREE_SHIPPING_THRESHOLD
+      ? [
+          {
+            shipping_rate_data: {
+              type: "fixed_amount",
+              fixed_amount: { amount: 0, currency: "aud" },
+              display_name: "Free Shipping",
+              delivery_estimate: {
+                minimum: { unit: "business_day", value: 3 },
+                maximum: { unit: "business_day", value: 7 },
+              },
+            },
+          },
+        ]
+      : [
+          {
+            shipping_rate_data: {
+              type: "fixed_amount",
+              fixed_amount: { amount: SHIPPING_RATE_AUD * 100, currency: "aud" },
+              display_name: "Standard Shipping",
+              delivery_estimate: {
+                minimum: { unit: "business_day", value: 3 },
+                maximum: { unit: "business_day", value: 7 },
+              },
+            },
+          },
+        ];
+
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : userEmail,
@@ -80,8 +115,10 @@ serve(async (req) => {
       shipping_address_collection: {
         allowed_countries: ["AU"],
       },
+      shipping_options: shippingOptions,
       metadata: {
         product_ids: items.map((i) => i.productId).join(","),
+        order_subtotal: orderSubtotal.toString(),
       },
     });
 
