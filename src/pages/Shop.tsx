@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { fetchProducts, Product, isVapeHeadProduct } from '@/lib/products';
+import { getProductImage } from '@/lib/productImages';
 import { useCartStore } from '@/stores/cartStore';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -234,9 +235,9 @@ const Shop = () => {
                 className="relative aspect-[3/4] overflow-hidden cursor-pointer bg-background"
                 onClick={() => handleProductClick(product.id)}
               >
-                {product.image_url ? (
+                {getProductImage(product.image_url) ? (
                   <img 
-                    src={product.image_url} 
+                    src={getProductImage(product.image_url)!} 
                     alt={product.name}
                     className="w-full h-full object-contain p-10 transition-all duration-700 group-hover:animate-hover-float"
                   />
@@ -357,9 +358,9 @@ const Shop = () => {
                     className="relative aspect-[3/4] overflow-hidden cursor-pointer bg-background"
                     onClick={() => handleProductClick(product.id)}
                   >
-                    {product.image_url ? (
+                    {getProductImage(product.image_url) ? (
                       <img 
-                        src={product.image_url} 
+                        src={getProductImage(product.image_url)!} 
                         alt={product.name}
                         className="w-full h-full object-contain p-6 transition-all duration-700 group-hover:animate-hover-float"
                       />
