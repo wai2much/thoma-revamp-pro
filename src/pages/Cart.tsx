@@ -8,6 +8,9 @@ import { Minus, Plus, Trash2, ShoppingBag, ExternalLink, Zap, ChevronLeft, Truck
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { ContactInquiryForm } from '@/components/ContactInquiryForm';
+import { Progress } from '@/components/ui/progress';
+
+const FREE_SHIPPING_THRESHOLD = 100;
 
 const Cart = () => {
   const { items, updateQuantity, removeItem, createCheckout, isLoading, getTotal, getItemCount, getTotalSavings, getShippingCost, getGrandTotal, checkoutUrl } = useCartStore();
@@ -191,12 +194,45 @@ const Cart = () => {
                     <span className="text-muted-foreground">${getShippingCost(isMember).toFixed(2)}</span>
                   )}
                 </div>
-                {getTotal(isMember) < 100 && (
-                  <div className="text-xs text-primary/80 font-mono text-center p-2 bg-primary/10 rounded border border-primary/20">
-                    <Zap className="w-3 h-3 inline mr-1" />
-                    Add ${(100 - getTotal(isMember)).toFixed(2)} more for FREE shipping!
+                
+                {/* Free Shipping Progress Bar */}
+                <div className="space-y-2 p-3 bg-primary/5 rounded-lg border border-primary/20">
+                  <div className="flex items-center justify-between text-xs font-mono">
+                    <span className="text-muted-foreground flex items-center gap-1">
+                      <Truck className="w-3 h-3" />
+                      Free Shipping Progress
+                    </span>
+                    <span className="text-primary">
+                      {getTotal(isMember) >= FREE_SHIPPING_THRESHOLD ? (
+                        <span className="flex items-center gap-1">
+                          <Zap className="w-3 h-3" />
+                          Unlocked!
+                        </span>
+                      ) : (
+                        `$${getTotal(isMember).toFixed(0)} / $${FREE_SHIPPING_THRESHOLD}`
+                      )}
+                    </span>
                   </div>
-                )}
+                  <div className="relative">
+                    <Progress 
+                      value={Math.min((getTotal(isMember) / FREE_SHIPPING_THRESHOLD) * 100, 100)} 
+                      className="h-2 bg-muted/30"
+                    />
+                    {getTotal(isMember) >= FREE_SHIPPING_THRESHOLD && (
+                      <div className="absolute inset-0 bg-primary/20 rounded-full animate-pulse" />
+                    )}
+                  </div>
+                  {getTotal(isMember) < FREE_SHIPPING_THRESHOLD && (
+                    <p className="text-xs text-primary/80 font-mono text-center">
+                      Add <span className="font-bold text-primary">${(FREE_SHIPPING_THRESHOLD - getTotal(isMember)).toFixed(2)}</span> more for FREE shipping!
+                    </p>
+                  )}
+                  {getTotal(isMember) >= FREE_SHIPPING_THRESHOLD && (
+                    <p className="text-xs text-primary font-mono text-center font-medium">
+                      🎉 You've unlocked FREE shipping!
+                    </p>
+                  )}
+                </div>
                 <div className="border-t border-primary/20 pt-4">
                   <div className="flex justify-between text-sm font-mono mb-2">
                     <span className="text-muted-foreground">Subtotal</span>
