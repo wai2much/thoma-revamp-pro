@@ -26,6 +26,8 @@ interface CartStore {
   getItemCount: () => number;
   getTotal: (isMember?: boolean) => number;
   getTotalSavings: (isMember?: boolean) => number;
+  getShippingCost: (isMember?: boolean) => number;
+  getGrandTotal: (isMember?: boolean) => number;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -155,6 +157,17 @@ export const useCartStore = create<CartStore>()(
           }
           return total;
         }, 0);
+      },
+
+      getShippingCost: (isMember = false) => {
+        const subtotal = get().getTotal(isMember);
+        const FREE_SHIPPING_THRESHOLD = 100;
+        const SHIPPING_RATE_AUD = 10;
+        return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_RATE_AUD;
+      },
+
+      getGrandTotal: (isMember = false) => {
+        return get().getTotal(isMember) + get().getShippingCost(isMember);
       },
     }),
     {
