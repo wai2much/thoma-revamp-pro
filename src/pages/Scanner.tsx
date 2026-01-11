@@ -116,17 +116,34 @@ const Scanner = () => {
     if (!memberData) return;
 
     try {
-      // Award points if specified
+      // Award points if specified - uses secure operator-only endpoint
       if (pointsToAward && parseInt(pointsToAward) > 0) {
-        const { error } = await supabase.functions.invoke('grant-signup-bonus', {
+        const pointsNum = parseInt(pointsToAward);
+        
+        // Validate points range client-side too
+        if (pointsNum < 1 || pointsNum > 1000) {
+          toast({
+            title: "Invalid Points",
+            description: "Points must be between 1 and 1000",
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        const { data, error } = await supabase.functions.invoke('award-checkin-points', {
           body: {
             userId: memberData.userId,
-            points: parseInt(pointsToAward),
+            points: pointsNum,
             description: 'Check-in bonus'
           }
         });
 
         if (error) throw error;
+        
+        // Check for authorization error in response
+        if (data?.error) {
+          throw new Error(data.error);
+        }
 
         toast({
           title: "Check-in Successful",
