@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, ZoomIn } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { X, ZoomIn, Monitor, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import product images
@@ -95,66 +96,94 @@ export const HausNoirWallpaper = () => {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center space-y-4">
-        <h2 className="text-4xl font-bold">HAUS NOIR Collection</h2>
+        <h2 className="text-4xl font-bold">HAUS NOIR Wallpapers</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Luxury auto fragrances curated by automotive enthusiasts. Premium
-          scents inspired by iconic vehicles.
+          Premium digital wallpapers featuring the HAUS NOIR collection.
+          Download for your devices.
         </p>
       </div>
 
-      {/* Filter Badges */}
-      <div className="flex justify-center gap-3">
-        <Badge
-          variant={filter === "all" ? "default" : "outline"}
-          className="cursor-pointer px-6 py-2"
-          onClick={() => setFilter("all")}
-        >
-          All Products
-        </Badge>
-        <Badge
-          variant={filter === "100ML" ? "default" : "outline"}
-          className="cursor-pointer px-6 py-2"
-          onClick={() => setFilter("100ML")}
-        >
-          Disc Collection (100ML)
-        </Badge>
-        <Badge
-          variant={filter === "250ML" ? "default" : "outline"}
-          className="cursor-pointer px-6 py-2"
-          onClick={() => setFilter("250ML")}
-        >
-          Collector Edition (250ML)
-        </Badge>
-      </div>
+      {/* Device Type Tabs */}
+      <Tabs defaultValue="desktop" className="w-full">
+        <TabsList className="grid w-full max-w-md mx-auto grid-cols-2">
+          <TabsTrigger value="desktop" className="flex items-center gap-2">
+            <Monitor className="w-4 h-4" />
+            Desktop
+          </TabsTrigger>
+          <TabsTrigger value="smartphone" className="flex items-center gap-2">
+            <Smartphone className="w-4 h-4" />
+            Smartphone
+          </TabsTrigger>
+        </TabsList>
 
-      {/* Gallery Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {filteredItems.map((item) => (
-          <Card
-            key={item.id}
-            className="glass-card group relative overflow-hidden cursor-pointer hover:glow-border transition-all"
-            onClick={() => setSelectedImage(item)}
-          >
-            <div className="aspect-[3/4] relative bg-gradient-to-br from-background to-muted">
-              <img
-                src={item.image}
-                alt={`${item.title} ${item.variant}`}
-                className="w-full h-full object-contain p-4"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <ZoomIn className="w-12 h-12 text-white" />
-              </div>
-            </div>
-            <div className="p-4 space-y-2">
-              <Badge variant="secondary" className="text-xs">
-                {item.collection}
-              </Badge>
-              <h3 className="font-bold text-lg">{item.title}</h3>
-              <p className="text-sm text-muted-foreground">{item.variant}</p>
-            </div>
-          </Card>
-        ))}
-      </div>
+        {/* Desktop Wallpapers */}
+        <TabsContent value="desktop" className="space-y-6 mt-6">
+          {/* Filter Badges */}
+          <div className="flex justify-center gap-3">
+            <Badge
+              variant={filter === "all" ? "default" : "outline"}
+              className="cursor-pointer px-6 py-2"
+              onClick={() => setFilter("all")}
+            >
+              All Products
+            </Badge>
+            <Badge
+              variant={filter === "100ML" ? "default" : "outline"}
+              className="cursor-pointer px-6 py-2"
+              onClick={() => setFilter("100ML")}
+            >
+              Disc Collection (100ML)
+            </Badge>
+            <Badge
+              variant={filter === "250ML" ? "default" : "outline"}
+              className="cursor-pointer px-6 py-2"
+              onClick={() => setFilter("250ML")}
+            >
+              Collector Edition (250ML)
+            </Badge>
+          </div>
+
+          {/* Gallery Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredItems.map((item) => (
+              <Card
+                key={item.id}
+                className="glass-card group relative overflow-hidden cursor-pointer hover:glow-border transition-all"
+                onClick={() => setSelectedImage(item)}
+              >
+                <div className="aspect-[16/9] relative bg-gradient-to-br from-background to-muted">
+                  <img
+                    src={item.image}
+                    alt={`${item.title} ${item.variant}`}
+                    className="w-full h-full object-contain p-4"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <ZoomIn className="w-12 h-12 text-white" />
+                  </div>
+                </div>
+                <div className="p-4 space-y-2">
+                  <Badge variant="secondary" className="text-xs">
+                    {item.collection}
+                  </Badge>
+                  <h3 className="font-bold text-lg">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.variant}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        {/* Smartphone Wallpapers */}
+        <TabsContent value="smartphone" className="mt-6">
+          <div className="text-center py-16">
+            <Smartphone className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
+            <h3 className="text-xl font-semibold mb-2">Coming Soon</h3>
+            <p className="text-muted-foreground">
+              Smartphone wallpapers optimized for mobile devices will be available soon.
+            </p>
+          </div>
+        </TabsContent>
+      </Tabs>
 
       {/* Lightbox Dialog */}
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
