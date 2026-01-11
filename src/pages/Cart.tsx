@@ -4,13 +4,13 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Minus, Plus, Trash2, ShoppingBag, ExternalLink, Zap, ChevronLeft } from 'lucide-react';
+import { Minus, Plus, Trash2, ShoppingBag, ExternalLink, Zap, ChevronLeft, Truck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { ContactInquiryForm } from '@/components/ContactInquiryForm';
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, createCheckout, isLoading, getTotal, getItemCount, getTotalSavings, checkoutUrl } = useCartStore();
+  const { items, updateQuantity, removeItem, createCheckout, isLoading, getTotal, getItemCount, getTotalSavings, getShippingCost, getGrandTotal, checkoutUrl } = useCartStore();
   const { subscription } = useAuth();
   const isMember = subscription.subscribed;
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
@@ -181,13 +181,30 @@ const Cart = () => {
                   </div>
                 )}
                 <div className="flex justify-between text-sm font-mono">
-                  <span className="text-muted-foreground">Shipping</span>
-                  <span className="text-muted-foreground">Calculated at checkout</span>
+                  <span className="text-muted-foreground flex items-center gap-2">
+                    <Truck className="w-4 h-4" />
+                    Shipping
+                  </span>
+                  {getShippingCost(isMember) === 0 ? (
+                    <span className="text-primary font-medium">FREE</span>
+                  ) : (
+                    <span className="text-muted-foreground">${getShippingCost(isMember).toFixed(2)}</span>
+                  )}
                 </div>
+                {getTotal(isMember) < 100 && (
+                  <div className="text-xs text-primary/80 font-mono text-center p-2 bg-primary/10 rounded border border-primary/20">
+                    <Zap className="w-3 h-3 inline mr-1" />
+                    Add ${(100 - getTotal(isMember)).toFixed(2)} more for FREE shipping!
+                  </div>
+                )}
                 <div className="border-t border-primary/20 pt-4">
+                  <div className="flex justify-between text-sm font-mono mb-2">
+                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="text-foreground">${getTotal(isMember).toFixed(2)}</span>
+                  </div>
                   <div className="flex justify-between font-display text-xl uppercase">
                     <span>Total</span>
-                    <span className="text-primary text-glow-cyan">${getTotal(isMember).toFixed(2)} AUD</span>
+                    <span className="text-primary text-glow-cyan">${getGrandTotal(isMember).toFixed(2)} AUD</span>
                   </div>
                   {isMember && getTotalSavings(isMember) > 0 && (
                     <p className="text-xs text-primary mt-1 text-right font-mono">
