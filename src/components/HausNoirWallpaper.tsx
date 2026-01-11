@@ -217,7 +217,7 @@ export const HausNoirWallpaper = () => {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center space-y-4">
-        <h2 className="text-4xl font-bold font-orbitron">HAUS NOIR Wallpapers</h2>
+        <h2 className="text-4xl font-bold font-orbitron">Wallpaper Place</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           Premium pixel art automotive wallpapers. Download for your desktop or mobile devices.
         </p>
