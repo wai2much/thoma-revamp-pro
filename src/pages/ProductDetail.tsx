@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProductById, isVapeHeadProduct } from '@/lib/products';
+import { getProductImage } from '@/lib/productImages';
 import { useCartStore } from '@/stores/cartStore';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -92,9 +93,9 @@ const ProductDetail = () => {
           {/* Product Images */}
           <div className="space-y-4">
             <div className="aspect-square rounded-lg overflow-hidden glass-card border border-primary/30 shadow-[0_0_30px_hsl(var(--primary)/0.2)]">
-              {product.image_url ? (
+              {getProductImage(product.image_url) ? (
                 <img
-                  src={product.image_url}
+                  src={getProductImage(product.image_url)!}
                   alt={product.name}
                   className="w-full h-full object-contain p-8 bg-background"
                 />
