@@ -24,6 +24,13 @@ import skylineR33Front from "@/assets/wallpapers/desktop/skyline-r33-front.jpg";
 import porsche930TurboFront from "@/assets/wallpapers/desktop/porsche-930-turbo-front.jpg";
 import gtaSilhouettePink from "@/assets/wallpapers/desktop/gta-silhouette-pink.png";
 
+// Import smartphone wallpapers
+import mercedesClaPixel from "@/assets/wallpapers/smartphone/mercedes-cla-pixel.jpg";
+import hausVelocityGr86 from "@/assets/wallpapers/smartphone/haus-velocity-gr86.png";
+import akiraVelocity from "@/assets/wallpapers/smartphone/akira-velocity.png";
+import hausVelocityAe86 from "@/assets/wallpapers/smartphone/haus-velocity-ae86.png";
+import hausVelocityE30 from "@/assets/wallpapers/smartphone/haus-velocity-e30.png";
+
 interface WallpaperItem {
   id: string;
   title: string;
@@ -147,6 +154,44 @@ const desktopWallpapers: WallpaperItem[] = [
   },
 ];
 
+const smartphoneWallpapers: WallpaperItem[] = [
+  {
+    id: "haus-velocity-gr86",
+    title: "GR86 Sunset",
+    category: "JDM",
+    image: hausVelocityGr86,
+    style: "Synthwave",
+  },
+  {
+    id: "akira-velocity",
+    title: "Akira Velocity",
+    category: "Anime",
+    image: akiraVelocity,
+    style: "Synthwave",
+  },
+  {
+    id: "haus-velocity-ae86",
+    title: "AE86 Trueno",
+    category: "JDM",
+    image: hausVelocityAe86,
+    style: "Pixel Art",
+  },
+  {
+    id: "haus-velocity-e30",
+    title: "E30 M3 Paradise",
+    category: "European",
+    image: hausVelocityE30,
+    style: "Pixel Art",
+  },
+  {
+    id: "mercedes-cla-pixel",
+    title: "CLA Pixel",
+    category: "European",
+    image: mercedesClaPixel,
+    style: "Pixel Art",
+  },
+];
+
 type StyleFilter = "all" | "Synthwave" | "Noir" | "Scenic" | "Motorsport" | "Pixel Art";
 
 export const HausNoirWallpaper = () => {
@@ -251,12 +296,44 @@ export const HausNoirWallpaper = () => {
 
         {/* Smartphone Wallpapers */}
         <TabsContent value="smartphone" className="mt-6">
-          <div className="text-center py-16">
-            <Smartphone className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Coming Soon</h3>
-            <p className="text-muted-foreground">
-              Smartphone wallpapers optimized for mobile devices will be available soon.
-            </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {smartphoneWallpapers.map((item) => (
+              <Card
+                key={item.id}
+                className="glass-card group relative overflow-hidden cursor-pointer hover:glow-border transition-all"
+                onClick={() => setSelectedImage(item)}
+              >
+                <div className="aspect-[9/16] relative bg-gradient-to-br from-background to-muted">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                    <ZoomIn className="w-8 h-8 text-white" />
+                  </div>
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8"
+                    onClick={(e) => handleDownload(item, e)}
+                  >
+                    <Download className="w-3 h-3" />
+                  </Button>
+                </div>
+                <div className="p-3 space-y-1">
+                  <div className="flex gap-1 flex-wrap">
+                    <Badge variant="secondary" className="text-[10px]">
+                      {item.category}
+                    </Badge>
+                    <Badge variant="outline" className="text-[10px]">
+                      {item.style}
+                    </Badge>
+                  </div>
+                  <h3 className="font-bold text-sm truncate">{item.title}</h3>
+                </div>
+              </Card>
+            ))}
           </div>
         </TabsContent>
       </Tabs>
