@@ -18,7 +18,7 @@ import Loyalty from "./pages/Loyalty";
 import LoyaltyCard from "./pages/LoyaltyCard";
 import PassEntrySetup from "./pages/PassEntrySetup";
 import ImageUpload from "./pages/ImageUpload";
-import Gallery from "./pages/Gallery";
+import Wallpaper from "./pages/Wallpaper";
 import FleetPlan from "./pages/FleetPlan";
 
 const queryClient = new QueryClient();
@@ -51,7 +51,7 @@ const AppContent = () => {
         <Route path="/loyalty-card/:memberId" element={<LoyaltyCard />} />
         <Route path="/passentry-setup" element={<PassEntrySetup />} />
         <Route path="/upload" element={<ImageUpload />} />
-        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/wallpaper" element={<Wallpaper />} />
         <Route path="/fleet" element={<FleetPlan />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />

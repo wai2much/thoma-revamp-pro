@@ -1,10 +1,10 @@
 import { Navigation } from "@/components/Navigation";
-import { HausNoirGallery } from "@/components/HausNoirGallery";
+import { HausNoirWallpaper } from "@/components/HausNoirWallpaper";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
-const Gallery = () => {
+const Wallpaper = () => {
   const navigate = useNavigate();
 
   return (
@@ -20,10 +20,10 @@ const Gallery = () => {
           Back
         </Button>
 
-        <HausNoirGallery />
+        <HausNoirWallpaper />
       </div>
     </div>
   );
 };
 
-export default Gallery;
+export default Wallpaper;
