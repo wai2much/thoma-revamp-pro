@@ -22,6 +22,7 @@ import skylineR32White from "@/assets/wallpapers/desktop/skyline-r32-white.jpg";
 import porsche911ClassicTrack from "@/assets/wallpapers/desktop/porsche-911-classic-track.jpg";
 import skylineR33Front from "@/assets/wallpapers/desktop/skyline-r33-front.jpg";
 import porsche930TurboFront from "@/assets/wallpapers/desktop/porsche-930-turbo-front.jpg";
+import gtaSilhouettePink from "@/assets/wallpapers/desktop/gta-silhouette-pink.png";
 
 interface WallpaperItem {
   id: string;
@@ -136,6 +137,13 @@ const desktopWallpapers: WallpaperItem[] = [
     category: "Classic",
     image: porsche930TurboFront,
     style: "Scenic",
+  },
+  {
+    id: "gta-silhouette",
+    title: "Vice City Vibes",
+    category: "Lifestyle",
+    image: gtaSilhouettePink,
+    style: "Synthwave",
   },
 ];
 
