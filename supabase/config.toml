@@ -41,3 +41,6 @@ verify_jwt = false
 
 [functions.get-loyalty-pass]
 verify_jwt = false
+
+[functions.check-password-breach]
+verify_jwt = false
