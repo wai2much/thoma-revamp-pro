@@ -29,37 +29,56 @@ const Scanner = () => {
 
   const validateMember = async (memberId: string) => {
     try {
-      // Extract customer ID from QR code format: HAUS-{memberId}
-      const customerId = memberId.replace("HAUS-", "").toLowerCase();
+      // Extract member ID from QR code format: HAUS-{memberId} or use as-is
+      const cleanMemberId = memberId.startsWith("HAUS-") 
+        ? memberId 
+        : `HAUS-${memberId.toUpperCase()}`;
       
-      // Check subscription via our edge function
+      // Check if operator is authenticated
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      // Fetch member's loyalty points
-      const { data: pointsData, error: pointsError } = await supabase.rpc('get_user_points_balance', {
-        p_user_id: user.id
+      // Fetch member data using secure operator-only function
+      // This function validates that the caller has operator/admin role
+      const { data: memberResult, error: memberError } = await supabase.rpc('get_member_by_member_id', {
+        p_member_id: cleanMemberId
       });
 
-      if (pointsError) throw pointsError;
+      if (memberError) {
+        // Handle authorization errors gracefully
+        if (memberError.message.includes('Unauthorized')) {
+          throw new Error("You must be an operator or admin to scan members");
+        }
+        throw memberError;
+      }
 
-      // In a real implementation, you'd query by customer ID
-      // For now, we'll show the scanned data with loyalty points
+      if (!memberResult || memberResult.length === 0) {
+        throw new Error("Member not found");
+      }
+
+      const member = memberResult[0];
+      
       toast({
         title: "Member Found",
-        description: `Member ID: ${memberId}`,
+        description: `Member ID: ${cleanMemberId}`,
       });
 
-      // Mock member data - replace with actual API call
+      // Map plan from product_id or use default
+      const planName = member.pass_id 
+        ? getPlanName(member.pass_id) 
+        : "Loyalty Member";
+
       setMemberData({
-        memberId: memberId,
-        memberName: "John Doe",
-        planName: "Family Pack",
-        email: "member@example.com",
-        validUntil: "Dec 31, 2025",
-        memberSince: "2024",
-        userId: user.id,
-        loyaltyPoints: pointsData || 0
+        memberId: cleanMemberId,
+        memberName: member.member_name || "Unknown",
+        planName: planName,
+        email: member.member_email || "",
+        validUntil: "Active",
+        memberSince: member.member_since 
+          ? new Date(member.member_since).getFullYear().toString() 
+          : "N/A",
+        userId: member.user_id || "",
+        loyaltyPoints: member.points_balance || 0
       });
 
       return true;
@@ -71,6 +90,17 @@ const Scanner = () => {
       });
       return false;
     }
+  };
+
+  // Helper to map product_id to readable plan name
+  const getPlanName = (productId: string): string => {
+    const plans: Record<string, string> = {
+      'price_1RKgWxFcBfLLqJmGIAhkpE2c': 'Single Pack',
+      'price_1RKgX3FcBfLLqJmGD96U0q9E': 'Family Pack',
+      'price_1RKgXIFcBfLLqJmGCXNpZjNM': 'Business Starter',
+      'price_1RKgXPFcBfLLqJmGTM0SVqwL': 'Business Velocity',
+    };
+    return plans[productId] || "Member";
   };
 
   const startQRScan = async () => {
