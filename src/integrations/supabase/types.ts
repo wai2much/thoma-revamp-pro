@@ -324,6 +324,18 @@ export type Database = {
       }
     }
     Functions: {
+      get_member_by_member_id: {
+        Args: { p_member_id: string }
+        Returns: {
+          member_email: string
+          member_name: string
+          member_phone: string
+          member_since: string
+          pass_id: string
+          points_balance: number
+          user_id: string
+        }[]
+      }
       get_user_points_balance: { Args: { p_user_id: string }; Returns: number }
       has_role: {
         Args: {
