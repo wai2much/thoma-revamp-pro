@@ -42,62 +42,56 @@ serve(async (req) => {
     const apiSecret = Deno.env.get("PASSKIT_API_SECRET");
     if (!apiKey || !apiSecret) throw new Error("PassKit credentials not configured");
 
+    console.log("[LIST-PASSKIT] API Key prefix:", apiKey.substring(0, 8) + "...");
     const jwt = await generatePassKitJWT(apiKey, apiSecret);
-    console.log("[LIST-PASSKIT] JWT generated, fetching programs...");
+    console.log("[LIST-PASSKIT] JWT generated, listing programs via POST...");
 
-    // List programs
-    const programsRes = await fetch(`${PASSKIT_API_BASE}/members/programs`, {
-      method: "GET",
-      headers: { "Authorization": `Bearer ${jwt}` },
+    // List programs - POST method per docs
+    const programsRes = await fetch(`${PASSKIT_API_BASE}/members/programs/`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${jwt}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ limit: 100, offset: 0 }),
     });
-    
+
     let programs: any = null;
     let programsError: string | null = null;
+    const programsBody = await programsRes.text();
+    console.log("[LIST-PASSKIT] Programs response:", programsRes.status, programsBody);
+
     if (programsRes.ok) {
-      programs = await programsRes.json();
+      try { programs = JSON.parse(programsBody); } catch { programs = programsBody; }
     } else {
-      programsError = await programsRes.text();
-      console.log("[LIST-PASSKIT] Programs GET failed, trying POST /list...");
-      
-      // Try POST method
-      const programsRes2 = await fetch(`${PASSKIT_API_BASE}/members/programs/list`, {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${jwt}`, "Content-Type": "application/json" },
-        body: JSON.stringify({}),
-      });
-      if (programsRes2.ok) {
-        programs = await programsRes2.json();
-        programsError = null;
-      } else {
-        programsError = await programsRes2.text();
-      }
+      programsError = `${programsRes.status}: ${programsBody}`;
     }
 
-    console.log("[LIST-PASSKIT] Programs result:", JSON.stringify(programs || programsError));
-
-    // Try listing tiers for known program ID
+    // List tiers via POST
     let tiers: any = null;
     let tiersError: string | null = null;
-    
-    const programId = "090GL9tNop4009zPvkhvyV";
-    
+
     const tiersRes = await fetch(`${PASSKIT_API_BASE}/members/tiers/list`, {
       method: "POST",
-      headers: { "Authorization": `Bearer ${jwt}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ programId }),
+      headers: {
+        "Authorization": `Bearer ${jwt}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ limit: 100, offset: 0 }),
     });
-    
+
+    const tiersBody = await tiersRes.text();
+    console.log("[LIST-PASSKIT] Tiers response:", tiersRes.status, tiersBody);
+
     if (tiersRes.ok) {
-      tiers = await tiersRes.json();
+      try { tiers = JSON.parse(tiersBody); } catch { tiers = tiersBody; }
     } else {
-      tiersError = await tiersRes.text();
-      console.log("[LIST-PASSKIT] Tiers error:", tiersError);
+      tiersError = `${tiersRes.status}: ${tiersBody}`;
     }
 
     return new Response(JSON.stringify({
-      programs: programs || programsError,
-      tiers: tiers || tiersError,
-      programIdUsed: programId,
+      programs: programs ?? programsError,
+      tiers: tiers ?? tiersError,
     }, null, 2), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
