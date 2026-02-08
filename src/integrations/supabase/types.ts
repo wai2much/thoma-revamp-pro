@@ -189,6 +189,8 @@ export type Database = {
         Row: {
           created_at: string | null
           id: string
+          passkit_program_id: string | null
+          passkit_tier_id: string | null
           product_id: string
           template_id: string
           tier_name: string
@@ -197,6 +199,8 @@ export type Database = {
         Insert: {
           created_at?: string | null
           id?: string
+          passkit_program_id?: string | null
+          passkit_tier_id?: string | null
           product_id: string
           template_id: string
           tier_name: string
@@ -205,6 +209,8 @@ export type Database = {
         Update: {
           created_at?: string | null
           id?: string
+          passkit_program_id?: string | null
+          passkit_tier_id?: string | null
           product_id?: string
           template_id?: string
           tier_name?: string

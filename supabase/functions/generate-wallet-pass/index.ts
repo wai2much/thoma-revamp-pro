@@ -8,6 +8,8 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+const PASSKIT_API_BASE = "https://api.pub1.passkit.io";
+
 const PRODUCT_NAMES: Record<string, string> = {
   "prod_TIKlo107LUfRkP": "Single Pack",
   "prod_TIKmAWTileFjnm": "Family Pack",
@@ -15,49 +17,133 @@ const PRODUCT_NAMES: Record<string, string> = {
   "prod_TIKmurHwJ5bDWJ": "Business Velocity Pack",
 };
 
-// Map Stripe product IDs to 5-character hex prefixes (from tier colors)
 const PRODUCT_PREFIXES: Record<string, string> = {
-  "prod_TIKlo107LUfRkP": "00000",  // Single Pack - #000000
-  "prod_TIKmAWTileFjnm": "10B98",  // Family Pack - #10B981
-  "prod_TIKmxYafsqTXwO": "0057B",  // Business Starter - #0057B8
-  "prod_TIKmurHwJ5bDWJ": "FFD70",  // Business Velocity - #FFD700
+  "prod_TIKlo107LUfRkP": "00000",
+  "prod_TIKmAWTileFjnm": "10B98",
+  "prod_TIKmxYafsqTXwO": "0057B",
+  "prod_TIKmurHwJ5bDWJ": "FFD70",
 };
 
-// Map Stripe product IDs to full hex colors for pass backgrounds
-const PRODUCT_COLORS: Record<string, string> = {
-  "prod_TIKlo107LUfRkP": "#000000",  // Single Pack - Black
-  "prod_TIKmAWTileFjnm": "#10B981",  // Family Pack - Green
-  "prod_TIKmxYafsqTXwO": "#0057B8",  // Business Starter - Blue
-  "prod_TIKmurHwJ5bDWJ": "#FFD700",  // Business Velocity - Gold
-};
+// --- PassKit JWT Auth ---
 
-// Function to get template ID from database
-async function getTemplateId(supabaseClient: any, productId: string): Promise<string | null> {
+function base64url(data: Uint8Array): string {
+  return btoa(String.fromCharCode(...data))
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
+async function generatePassKitJWT(apiKey: string, apiSecret: string): Promise<string> {
+  const header = { alg: "HS256", typ: "JWT" };
+  const now = Math.floor(Date.now() / 1000);
+  const payload = {
+    uid: apiKey,
+    exp: now + 300, // 5 min expiry
+    iat: now,
+  };
+
+  const encoder = new TextEncoder();
+  const headerB64 = base64url(encoder.encode(JSON.stringify(header)));
+  const payloadB64 = base64url(encoder.encode(JSON.stringify(payload)));
+  const signingInput = `${headerB64}.${payloadB64}`;
+
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(apiSecret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+
+  const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(signingInput));
+  const signatureB64 = base64url(new Uint8Array(signature));
+
+  return `${signingInput}.${signatureB64}`;
+}
+
+// --- PassKit Config from DB ---
+
+interface PassKitConfig {
+  programId: string;
+  tierId: string;
+}
+
+async function getPassKitConfig(supabaseClient: any, productId: string): Promise<PassKitConfig | null> {
   const { data, error } = await supabaseClient
     .from("passentry_config")
-    .select("template_id")
+    .select("passkit_program_id, passkit_tier_id")
     .eq("product_id", productId)
     .single();
 
-  if (error) {
-    console.error("[WALLET-PASS] Error fetching template ID:", error);
+  if (error || !data?.passkit_program_id || !data?.passkit_tier_id) {
+    console.error("[WALLET-PASS] Error fetching PassKit config:", error);
     return null;
   }
 
-  return data?.template_id || null;
+  return {
+    programId: data.passkit_program_id,
+    tierId: data.passkit_tier_id,
+  };
 }
 
-// Car banner images for random selection (1125px x 432px)
-const CAR_BANNERS = [
-  "banner-speed.png",
-  "banner-sunset-water.png",
-  "banner-city-sunset.png",
-  "banner-red-smoke.png",
-  "banner-supercar-rear.png",
-  "banner-racing-sunset.png",
-  "banner-sports.png", 
-  "banner-super-gt.png"
-];
+// --- PassKit Member Enrolment ---
+
+async function enrolPassKitMember(
+  jwt: string,
+  config: PassKitConfig,
+  memberData: {
+    externalId: string;
+    displayName: string;
+    email: string;
+    planName: string;
+    expiryDate?: string;
+  }
+): Promise<{ passKitId: string; passUrl: string }> {
+  const enrolPayload = {
+    externalId: memberData.externalId,
+    tierId: config.tierId,
+    programId: config.programId,
+    person: {
+      displayName: memberData.displayName,
+      emailAddress: memberData.email,
+    },
+    metaData: {
+      plan: memberData.planName,
+    },
+    ...(memberData.expiryDate ? { expiryDate: memberData.expiryDate } : {}),
+  };
+
+  console.log("[WALLET-PASS] Enrolling member in PassKit:", JSON.stringify(enrolPayload));
+
+  const response = await fetch(`${PASSKIT_API_BASE}/members/member`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${jwt}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(enrolPayload),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("[WALLET-PASS] PassKit enrol error:", {
+      status: response.status,
+      body: errorText,
+    });
+    throw new Error(`PassKit enrol error: ${response.status} - ${errorText}`);
+  }
+
+  const result = await response.json();
+  const passKitId = result.id;
+  console.log("[WALLET-PASS] PassKit member enrolled:", passKitId);
+
+  // PassKit pass URL format
+  const passUrl = `https://pub1.pskt.io/${passKitId}`;
+
+  return { passKitId, passUrl };
+}
+
+// --- Main Handler ---
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -79,44 +165,46 @@ serve(async (req) => {
     const token = authHeader.replace("Bearer ", "");
     const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
     if (userError) throw userError;
-    
+
     const user = userData.user;
     if (!user?.email) throw new Error("User not authenticated");
-    console.log("[WALLET-PASS] User authenticated", { email: user.email });
+    console.log("[WALLET-PASS] User authenticated:", user.email);
 
-    // Get subscription details
+    // Get Stripe subscription
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) throw new Error("Stripe key not configured");
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
-    
-    if (customers.data.length === 0) {
-      throw new Error("No subscription found");
-    }
+
+    if (customers.data.length === 0) throw new Error("No subscription found");
 
     const customerId = customers.data[0].id;
     const subscriptions = await stripe.subscriptions.list({
       customer: customerId,
       status: "active",
-      limit: 10, // Get all active subscriptions
+      limit: 10,
     });
 
-    if (subscriptions.data.length === 0) {
-      throw new Error("No active subscription");
-    }
+    if (subscriptions.data.length === 0) throw new Error("No active subscription");
 
-    // Get the most recent subscription (sorted by created date)
     const subscription = subscriptions.data.sort((a: any, b: any) => b.created - a.created)[0];
     const subscriptionId = subscription.id;
     const productId = subscription.items.data[0].price.product as string;
 
-    // Check if pass already exists in database
+    // Check for existing pass
     const { data: existingPass } = await supabaseClient
       .from("membership_passes")
       .select("*")
       .eq("subscription_id", subscriptionId)
       .single();
+
+    const planName = PRODUCT_NAMES[productId] || "Premium Member";
+    const memberName = user.email.split("@")[0].charAt(0).toUpperCase() + user.email.split("@")[0].slice(1);
+    const memberSince = new Date(subscription.created * 1000).getFullYear().toString();
+    const validUntil = subscription.current_period_end
+      ? new Date(subscription.current_period_end * 1000).toLocaleDateString("en-GB", { year: "numeric", month: "2-digit", day: "2-digit" })
+      : "Active";
 
     if (existingPass) {
       console.log("[WALLET-PASS] Pass already exists, returning cached version");
@@ -126,131 +214,53 @@ serve(async (req) => {
         appleWalletUrl: existingPass.apple_url,
         googlePayUrl: existingPass.google_url,
         membershipData: {
-          memberName: user.email.split('@')[0].charAt(0).toUpperCase() + user.email.split('@')[0].slice(1),
+          memberName,
           memberEmail: user.email,
-          planName: PRODUCT_NAMES[productId] || "Premium Member",
+          planName,
           memberId: existingPass.member_id,
-          memberSince: new Date(subscription.created * 1000).getFullYear().toString(),
-          validUntil: subscription.current_period_end 
-            ? new Date(subscription.current_period_end * 1000).toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })
-            : "Active",
-        }
+          memberSince,
+          validUntil,
+        },
       }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
       });
     }
-    const planName = PRODUCT_NAMES[productId] || "Premium Member";
-    
-    const memberName = user.email.split('@')[0].charAt(0).toUpperCase() + user.email.split('@')[0].slice(1);
-    
-    // Generate unique member ID with hex prefix based on product tier
+
+    // Generate member ID
     const hexPrefix = PRODUCT_PREFIXES[productId] || "00000";
     const uniqueId = Math.random().toString(36).substring(2, 9).toUpperCase();
     const memberId = `${hexPrefix}-${uniqueId}`;
-    console.log("[WALLET-PASS] Generated member ID with hex prefix:", memberId, "for product:", productId);
-    
-    const memberSince = new Date(subscription.created * 1000).getFullYear().toString();
-    const validUntil = subscription.current_period_end 
-      ? new Date(subscription.current_period_end * 1000).toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })
-      : "Active";
+    console.log("[WALLET-PASS] Generated member ID:", memberId);
 
-    console.log("[WALLET-PASS] Generating PassEntry pass", { planName, memberId });
+    // Get PassKit credentials
+    const passkitApiKey = Deno.env.get("PASSKIT_API_KEY");
+    const passkitApiSecret = Deno.env.get("PASSKIT_API_SECRET");
+    if (!passkitApiKey || !passkitApiSecret) throw new Error("PassKit credentials not configured");
 
-    // Create PassEntry wallet pass
-    const passEntryKey = Deno.env.get("PASSENTRY_API_KEY");
-    if (!passEntryKey) throw new Error("PassEntry API key not configured");
-
-    // Get tier color for pass background
-    const tierColor = PRODUCT_COLORS[productId] || "#1C1C1C";
-    console.log("[WALLET-PASS] Using tier color:", tierColor, "for product:", productId);
-
-    // Randomly select a car banner
-    const randomBanner = CAR_BANNERS[Math.floor(Math.random() * CAR_BANNERS.length)];
-    const origin = req.headers.get("origin") || "https://lnfmxpcpudugultrpwwa.lovableproject.com";
-    const bannerUrl = `${origin}/assets/${randomBanner}`;
-    console.log("[WALLET-PASS] Using random banner:", bannerUrl);
-
-    // Get tier-specific template ID from database
-    const templateId = await getTemplateId(supabaseClient, productId);
-    if (!templateId) {
-      throw new Error(`No template configured for product: ${productId}. Please configure templates at /passentry-setup`);
-    }
-    console.log("[WALLET-PASS] Using template:", templateId, "for product:", productId);
-
-    // DIAGNOSTIC: Fetch template details to see actual field IDs
-    try {
-      const templateResponse = await fetch(`https://api.passentry.com/api/v1/pass-templates/${templateId}`, {
-        headers: { "Authorization": `Bearer ${passEntryKey}` }
-      });
-      
-      if (templateResponse.ok) {
-        const templateData = await templateResponse.json();
-        const fields = templateData.data?.attributes?.fields || {};
-        
-        // Extract all field IDs
-        const allFieldIds: string[] = [];
-        for (const section of Object.values(fields)) {
-          if (section && typeof section === 'object') {
-            for (const field of Object.values(section as any)) {
-              if (field && typeof field === 'object' && 'id' in field) {
-                allFieldIds.push((field as any).id);
-              }
-            }
-          }
-        }
-        
-        console.log("[WALLET-PASS] DIAGNOSTIC - Template field IDs available:", [...new Set(allFieldIds)]);
-        console.log("[WALLET-PASS] DIAGNOSTIC - Full template fields structure:", JSON.stringify(fields, null, 2));
-      }
-    } catch (diagError) {
-      console.error("[WALLET-PASS] Failed to fetch template for diagnostics:", diagError);
+    // Get PassKit config from DB
+    const passkitConfig = await getPassKitConfig(supabaseClient, productId);
+    if (!passkitConfig) {
+      throw new Error(`No PassKit config for product: ${productId}. Update passentry_config table with passkit_program_id and passkit_tier_id.`);
     }
 
-    // Create PassEntry wallet pass - include metadata for webhook
-    // Note: Custom fields must be wrapped in { value: "..." } format
-    // Map to actual template field IDs (with exact casing and spaces!)
-    const passEntryResponse = await fetch(`https://api.passentry.com/api/v1/passes?passTemplate=${templateId}&includePassSource=apple,google`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${passEntryKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        externalId: memberId,
-        pass: {
-          stripImage: bannerUrl,
-          backgroundColor: tierColor,
-          member_name: memberName.toUpperCase(),
-          member_id: memberId,
-          Custom: memberSince,
-          tier_name: planName.toUpperCase()
-        },
-        metadata: {
-          user_id: user.id,
-          subscription_id: subscriptionId,
-          product_id: productId,
-        }
-      }),
+    // Generate JWT for PassKit auth
+    const jwt = await generatePassKitJWT(passkitApiKey, passkitApiSecret);
+    console.log("[WALLET-PASS] PassKit JWT generated");
+
+    // Calculate expiry date from subscription
+    const expiryDate = subscription.current_period_end
+      ? new Date(subscription.current_period_end * 1000).toISOString()
+      : undefined;
+
+    // Enrol member in PassKit
+    const { passKitId, passUrl } = await enrolPassKitMember(jwt, passkitConfig, {
+      externalId: memberId,
+      displayName: memberName,
+      email: user.email,
+      planName,
+      expiryDate,
     });
-
-    if (!passEntryResponse.ok) {
-      const errorText = await passEntryResponse.text();
-      console.error("[WALLET-PASS] PassEntry API error:", {
-        status: passEntryResponse.status,
-        statusText: passEntryResponse.statusText,
-        body: errorText,
-        url: passEntryResponse.url
-      });
-      throw new Error(`PassEntry API error: ${passEntryResponse.status} - ${errorText}`);
-    }
-
-    const passData = await passEntryResponse.json();
-    console.log("[WALLET-PASS] PassEntry pass created successfully", { passId: passData.data?.id });
-
-    const downloadUrl = passData.data?.attributes?.downloadUrl;
-    const passSource = passData.data?.attributes?.passSource;
-    const appleUrl = passSource?.apple || downloadUrl;
 
     // Save pass to database
     const { error: insertError } = await supabaseClient
@@ -258,30 +268,26 @@ serve(async (req) => {
       .insert({
         user_id: user.id,
         member_id: memberId,
-        pass_id: passData.data?.id,
-        apple_url: appleUrl,
-        google_url: passSource?.google,
-        download_url: downloadUrl,
+        pass_id: passKitId,
+        apple_url: passUrl,
+        google_url: passUrl,
+        download_url: passUrl,
         subscription_id: subscriptionId,
         product_id: productId,
       });
 
     if (insertError) {
-      console.error("[WALLET-PASS] Error saving pass to database:", insertError);
-      // Don't throw - pass was created successfully, just log the error
+      console.error("[WALLET-PASS] Error saving pass:", insertError);
     } else {
-      console.log("[WALLET-PASS] Pass saved to database successfully");
+      console.log("[WALLET-PASS] Pass saved to database");
     }
 
     // Send confirmation email
-    console.log("[WALLET-PASS] Starting email send process");
     const resendKey = Deno.env.get("RESEND_API_KEY");
     if (resendKey) {
       try {
         const resend = new Resend(resendKey);
-        console.log("[WALLET-PASS] Resend initialized, preparing email");
-        
-        const emailResponse = await resend.emails.send({
+        await resend.emails.send({
           from: "TyrePlus Membership <onboarding@resend.dev>",
           to: [user.email],
           subject: "Your TyrePlus Membership Pass is Ready!",
@@ -289,7 +295,6 @@ serve(async (req) => {
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
               <h1 style="color: #333;">Welcome to TyrePlus, ${memberName}!</h1>
               <p>Your digital membership pass has been created and is ready to use.</p>
-              
               <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
                 <h2 style="margin-top: 0;">Membership Details</h2>
                 <p><strong>Plan:</strong> ${planName}</p>
@@ -297,41 +302,27 @@ serve(async (req) => {
                 <p><strong>Member Since:</strong> ${memberSince}</p>
                 <p><strong>Valid Until:</strong> ${validUntil}</p>
               </div>
-
               <div style="margin: 30px 0;">
                 <h3>Add to Your Wallet:</h3>
-                ${appleUrl ? `<p><a href="${appleUrl}" style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 5px 0;">Add to Apple Wallet</a></p>` : ''}
-                ${passSource?.google ? `<p><a href="${passSource.google}" style="display: inline-block; background: #4285f4; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 5px 0;">Add to Google Wallet</a></p>` : ''}
+                <p><a href="${passUrl}" style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;">Add to Wallet</a></p>
               </div>
-
               <p style="color: #666; font-size: 14px;">
                 Thank you for choosing TyrePlus. If you have any questions, please contact our support team.
               </p>
             </div>
           `,
         });
-        
-        console.log("[WALLET-PASS] Email sent successfully", { 
-          emailId: emailResponse.data?.id,
-          recipient: user.email 
-        });
+        console.log("[WALLET-PASS] Confirmation email sent");
       } catch (emailError) {
-        console.error("[WALLET-PASS] Email send failed (non-blocking):", {
-          error: emailError instanceof Error ? emailError.message : String(emailError),
-          recipient: user.email
-        });
-        // Don't throw - email is non-critical
+        console.error("[WALLET-PASS] Email failed (non-blocking):", emailError);
       }
-    } else {
-      console.log("[WALLET-PASS] RESEND_API_KEY not configured, skipping email");
     }
 
-    console.log("[WALLET-PASS] Returning success response");
     return new Response(JSON.stringify({
       success: true,
-      passUrl: downloadUrl,
-      appleWalletUrl: appleUrl,
-      googlePayUrl: passSource?.google,
+      passUrl,
+      appleWalletUrl: passUrl,
+      googlePayUrl: passUrl,
       membershipData: {
         memberName,
         memberEmail: user.email,
@@ -339,12 +330,11 @@ serve(async (req) => {
         memberId,
         memberSince,
         validUntil,
-      }
+      },
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
-
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("[WALLET-PASS] ERROR:", errorMessage);
